@@ -1,0 +1,14 @@
+services:
+    Comsave\Webservice\Core\SalesforceOutboundMessageBundle\:
+        autowire: true
+        autoconfigure: true
+        public: false
+        resource: '../../*'
+        exclude: '../../{Document,Repository}'
+
+    Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Controller\:
+        autowire: true
+        autoconfigure: true
+        public: true
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']

@@ -1,8 +1,8 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle;
+namespace Comsave\SalesforceOutboundMessageBundle;
 
-class SalesforceOutboundMessageBundle
+class SalesforceOutboundMessageBundle extends Bundle
 {
 
 }

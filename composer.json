@@ -1,0 +1,15 @@
+{
+  "name": "comsave/salesforce-outbound-message-bundle",
+  "require": {
+    "monolog/monolog": "1.0.*",
+    "php": ">=7.2.0",
+    "friendsofsymfony/rest-bundle": "^2.3",
+    "doctrine/doctrine-bundle": "^1.9",
+    "gedmo/doctrine-extensions": "^2.4",
+    "guzzlehttp/guzzle": "^6.3",
+    "symfony/symfony": "^3.4.9"
+  },
+  "autoload": {
+    "psr-0" : {"": "SalesforceOutboundMessageBundle/"}
+  }
+}
