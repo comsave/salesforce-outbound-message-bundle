@@ -1,6 +1,6 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Factory;
+namespace SalesforceOutboundMessageBundle\Services\Factory;
 
 use Comsave\Webservice\Core\CoreBundle\Document\DiscountRule;
 use Comsave\Webservice\Core\CoreBundle\Document\Interconnect;
@@ -10,9 +10,9 @@ use Comsave\Webservice\Core\CoreBundle\Document\Product;
 use Comsave\Webservice\Core\DeliveryBundle\Document\Delivery;
 use Comsave\Webservice\Core\OrderBundle\Document\Order;
 use Comsave\Webservice\Core\OrderBundle\Document\OrderProduct;
-use Comsave\Webservice\Core\SalesforceBundle\Exception\SalesforceException;
 use Comsave\Webservice\Core\UserBundle\Document\Account;
 use Comsave\Webservice\Core\UserBundle\Document\User;
+use SalesforceOutboundMessageBundle\Exception\SalesforceException;
 
 class OutboundMessageDocumentClassNameFactory
 {

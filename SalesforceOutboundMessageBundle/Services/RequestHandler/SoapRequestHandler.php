@@ -2,13 +2,14 @@
 
 namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler;
 
-use Comsave\Webservice\Core\CoreBundle\Services\DocumentUpdater;
-use Comsave\Webservice\Core\SalesforceBundle\Exception\SalesforceException;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Model\NotificationRequest;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Model\NotificationResponse;
+
+use SalesforceOutboundMessageBundle\Exception\SalesforceException;
+use SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
+use SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
+use SalesforceOutboundMessageBundle\Model\NotificationRequest;
+use SalesforceOutboundMessageBundle\Model\NotificationResponse;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
 use Psr\Log\LoggerInterface;

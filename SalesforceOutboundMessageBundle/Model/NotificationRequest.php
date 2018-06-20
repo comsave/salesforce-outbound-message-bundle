@@ -1,7 +1,11 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Model;
+namespace SalesforceOutboundMessageBundle\Model;
 
+/**
+ * Class NotificationRequest
+ * @package SalesforceOutboundMessageBundle\Model
+ */
 class NotificationRequest
 {
     protected $OrganizationId;

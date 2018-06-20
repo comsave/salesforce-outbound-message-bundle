@@ -1,9 +1,9 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Factory;
+namespace SalesforceOutboundMessageBundle\Services\Factory;
 
-use Comsave\Webservice\Core\SalesforceBundle\Exception\SalesforceException;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Interfaces\WsdlPathFactoryInterface;
+use SalesforceOutboundMessageBundle\Interfaces\WsdlPathFactoryInterface;
+use SalesforceOutboundMessageBundle\Exception\SalesforceException;
 
 class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
 {

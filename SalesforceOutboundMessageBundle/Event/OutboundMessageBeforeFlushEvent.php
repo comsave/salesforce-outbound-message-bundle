@@ -1,9 +1,8 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Event;
+namespace SalesforceOutboundMessageBundle\Event;
 
-use Comsave\Webservice\Core\CoreBundle\Document\BaseDocument;
-use Comsave\Webservice\Core\CoreBundle\Interfaces\DocumentInterface;
+use SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class OutboundMessageBeforeFlushEvent extends Event

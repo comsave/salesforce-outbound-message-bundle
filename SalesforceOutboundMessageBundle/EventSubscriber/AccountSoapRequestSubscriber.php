@@ -10,7 +10,6 @@ use Comsave\Webservice\Core\UserBundle\Document\Account;
 use Comsave\Webservice\Core\UserBundle\Document\User;
 use Comsave\Webservice\Core\UserBundle\Repository\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Debug\Tests\Fixtures\InternalClass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

@@ -1,15 +1,16 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Interfaces;
+namespace SalesforceOutboundMessageBundle\Interfaces;
 
-use Comsave\Webservice\Core\SalesforceBundle\Exception\SalesforceException;
-
+/**
+ * Interface WsdlPathFactoryInterface
+ * @package SalesforceOutboundMessageBundle\Interfaces
+ */
 interface WsdlPathFactoryInterface
 {
     /**
      * @param string $objectName
      * @return string
-     * @throws SalesforceException
      */
     public function getWsdlPath(string $objectName): string;
 }

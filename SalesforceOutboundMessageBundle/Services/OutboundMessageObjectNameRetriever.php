@@ -1,8 +1,8 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services;
+namespace SalesforceOutboundMessageBundle\Services;
 
-use Comsave\Webservice\Core\SalesforceBundle\Exception\SalesforceException;
+use SalesforceOutboundMessageBundle\Exception\SalesforceException;
 
 /**
  * Class OutboundMessageObjectNameRetriever

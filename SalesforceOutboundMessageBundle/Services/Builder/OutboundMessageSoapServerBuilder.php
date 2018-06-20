@@ -1,9 +1,8 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder;
+namespace SalesforceOutboundMessageBundle\Services\Builder;
 
-use Comsave\Webservice\Core\SalesforceBundle\Exception\SalesforceException;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
+use SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 
 class OutboundMessageSoapServerBuilder
 {
@@ -42,7 +41,6 @@ class OutboundMessageSoapServerBuilder
     /**
      * @param string $objectName
      * @return \SoapServer
-     * @throws SalesforceException
      */
     public function build(string $objectName): \SoapServer
     {

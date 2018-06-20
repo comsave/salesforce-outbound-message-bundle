@@ -1,13 +1,12 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler;
+namespace SalesforceOutboundMessageBundle\Services\RequestHandler;
 
-use Comsave\Webservice\Core\SalesforceBundle\Exception\SalesforceException;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Model\NotificationResponse;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
-use Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\OutboundMessageObjectNameRetriever;
-use Psr\Log\LoggerInterface;
+use SalesforceBundle\Exception\SalesforceException;
+use SalesforceOutboundMessageBundle\Model\NotificationResponse;
+use SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder;
+use SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
+use SalesforceOutboundMessageBundle\Services\OutboundMessageObjectNameRetriever;
 use Symfony\Component\HttpFoundation\Response;
 
 class OutboundMessageRequestHandler
