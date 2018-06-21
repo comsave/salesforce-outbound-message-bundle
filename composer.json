@@ -1,5 +1,6 @@
 {
   "name": "comsave/salesforce-outbound-message-bundle",
+  "description": "Salesforce outbound message handler. Will process the outbound message sent by Salesforce and save all the changes to your database.",
   "provide" : {
     "ext-mongo": "*"
   },
@@ -15,7 +16,11 @@
     "doctrine/mongodb-odm": "^1.2",
     "symfony/symfony": "^3.4.9"
   },
+  "require-dev": {
+    "phpunit/php-code-coverage": "^6.0",
+    "phpunit/phpunit": "^7.0"
+  },
   "autoload": {
-    "psr-0" : {"": "SalesforceOutboundMessageBundle/"}
+    "psr-4" : {"": "SalesforceOutboundMessageBundle/"}
   }
 }
