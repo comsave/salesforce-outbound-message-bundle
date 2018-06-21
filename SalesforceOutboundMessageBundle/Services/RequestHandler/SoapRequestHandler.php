@@ -1,6 +1,6 @@
 <?php
 
-namespace Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler;
+namespace SalesforceOutboundMessageBundle\Services\RequestHandler;
 
 
 use SalesforceOutboundMessageBundle\Exception\SalesforceException;

@@ -2,6 +2,7 @@
 
 namespace SalesforceOutboundMessageBundle\Services\Builder;
 
+use LogicItLab\Salesforce\MapperBundle\Mapper;
 use SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
@@ -71,9 +72,9 @@ class SoapRequestHandlerBuilder
     /**
      * @param string $objectName
      * @return SoapRequestHandlerInterface
-     * @throws \Comsave\Webservice\Core\SalesforceBundle\Exception\SalesforceException
+     * @throws \SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
-    public function build(string $objectName): SoapRequestHandlerInterface
+    public function build(string $documentName): SoapRequestHandlerInterface
     {
         return new SoapRequestHandler(
             $this->documentManager,
@@ -81,7 +82,7 @@ class SoapRequestHandlerBuilder
             $this->documentUpdater,
             $this->eventDispatcher,
             $this->logger,
-            $this->outboundMessageEntityClassNameFactory->getClassName($objectName)
+            $documentName
         );
     }
 }

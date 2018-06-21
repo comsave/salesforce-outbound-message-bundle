@@ -2,8 +2,8 @@
 
 namespace SalesforceOutboundMessageBundle\Services\RequestHandler;
 
-use SalesforceBundle\Exception\SalesforceException;
-use SalesforceOutboundMessageBundle\Model\NotificationResponse;
+use SalesforceOutboundMessageBundle\Exception\SalesforceException;
+use SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder;
 use SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
 use SalesforceOutboundMessageBundle\Services\OutboundMessageObjectNameRetriever;
@@ -45,12 +45,13 @@ class OutboundMessageRequestHandler
 
     /**
      * @param string $xml
+     * @param string $documentName
      * @return Response
      * @throws SalesforceException
      */
-    public function handle(string $xml): Response
+    public function handle(string $xml, string $documentName): Response
     {
-        $soapServer = $this->outboundMessageSoapServerBuilder->build($this->outboundMessageObjectNameRetriever->retrieve($xml));
+        $soapServer = $this->outboundMessageSoapServerBuilder->build($this->outboundMessageObjectNameRetriever->retrieve($xml), $documentName);
         ob_start();
         $soapServer->handle($xml);
         $responseContent = ob_get_contents();

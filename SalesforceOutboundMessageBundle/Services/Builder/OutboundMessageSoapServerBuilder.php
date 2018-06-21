@@ -2,6 +2,7 @@
 
 namespace SalesforceOutboundMessageBundle\Services\Builder;
 
+use SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 
 class OutboundMessageSoapServerBuilder
@@ -40,13 +41,15 @@ class OutboundMessageSoapServerBuilder
 
     /**
      * @param string $objectName
+     * @param string $documentName
      * @return \SoapServer
+     * @throws \SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
-    public function build(string $objectName): \SoapServer
+    public function build(string $objectName, string $documentName): \SoapServer
     {
         return $this->soapServerBuilder->build(
             $this->wsdlPathFactory->getWsdlPath($objectName),
-            $this->soapServerRequestHandlerBuilder->build($objectName)
+            $this->soapServerRequestHandlerBuilder->build($documentName)
         );
     }
 }
