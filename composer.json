@@ -14,7 +14,7 @@
     "guzzlehttp/guzzle": "^6.3",
     "symfony/event-dispatcher": "^3.4.9",
     "doctrine/mongodb-odm": "^1.2",
-    "symfony/symfony": "^3.4.9"
+    "symfony/symfony": "^3.4.10"
   },
   "require-dev": {
     "phpunit/php-code-coverage": "^6.0",
