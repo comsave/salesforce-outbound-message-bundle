@@ -1,6 +1,7 @@
 {
   "name": "comsave/salesforce-outbound-message-bundle",
   "description": "Salesforce outbound message handler. Will process the outbound message sent by Salesforce and save all the changes to your database.",
+  "license": "MIT",
   "provide" : {
     "ext-mongo": "*"
   },
