@@ -49,9 +49,9 @@ class OutboundMessageRequestHandler
      * @return Response
      * @throws SalesforceException
      */
-    public function handle(string $xml, string $documentName): Response
+    public function handle(string $xml): Response
     {
-        $soapServer = $this->outboundMessageSoapServerBuilder->build($this->outboundMessageObjectNameRetriever->retrieve($xml), $documentName);
+        $soapServer = $this->outboundMessageSoapServerBuilder->build($this->outboundMessageObjectNameRetriever->retrieve($xml));
         ob_start();
         $soapServer->handle($xml);
         $responseContent = ob_get_contents();

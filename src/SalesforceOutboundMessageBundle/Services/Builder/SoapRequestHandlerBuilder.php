@@ -6,7 +6,6 @@ use LogicItLab\Salesforce\MapperBundle\Mapper;
 use SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
-use SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -29,11 +28,6 @@ class SoapRequestHandlerBuilder
     private $documentUpdater;
 
     /**
-     * @var OutboundMessageDocumentClassNameFactory
-     */
-    private $outboundMessageEntityClassNameFactory;
-
-    /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
@@ -48,7 +42,6 @@ class SoapRequestHandlerBuilder
      * @param DocumentManager $documentManager
      * @param Mapper $mapper
      * @param DocumentUpdater $documentUpdater
-     * @param OutboundMessageDocumentClassNameFactory $outboundMessageEntityClassNameFactory
      * @param EventDispatcherInterface $eventDispatcher
      * @param LoggerInterface $logger
      * @codeCoverageIgnore
@@ -57,14 +50,12 @@ class SoapRequestHandlerBuilder
         DocumentManager $documentManager,
         Mapper $mapper,
         DocumentUpdater $documentUpdater,
-        OutboundMessageDocumentClassNameFactory $outboundMessageEntityClassNameFactory,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger)
     {
         $this->documentManager = $documentManager;
         $this->mapper = $mapper;
         $this->documentUpdater = $documentUpdater;
-        $this->outboundMessageEntityClassNameFactory = $outboundMessageEntityClassNameFactory;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
     }

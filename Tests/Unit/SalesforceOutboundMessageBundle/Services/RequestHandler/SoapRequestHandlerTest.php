@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler;
 
+use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use SalesforceOutboundMessageBundle\Model\NotificationRequest;
 use SalesforceOutboundMessageBundle\Model\NotificationResponse;
@@ -65,7 +66,7 @@ class SoapRequestHandlerTest extends TestCase
             $this->documentUpdater,
             $this->eventDispatcher,
             $this->logger,
-            'DiscountRule__c'
+            'Product2'
         );
     }
 
@@ -101,10 +102,8 @@ class SoapRequestHandlerTest extends TestCase
             ->method('getNotification')
             ->willReturn($notification);
 
-        $mappedDocumentMock = $this->createMock(DocumentInterface::class);
-        $mappedDocumentMock->expects($this->once())
-            ->method('getName')
-            ->willReturn('Ziggo 100Mbit fiber');
+        $mappedDocumentMock = new Product();
+        $mappedDocumentMock->setName('ProductName');
 
         $this->mapper->expects($this->once())
             ->method('mapToDomainObject')
@@ -145,10 +144,10 @@ class SoapRequestHandlerTest extends TestCase
             ->method('getNotification')
             ->willReturn($notification);
 
-        $mappedDocumentMock = $this->createMock(DocumentInterface::class);
+        $mappedDocumentMock = $this->createMock(Product::class);
         $mappedDocumentMock->expects($this->once())
             ->method('getName')
-            ->willReturn('Ziggo 100Mbit fiber');
+            ->willReturn('ProductName');
 
         $this->mapper->expects($this->once())
             ->method('mapToDomainObject')

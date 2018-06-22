@@ -3,6 +3,7 @@
 namespace SalesforceOutboundMessageBundle\Services\Builder;
 
 use SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
+use SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
 use SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 
 class OutboundMessageSoapServerBuilder
@@ -23,33 +24,35 @@ class OutboundMessageSoapServerBuilder
     private $soapServerRequestHandlerBuilder;
 
     /**
-     * OutboundMessageSoapServerBuilder constructor.
+     * @var OutboundMessageDocumentClassNameFactory
+     */
+    private $outboundMessageDocumentClassNameFactory;
+
+    /**
      * @param SoapServerBuilder $soapServerBuilder
      * @param OutboundMessageWsdlPathFactory $wsdlPathFactory
      * @param SoapRequestHandlerBuilder $soapServerRequestHandlerBuilder
+     * @param OutboundMessageDocumentClassNameFactory $outboundMessageDocumentClassNameFactory
      * @codeCoverageIgnore
      */
-    public function __construct(
-        SoapServerBuilder $soapServerBuilder,
-        OutboundMessageWsdlPathFactory $wsdlPathFactory,
-        SoapRequestHandlerBuilder $soapServerRequestHandlerBuilder)
+    public function __construct(SoapServerBuilder $soapServerBuilder, OutboundMessageWsdlPathFactory $wsdlPathFactory, SoapRequestHandlerBuilder $soapServerRequestHandlerBuilder, OutboundMessageDocumentClassNameFactory $outboundMessageDocumentClassNameFactory)
     {
         $this->soapServerBuilder = $soapServerBuilder;
         $this->wsdlPathFactory = $wsdlPathFactory;
         $this->soapServerRequestHandlerBuilder = $soapServerRequestHandlerBuilder;
+        $this->outboundMessageDocumentClassNameFactory = $outboundMessageDocumentClassNameFactory;
     }
 
     /**
      * @param string $objectName
-     * @param string $documentName
      * @return \SoapServer
      * @throws \SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
-    public function build(string $objectName, string $documentName): \SoapServer
+    public function build(string $objectName): \SoapServer
     {
         return $this->soapServerBuilder->build(
             $this->wsdlPathFactory->getWsdlPath($objectName),
-            $this->soapServerRequestHandlerBuilder->build($documentName)
+            $this->soapServerRequestHandlerBuilder->build($this->outboundMessageDocumentClassNameFactory->getClassName($objectName))
         );
     }
 }

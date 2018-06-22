@@ -2,6 +2,7 @@
 
 namespace SalesforceOutboundMessageBundle\Event;
 
+use LogicItLab\Salesforce\MapperBundle\Model\AbstractModel;
 use SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -10,7 +11,7 @@ class OutboundMessageBeforeFlushEvent extends Event
     const NAME = 'comsave.webservice.core.salesforce_outbound_message.before_flush';
 
     /**
-     * @var DocumentInterface
+     * @var AbstractModel
      */
     private $document;
 
@@ -20,7 +21,7 @@ class OutboundMessageBeforeFlushEvent extends Event
     private $pricebookEntryId;
 
     /**
-     * @return DocumentInterface
+     * @return AbstractModel
      */
     public function getDocument()
     {
@@ -28,9 +29,9 @@ class OutboundMessageBeforeFlushEvent extends Event
     }
 
     /**
-     * @param DocumentInterface $document
+     * @param AbstractModel $document
      */
-    public function setDocument(DocumentInterface $document): void
+    public function setDocument(AbstractModel $document): void
     {
         $this->document = $document;
     }

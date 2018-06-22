@@ -19,7 +19,7 @@ class OutboundMessageWsdlPathFactoryTest extends TestCase
 
     public function setUp()
     {
-        $this->outboundMessageWsdlPathFactory = new OutboundMessageWsdlPathFactory();
+        $this->outboundMessageWsdlPathFactory = new OutboundMessageWsdlPathFactory('Tests/Resources/wsdl/');
     }
 
     /**
@@ -30,7 +30,7 @@ class OutboundMessageWsdlPathFactoryTest extends TestCase
         $objectName = 'DiscountRule__c';
         $wsdlPath = $this->outboundMessageWsdlPathFactory->getWsdlPath($objectName);
 
-        $this->assertEquals('/app/comsave-webservice/src/Comsave/Webservice/Core/SalesforceOutboundMessageBundle/Services/Factory/../../Resources/wsdl/DiscountRule__c.wsdl', $wsdlPath);
+        $this->assertEquals('Tests/Resources/wsdl/DiscountRule__c.wsdl', $wsdlPath);
     }
 
     /**

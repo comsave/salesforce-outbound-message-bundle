@@ -4,10 +4,16 @@ namespace SalesforceOutboundMessageBundle\Services\Factory;
 
 use SalesforceOutboundMessageBundle\Interfaces\WsdlPathFactoryInterface;
 use SalesforceOutboundMessageBundle\Exception\SalesforceException;
+use Symfony\Component\DependencyInjection\Container;
 
 class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
 {
-    private $abstractWsdlPath = __DIR__ . '/../../Resources/wsdl/%s.wsdl';
+    private $abstractWsdlPath;
+
+    public function __construct(string $wsdlPath)
+    {
+        $this->abstractWsdlPath = $wsdlPath;
+    }
 
     /**
      * @param string $objectName
@@ -16,9 +22,13 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
      */
     public function getWsdlPath(string $objectName): string
     {
-        $wsdlPath = sprintf($this->abstractWsdlPath, $objectName);
+        if (substr($this->abstractWsdlPath, -1, 1) != '/') {
+            $this->abstractWsdlPath .= '/';
+        }
 
-        if(!file_exists($wsdlPath)) {
+        $wsdlPath = sprintf('%s%s.wsdl', $this->abstractWsdlPath, $objectName);
+
+        if (!file_exists($wsdlPath)) {
             throw new SalesforceException(sprintf('WSDL details for object `%s` are not found.', $objectName));
         }
 

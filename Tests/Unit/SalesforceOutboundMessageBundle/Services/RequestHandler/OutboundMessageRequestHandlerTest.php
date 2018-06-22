@@ -58,7 +58,6 @@ class OutboundMessageRequestHandlerTest extends TestCase
 
         $this->outboundMessageObjectNameRetriever->expects($this->once())
             ->method('retrieve')
-            ->with($xml, $documentName)
             ->willReturn('objectName');
 
         $soapServerMock = $this->createMock(\SoapServer::class);

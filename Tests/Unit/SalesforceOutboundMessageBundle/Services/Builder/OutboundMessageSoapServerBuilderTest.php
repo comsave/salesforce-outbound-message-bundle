@@ -5,6 +5,7 @@ namespace Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Ser
 use SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
 use SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
 use SalesforceOutboundMessageBundle\Services\Builder\SoapServerBuilder;
+use SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
 use SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 use SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -37,15 +38,22 @@ class OutboundMessageSoapServerBuilderTest extends TestCase
      */
     private $soapServerRequestHandlerBuilder;
 
+    /**
+     * @var MockObject
+     */
+    private $outboundMessageDocumentClassNameFactory;
+
     public function setUp()
     {
         $this->soapServerBuilder = $this->createMock(SoapServerBuilder::class);
         $this->wsdlPathFactory = $this->createMock(OutboundMessageWsdlPathFactory::class);
         $this->soapServerRequestHandlerBuilder = $this->createMock(SoapRequestHandlerBuilder::class);
+        $this->outboundMessageDocumentClassNameFactory = $this->createMock(OutboundMessageDocumentClassNameFactory::class);
         $this->outboundMessageSoapServerBuilder = new OutboundMessageSoapServerBuilder(
             $this->soapServerBuilder,
             $this->wsdlPathFactory,
-            $this->soapServerRequestHandlerBuilder
+            $this->soapServerRequestHandlerBuilder,
+            $this->outboundMessageDocumentClassNameFactory
         );
     }
 
@@ -54,10 +62,9 @@ class OutboundMessageSoapServerBuilderTest extends TestCase
      */
     public function testBuildReturnsASoapServer()
     {
-        $documentName = 'document/name/folder/file';
         $this->wsdlPathFactory->expects($this->once())
             ->method('getWsdlPath')
-            ->willReturn('path/to/product.wsdl');
+            ->willReturn('path/to/document.wsdl');
 
         $soapRequestHandler = $this->createMock(SoapRequestHandler::class);
 
@@ -72,7 +79,13 @@ class OutboundMessageSoapServerBuilderTest extends TestCase
             ->willReturn($soapServerMock);
 
         $objectName = 'Product';
-        $soapServer = $this->outboundMessageSoapServerBuilder->build($objectName, $documentName);
+
+        $this->outboundMessageDocumentClassNameFactory->expects($this->once())
+            ->method('getClassName')
+            ->with($objectName)
+            ->willReturn('DocumentClassPathName');
+
+        $soapServer = $this->outboundMessageSoapServerBuilder->build($objectName);
 
         $this->assertEquals($soapServer, $soapServerMock);
     }

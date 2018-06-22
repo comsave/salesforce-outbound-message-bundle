@@ -28,7 +28,7 @@ class SoapServerBuilderTest extends TestCase
      */
     public function testBuildReturnsASoapServer()
     {
-        $wsdlPath = '/app/comsave-webservice/src/Comsave/Webservice/Core/SalesforceOutboundMessageBundle/Services/Factory/../../Resources/wsdl/DiscountRule__c.wsdl';
+        $wsdlPath = 'Tests/Resources/wsdl/DiscountRule__c.wsdl';
         $soapRequestHandler = $this->createMock(SoapRequestHandler::class);
         $soapServer = $this->soapServerBuilder->build($wsdlPath, $soapRequestHandler);
 
