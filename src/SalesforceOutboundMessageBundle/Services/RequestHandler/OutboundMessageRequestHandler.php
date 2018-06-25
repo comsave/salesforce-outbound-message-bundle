@@ -45,7 +45,6 @@ class OutboundMessageRequestHandler
 
     /**
      * @param string $xml
-     * @param string $documentName
      * @return Response
      * @throws SalesforceException
      */
