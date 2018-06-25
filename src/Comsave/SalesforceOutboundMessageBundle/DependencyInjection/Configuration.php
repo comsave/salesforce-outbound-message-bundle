@@ -18,12 +18,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('salesforce_outbound_messages');
+        $rootNode = $treeBuilder->root('comsave_salesforce_outbound_messages');
 
         $rootNode
             ->children()
-                ->scalarNode('salesforce_wsdl_directory')->isRequired()->end()
-                ->arrayNode('salesforce_documents')->isRequired()->end()
+                ->scalarNode('wsdl_directory')->isRequired()->end()
+                //->arrayNode('documents')->isRequired()->end()
             ->end()
         ;
 
