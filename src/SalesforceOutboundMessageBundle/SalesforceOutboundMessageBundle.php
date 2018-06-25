@@ -11,4 +11,9 @@ class SalesforceOutboundMessageBundle extends Bundle
     {
         return new SalesforceOutboundMessageExtension();
     }
+
+    public function getAlias()
+    {
+        return 'salesforce_outbound_message';
+    }
 }
