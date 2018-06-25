@@ -137,7 +137,7 @@ All Rights Reserved
     <service name="NotificationService">
         <documentation>Notification Service Implementation</documentation>
         <port binding="tns:NotificationBinding" name="Notification">
-            <soap:address location="http://comsave-webservice.joeri.development.comsave.nl/soap/discount_rule"/>
+            <soap:address location="http://blabla"/>
         </port>
     </service>
 
