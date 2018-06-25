@@ -18,7 +18,7 @@ class SalesforceOutboundMessageExtension extends Extension
 
         //DependencyInjectionBuilder::setupConfigurationParameters($container, $config, 'comsave_salesforce_outbound_messages');
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
         $loader->load('services.yml');
     }
 }
