@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class PropertyAccessorTest
- * @package Tests\Unit\Comsave\Webservice\Core\CoreBundle\Services
- * @coversDefaultClass \Comsave\Webservice\Core\CoreBundle\Services\PropertyAccessor
+ * @package Tests\Unit\SalesforceOutboundMessageBundle\Services
+ * @coversDefaultClass \SalesforceOutboundMessageBundle\Services\PropertyAccessor
  */
 class PropertyAccessorTest extends TestCase
 {

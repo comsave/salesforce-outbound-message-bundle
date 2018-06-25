@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class SoapServerBuilderTest
- * @package Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder
- * @coversDefaultClass \Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder\SoapServerBuilder
+ * @package Tests\Unit\SalesforceOutboundMessageBundle\Services\Builder
+ * @coversDefaultClass \SalesforceOutboundMessageBundle\Services\Builder\SoapServerBuilder
  */
 class SoapServerBuilderTest extends TestCase
 {

@@ -7,8 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class OutboundMessageWsdlPathFactoryTest
- * @package Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Factory
- * @coversDefaultClass \Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory
+ * @package Tests\Unit\SalesforceOutboundMessageBundle\Services\Factory
+ * @coversDefaultClass \SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory
  */
 class OutboundMessageWsdlPathFactoryTest extends TestCase
 {

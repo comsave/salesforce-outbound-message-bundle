@@ -11,8 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class DocumentUpdaterTest
- * @package Tests\Unit\Comsave\Webservice\Core\CoreBundle\Services
- * @coversDefaultClass \Comsave\Webservice\Core\CoreBundle\Services\DocumentUpdater
+ * @package Tests\Unit\SalesforceOutboundMessageBundle\Services
+ * @coversDefaultClass \SalesforceOutboundMessageBundle\Services\DocumentUpdater
  */
 class DocumentUpdaterTest extends TestCase
 {

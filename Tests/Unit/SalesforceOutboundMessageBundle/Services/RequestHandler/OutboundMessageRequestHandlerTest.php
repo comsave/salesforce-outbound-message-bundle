@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class OutboundMessageRequestHandlerTest
- * @package Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler
- * @coversDefaultClass \Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler
+ * @package Tests\Unit\SalesforceOutboundMessageBundle\Services\RequestHandler
+ * @coversDefaultClass \SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler
  */
 class OutboundMessageRequestHandlerTest extends TestCase
 {

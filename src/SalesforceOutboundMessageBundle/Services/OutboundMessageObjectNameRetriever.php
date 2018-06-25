@@ -6,7 +6,7 @@ use SalesforceOutboundMessageBundle\Exception\SalesforceException;
 
 /**
  * Class OutboundMessageObjectNameRetriever
- * @package Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services
+ * @package SalesforceOutboundMessageBundle\Services
  */
 class OutboundMessageObjectNameRetriever
 {

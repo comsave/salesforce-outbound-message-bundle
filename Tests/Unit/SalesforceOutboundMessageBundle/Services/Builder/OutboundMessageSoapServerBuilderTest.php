@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder;
+namespace Tests\Unit\SalesforceOutboundMessageBundle\Services\Builder;
 
 use SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
 use SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
@@ -13,8 +13,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class OutboundMessageSoapServerBuilderTest
- * @package Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder
- * @coversDefaultClass \Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder
+ * @package Tests\Unit\SalesforceOutboundMessageBundle\Services\Builder
+ * @coversDefaultClass \SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder
  */
 class OutboundMessageSoapServerBuilderTest extends TestCase
 {

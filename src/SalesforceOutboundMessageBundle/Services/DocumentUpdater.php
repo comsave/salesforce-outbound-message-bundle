@@ -6,7 +6,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 
 /**
  * Class DocumentUpdater
- * @package Comsave\Webservice\Core\CoreBundle\Services
+ * @package SalesforceOutboundMessageBundle\Services
  */
 class DocumentUpdater
 {

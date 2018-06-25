@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder;
+namespace Tests\Unit\SalesforceOutboundMessageBundle\Services\Builder;
 
 use SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
@@ -14,8 +14,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class SoapRequestHandlerBuilderTest
- * @package Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder
- * @coversDefaultClass \Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder
+ * @package Tests\Unit\SalesforceOutboundMessageBundle\Services\Builder
+ * @coversDefaultClass \SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder
  */
 class SoapRequestHandlerBuilderTest extends TestCase
 {

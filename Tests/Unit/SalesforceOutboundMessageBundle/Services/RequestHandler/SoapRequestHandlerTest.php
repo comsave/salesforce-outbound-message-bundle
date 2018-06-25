@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler;
+namespace Tests\Unit\SalesforceOutboundMessageBundle\Services\RequestHandler;
 
 use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
@@ -17,8 +17,8 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Class SoapRequestHandlerTest
- * @package Tests\Unit\Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler
- * @coversDefaultClass \Comsave\Webservice\Core\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler
+ * @package Tests\Unit\SalesforceOutboundMessageBundle\Services\RequestHandler
+ * @coversDefaultClass \SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler
  */
 class SoapRequestHandlerTest extends TestCase
 {
