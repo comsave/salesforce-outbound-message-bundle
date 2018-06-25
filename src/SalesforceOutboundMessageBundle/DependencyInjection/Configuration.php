@@ -25,7 +25,6 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('salesforce_wsdl_directory')->isRequired()->end()
                 ->arrayNode('salesforce_documents')->isRequired()->end()
             ->end()
-        ->end()
         ;
 
         return $treeBuilder;

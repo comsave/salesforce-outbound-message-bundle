@@ -8,8 +8,8 @@ services:
 
     SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
         public: true
-        arguments: ['%salesforce_wsdl_directory%']
+        arguments: ['%salesforce_outbound_messages.salesforce_wsdl_directory%']
 
     SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
         public: true
-        arguments: ['%salesforce_documents%']
+        arguments: ['%salesforce_outbound_messages.salesforce_documents%']
