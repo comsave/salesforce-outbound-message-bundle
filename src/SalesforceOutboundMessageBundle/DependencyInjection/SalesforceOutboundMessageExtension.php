@@ -14,7 +14,7 @@ class SalesforceOutboundMessageExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        DependencyInjectionBuilder::setupConfigurationParameters($container, $config, 'comsave_webservice_core_address');
+        DependencyInjectionBuilder::setupConfigurationParameters($container, $config, 'salesforce_outbound_messages');
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
