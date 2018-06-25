@@ -6,13 +6,6 @@ services:
         resource: '../../*'
         exclude: '../../{Document,Repository}'
 
-    SalesforceOutboundMessageBundle\Controller\:
-        autowire: true
-        autoconfigure: true
-        public: true
-        resource: '../../Controller'
-        tags: ['controller.service_arguments']
-
     SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
         public: true
         arguments: ['%salesforce_wsdl_directory%']
