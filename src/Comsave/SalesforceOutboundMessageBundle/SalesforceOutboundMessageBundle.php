@@ -2,7 +2,7 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle;
 
-use SalesforceOutboundMessageBundle\DependencyInjection\SalesforceOutboundMessageExtension;
+use Comsave\SalesforceOutboundMessageBundle\DependencyInjection\SalesforceOutboundMessageExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SalesforceOutboundMessageBundle extends Bundle
