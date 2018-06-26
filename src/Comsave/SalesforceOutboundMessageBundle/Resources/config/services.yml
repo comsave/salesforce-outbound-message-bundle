@@ -5,6 +5,6 @@ services:
 
     Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler:
             arguments:
-                - 'Comsave/SalesforceOutboundMessageBundle/Services/Builder/OutboundMessageSoapServerBuilder'
-                - 'Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapResponseBuilder'
-                - 'Comsave/SalesforceOutboundMessageBundle/Services/OutboundMessageObjectNameRetriever'
+                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/OutboundMessageSoapServerBuilder'
+                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapResponseBuilder'
+                - '@Comsave/SalesforceOutboundMessageBundle/Services/OutboundMessageObjectNameRetriever'
