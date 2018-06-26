@@ -19,6 +19,6 @@ class OutboundMessageDocumentClassNameFactory
      */
     public function getClassName(string $objectName): string
     {
-        return $this->documentLocations[$objectName];
+        return $this->documentLocations[$objectName]['path'];
     }
 }
