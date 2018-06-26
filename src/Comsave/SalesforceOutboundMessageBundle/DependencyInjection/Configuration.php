@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->scalarNode('wsdl_directory')->isRequired()->end()
+            ->arrayNode('document_paths')->isRequired()->end()
             ->end()
         ;
 

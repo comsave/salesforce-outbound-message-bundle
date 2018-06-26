@@ -18,9 +18,9 @@ services:
 #                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapRequestHandlerBuilder'
 #                - '@Comsave/SalesforceOutboundMessageBundle/Services/Factory/OutboundMessageDocumentClassNameFactory'
 #
-#    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
-#            arguments:
-#                - '%comsave_salesforce_outbound_message.wsdl_directory%'
+    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
+            arguments:
+                - '%comsave_salesforce_outbound_message.wsdl_directory%'
 #
 #    Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder:
 #            arguments:
@@ -30,6 +30,6 @@ services:
 #                - '@Symfony\Component\EventDispatcher\EventDispatcherInterface'
 #                - '@Psr\Log\LoggerInterface'
 #
-#    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
-#            arguments:
-#                - '%comsave_salesforce_outbound_message.document_paths%'
+    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
+            arguments:
+                - '%comsave_salesforce_outbound_message.document_paths%'
