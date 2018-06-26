@@ -1,0 +1,7 @@
+comsave_salesforce_outbound_message:
+    resource: "@ComsaveSalesforceOutboundMessageBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
