@@ -2,7 +2,6 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
-use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
 use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 
@@ -46,7 +45,7 @@ class OutboundMessageSoapServerBuilder
     /**
      * @param string $objectName
      * @return \SoapServer
-     * @throws \SalesforceOutboundMessageBundle\Exception\SalesforceException
+     * @throws \Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
     public function build(string $objectName): \SoapServer
     {

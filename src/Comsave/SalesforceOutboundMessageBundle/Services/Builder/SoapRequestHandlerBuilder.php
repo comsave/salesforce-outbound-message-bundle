@@ -61,9 +61,8 @@ class SoapRequestHandlerBuilder
     }
 
     /**
-     * @param string $objectName
+     * @param string $documentName
      * @return SoapRequestHandlerInterface
-     * @throws \SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
     public function build(string $documentName): SoapRequestHandlerInterface
     {

@@ -1,5 +1,8 @@
 /.web-server-pid
 /app/
+bin/
+web/
+/var/*
 /build/
 /phpunit.xml
 /var/*
@@ -18,4 +21,4 @@
 
 .idea
 
-composer.lock
+/composer.lock
