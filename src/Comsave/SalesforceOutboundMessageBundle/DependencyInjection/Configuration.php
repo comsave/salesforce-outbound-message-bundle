@@ -4,6 +4,7 @@ namespace Comsave\SalesforceOutboundMessageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\ScalarNodeDefinition;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -22,11 +23,26 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('wsdl_directory')->isRequired()->end()
-            ->arrayNode('document_paths')->isRequired()->end()
+                ->scalarNode('wsdl_directory')->isRequired()->end()
+                ->arrayNode('document_paths')
+                    ->useAttributeAsKey('name', false)
+                    ->prototype('array')
+                        ->append($this->getDocumentPath())
+                        ->append($this->getDocumentName())
+                ->end()
             ->end()
         ;
 
         return $treeBuilder;
+    }
+
+    private function getDocumentPath()
+    {
+        return new ScalarNodeDefinition('path');
+    }
+
+    private function getDocumentName()
+    {
+        return new ScalarNodeDefinition('name');
     }
 }
