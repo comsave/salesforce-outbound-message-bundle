@@ -1,33 +1,35 @@
 services:
-#    comsave_salesforce_outbound_message.example:
-#        class: Comsave\SalesforceOutboundMessageBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    Comsave\SalesforceOutboundMessageBundle\:
+            autowire: true
+            autoconfigure: true
+            public: false
+            resource: '../../*'
 
-    Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler:
-            arguments:
-                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/OutboundMessageSoapServerBuilder'
-                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapResponseBuilder'
-                - '@Comsave/SalesforceOutboundMessageBundle/Services/OutboundMessageObjectNameRetriever'
-
-    Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder:
-            arguments:
-                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapServerBuilder'
-                - '@Comsave/SalesforceOutboundMessageBundle/Services/Factory/OutboundMessageWsdlPathFactory'
-                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapRequestHandlerBuilder'
-                - '@Comsave/SalesforceOutboundMessageBundle/Services/Factory/OutboundMessageDocumentClassNameFactory'
-
-    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
-            arguments:
-                - '%comsave_salesforce_outbound_message.wsdl_directory%'
-
-    Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder:
-            arguments:
-                - '@Doctrine\ODM\MongoDB\DocumentManager'
-                - '@LogicItLab\Salesforce\MapperBundle\Mapper'
-                - '@Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater'
-                - '@Symfony\Component\EventDispatcher\EventDispatcherInterface'
-                - '@Psr\Log\LoggerInterface'
-
-    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
-            arguments:
-                - '%comsave_salesforce_outbound_message.document_paths%'
+#    Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler:
+#            arguments:
+#                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/OutboundMessageSoapServerBuilder'
+#                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapResponseBuilder'
+#                - '@Comsave/SalesforceOutboundMessageBundle/Services/OutboundMessageObjectNameRetriever'
+#
+#    Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder:
+#            arguments:
+#                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapServerBuilder'
+#                - '@Comsave/SalesforceOutboundMessageBundle/Services/Factory/OutboundMessageWsdlPathFactory'
+#                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapRequestHandlerBuilder'
+#                - '@Comsave/SalesforceOutboundMessageBundle/Services/Factory/OutboundMessageDocumentClassNameFactory'
+#
+#    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
+#            arguments:
+#                - '%comsave_salesforce_outbound_message.wsdl_directory%'
+#
+#    Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder:
+#            arguments:
+#                - '@Doctrine\ODM\MongoDB\DocumentManager'
+#                - '@LogicItLab\Salesforce\MapperBundle\Mapper'
+#                - '@Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater'
+#                - '@Symfony\Component\EventDispatcher\EventDispatcherInterface'
+#                - '@Psr\Log\LoggerInterface'
+#
+#    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
+#            arguments:
+#                - '%comsave_salesforce_outbound_message.document_paths%'
