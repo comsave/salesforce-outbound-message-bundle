@@ -17,3 +17,5 @@
 /web/bundles/
 
 .idea
+
+composer.lock

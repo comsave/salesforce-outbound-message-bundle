@@ -1,5 +1,5 @@
 {
-    "name": "dirkscholten/salesforce-outbound-message-bundle",
+    "name": "comsave/salesforce-outbound-message-bundle",
     "license": "proprietary",
     "type": "project",
     "autoload": {
