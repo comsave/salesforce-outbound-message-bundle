@@ -1,15 +1,15 @@
 services:
-    SalesforceOutboundMessageBundle\:
+    Comsave\SalesforceOutboundMessageBundle\:
         autowire: true
         autoconfigure: true
         public: false
         resource: '../../*'
         exclude: '../../{Document,Repository}'
 
-    SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
+    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
         public: true
         arguments: ['%salesforce_outbound_messages.salesforce_wsdl_directory%']
 
-    SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
+    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
         public: true
         arguments: ['%salesforce_outbound_messages.salesforce_documents%']
