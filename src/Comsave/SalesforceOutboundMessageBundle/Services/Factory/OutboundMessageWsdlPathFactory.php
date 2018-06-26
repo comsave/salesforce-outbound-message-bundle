@@ -28,7 +28,7 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
         $wsdlPath = sprintf('%s%s.wsdl', $this->abstractWsdlPath, $objectName);
 
         if (!file_exists($wsdlPath)) {
-            throw new SalesforceException(sprintf('WSDL details for object `%s` are not found.', $objectName));
+            throw new SalesforceException(sprintf('WSDL details for object `%s` are not found. Looked in: %s.', $objectName, $wsdlPath));
         }
 
         return $wsdlPath;
