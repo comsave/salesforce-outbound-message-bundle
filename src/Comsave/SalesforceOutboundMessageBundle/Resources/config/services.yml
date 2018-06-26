@@ -2,3 +2,9 @@ services:
 #    comsave_salesforce_outbound_message.example:
 #        class: Comsave\SalesforceOutboundMessageBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler:
+            arguments:
+                - 'Comsave/SalesforceOutboundMessageBundle/Services/Builder/OutboundMessageSoapServerBuilder'
+                - 'Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapResponseBuilder'
+                - 'Comsave/SalesforceOutboundMessageBundle/Services/OutboundMessageObjectNameRetriever'
