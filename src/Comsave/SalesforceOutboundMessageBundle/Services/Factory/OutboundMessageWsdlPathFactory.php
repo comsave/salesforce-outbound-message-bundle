@@ -29,7 +29,7 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
         $wsdlPath = sprintf('%s%s.wsdl', $this->abstractWsdlPath, $objectName);
 
         if (!file_exists($wsdlPath)) {
-            throw new WsdlFileNotFound(sprintf('WSDL details for object `%s` are not found. Looked for: %s.', $objectName, $wsdlPath));
+            throw new WsdlFileNotFound($objectName, $wsdlPath);
         }
 
         return $wsdlPath;

@@ -5,6 +5,7 @@ namespace Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler;
 use Comsave\SalesforceOutboundMessageBundle\Exception\InvalidRequestException;
 use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
+use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationRequest;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationResponse;
@@ -108,9 +109,13 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $mappedDocument = $this->mapper->mapToDomainObject($sObject, $this->documentClassName);
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
 
-        $beforeFlushEvent = new OutboundMessageBeforeFlushEvent();
-        $beforeFlushEvent->setDocument($mappedDocument);
-        $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
+        if($mappedDocument instanceof DocumentInterface) {
+            $beforeFlushEvent = new OutboundMessageBeforeFlushEvent();
+            $beforeFlushEvent->setDocument($mappedDocument);
+            $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
+        } else {
+            $this->logger->warning('Your document does not implement DocumentInterface. The event cannot be created.');
+        }
 
         if ($mappedDocument->getName() != 'Skip') {
             if ($existingDocument) {

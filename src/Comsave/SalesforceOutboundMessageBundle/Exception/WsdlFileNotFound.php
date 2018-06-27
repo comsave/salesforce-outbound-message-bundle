@@ -6,8 +6,13 @@ use Throwable;
 
 class WsdlFileNotFound extends SalesforceException
 {
-    public function __construct(string $message = "Could not find wsdl file.", int $code = 0, Throwable $previous = null)
+    /**
+     * @var string
+     */
+    protected $message;
+
+    public function __construct(string $objectname = "Could not find wsdl file.", string $wsdlPath)
     {
-        parent::__construct($message, $code, $previous);
+        $this->message = sprintf('WSDL details for object `%s` are not found. Looked for: %s.', $objectname, $wsdlPath);
     }
 }
