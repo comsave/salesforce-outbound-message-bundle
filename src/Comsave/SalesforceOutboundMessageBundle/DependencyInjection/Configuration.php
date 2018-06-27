@@ -28,7 +28,6 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name', false)
                     ->prototype('array')
                         ->append($this->getDocumentPath())
-                        ->append($this->getDocumentName())
                 ->end()
             ->end()
         ;
