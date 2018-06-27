@@ -24,10 +24,6 @@ class ComsaveSalesforceOutboundMessageExtension extends Extension
 
         DependencyInjectionBuilder::setupConfigurationParameters($container, $config, 'comsave_salesforce_outbound_message');
 
-        //$container->setParameter('comsave_salesforce_outbound_message.wsdl_directory', $config['wsdl_directory']);
-
-        var_dump($config);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
