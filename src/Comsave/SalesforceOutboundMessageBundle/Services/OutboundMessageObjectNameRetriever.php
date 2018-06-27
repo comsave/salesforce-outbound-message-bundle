@@ -2,7 +2,7 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services;
 
-use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
+use Comsave\SalesforceOutboundMessageBundle\Exception\ObjectNameNotFoundException;
 
 /**
  * Class OutboundMessageObjectNameRetriever
@@ -11,9 +11,9 @@ use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 class OutboundMessageObjectNameRetriever
 {
     /**
-     * @param string $xml
-     * @return string
-     * @throws SalesforceException
+     * @param null|string $xml
+     * @return mixed
+     * @throws ObjectNameNotFoundException
      */
     public function retrieve(?string $xml)
     {
@@ -21,6 +21,6 @@ class OutboundMessageObjectNameRetriever
 
         if (isset($matches[1])) return $matches[1];
 
-        throw new SalesforceException('Could not read object name from request.');
+        throw new ObjectNameNotFoundException();
     }
 }

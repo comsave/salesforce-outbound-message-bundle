@@ -2,6 +2,7 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler;
 
+use Comsave\SalesforceOutboundMessageBundle\Exception\InvalidRequestException;
 use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
@@ -98,7 +99,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
     public function process($sObject)
     {
         if (!is_object($sObject)) {
-            throw new SalesforceException('Request item is not an object.');
+            throw new InvalidRequestException();
         }
 
         $this->logger->debug('Document name: ' . $this->documentClassName);

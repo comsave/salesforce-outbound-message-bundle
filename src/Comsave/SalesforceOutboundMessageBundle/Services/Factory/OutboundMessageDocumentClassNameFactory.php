@@ -2,7 +2,7 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services\Factory;
 
-use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
+use Comsave\SalesforceOutboundMessageBundle\Exception\DocumentNotFoundException;
 
 /**
  * Class OutboundMessageDocumentClassNameFactory
@@ -23,13 +23,13 @@ class OutboundMessageDocumentClassNameFactory
     /**
      * @param string $objectName
      * @return string
-     * @throws SalesforceException
+     * @throws DocumentNotFoundException
      */
     public function getClassName(string $objectName): string
     {
         if(isset($this->documentLocations[$objectName])) {
             return $this->documentLocations[$objectName]['path'];
         }
-        throw new SalesforceException('You are trying to access a document that could not be found. Did you forget to add the document path to your config file?');
+        throw new DocumentNotFoundException();
     }
 }
