@@ -115,9 +115,6 @@ class SoapRequestHandlerTest extends TestCase
             ->method('find')
             ->willReturn($existingDocumentMock);
 
-        $this->eventDispatcher->expects($this->once())
-            ->method('dispatch');
-
         $this->documentUpdater->expects($this->once())
             ->method('updateWithDocument');
 
@@ -156,9 +153,6 @@ class SoapRequestHandlerTest extends TestCase
         $this->documentManager->expects($this->once())
             ->method('find')
             ->willReturn(null);
-
-        $this->eventDispatcher->expects($this->once())
-            ->method('dispatch');
 
         $this->documentManager->expects($this->once())
             ->method('persist');

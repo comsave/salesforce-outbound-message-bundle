@@ -5,11 +5,7 @@
     "autoload": {
         "psr-4": {
             "Comsave\\SalesforceOutboundMessageBundle\\": "src/Comsave/SalesforceOutboundMessageBundle"
-        },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
