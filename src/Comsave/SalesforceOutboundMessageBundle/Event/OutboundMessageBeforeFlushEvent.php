@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\Event;
 
 class OutboundMessageBeforeFlushEvent extends Event
 {
-    const NAME = 'comsave.webservice.core.salesforce_outbound_message.before_flush';
+    const NAME = 'comsave.salesforce_outbound_message.before_flush';
 
     /**
      * @var DocumentInterface
@@ -16,9 +16,9 @@ class OutboundMessageBeforeFlushEvent extends Event
     private $document;
 
     /**
-     * @var string
+     * @var array
      */
-    private $pricebookEntryId;
+    private $extraInfo;
 
     /**
      * @return DocumentInterface
@@ -37,18 +37,18 @@ class OutboundMessageBeforeFlushEvent extends Event
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getPricebookEntryId(): string
+    public function getExtraInfo(): array
     {
-        return $this->pricebookEntryId;
+        return $this->extraInfo;
     }
 
     /**
-     * @param string $pricebookEntryId
+     * @param array $extraInfo
      */
-    public function setPricebookEntryId(string $pricebookEntryId): void
+    public function setExtraInfo(array $extraInfo): void
     {
-        $this->pricebookEntryId = $pricebookEntryId;
+        $this->extraInfo = $extraInfo;
     }
 }
