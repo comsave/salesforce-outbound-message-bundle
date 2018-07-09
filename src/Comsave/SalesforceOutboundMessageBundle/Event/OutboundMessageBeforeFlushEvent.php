@@ -6,6 +6,10 @@ use LogicItLab\Salesforce\MapperBundle\Model\AbstractModel;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Class OutboundMessageBeforeFlushEvent
+ * @package Comsave\SalesforceOutboundMessageBundle\Event
+ */
 class OutboundMessageBeforeFlushEvent extends Event
 {
     const NAME = 'comsave.salesforce_outbound_message.before_flush';
@@ -14,11 +18,6 @@ class OutboundMessageBeforeFlushEvent extends Event
      * @var DocumentInterface
      */
     private $document;
-
-    /**
-     * @var array
-     */
-    private $extraInfo;
 
     /**
      * @return DocumentInterface
@@ -34,21 +33,5 @@ class OutboundMessageBeforeFlushEvent extends Event
     public function setDocument(DocumentInterface $document): void
     {
         $this->document = $document;
-    }
-
-    /**
-     * @return array
-     */
-    public function getExtraInfo(): array
-    {
-        return $this->extraInfo;
-    }
-
-    /**
-     * @param array $extraInfo
-     */
-    public function setExtraInfo(array $extraInfo): void
-    {
-        $this->extraInfo = $extraInfo;
     }
 }
