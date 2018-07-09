@@ -2,7 +2,7 @@ services:
     Comsave\SalesforceOutboundMessageBundle\:
             autowire: true
             autoconfigure: true
-            public: false
+            public: true
             resource: '../../*'
 
 #    Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler:
