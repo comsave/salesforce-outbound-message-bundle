@@ -48,7 +48,6 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
     private $documentClassName;
 
     /**
-     * SoapRequestHandler constructor.
      * @param DocumentManager $documentManager
      * @param Mapper $mapper
      * @param DocumentUpdater $documentUpdater
