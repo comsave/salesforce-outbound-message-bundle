@@ -5,12 +5,15 @@ services:
             public: true
             resource: '../../*'
 
-#    Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler:
+    salesforce.outboundmessage.outboundmessagerequesthandler:
+        class: Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler
+
+    Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler: '@salesforce.outboundmessage.outboundmessagerequesthandler'
 #            arguments:
 #                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/OutboundMessageSoapServerBuilder'
 #                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapResponseBuilder'
 #                - '@Comsave/SalesforceOutboundMessageBundle/Services/OutboundMessageObjectNameRetriever'
-#
+
 #    Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder:
 #            arguments:
 #                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapServerBuilder'
@@ -18,7 +21,7 @@ services:
 #                - '@Comsave/SalesforceOutboundMessageBundle/Services/Builder/SoapRequestHandlerBuilder'
 #                - '@Comsave/SalesforceOutboundMessageBundle/Services/Factory/OutboundMessageDocumentClassNameFactory'
 #
-    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
+    Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory: '@sf_OutboundMessageWsdlPathFactory'
             arguments:
                 - '%comsave_salesforce_outbound_message.wsdl_directory%'
 #
