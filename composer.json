@@ -16,6 +16,7 @@
     "comsave/salesforce-mapper-bundle": "^3.0.6",
     "doctrine/doctrine-bundle": "^1.9",
     "doctrine/mongodb-odm": "^1.2",
+    "doctrine/orm": "^2.6",
     "sensio/framework-extra-bundle": "^5.0.0",
     "symfony/dotenv": "^4.1",
     "symfony/flex": "^1.0",

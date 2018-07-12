@@ -59,6 +59,9 @@
     "doctrine/mongodb-odm": {
         "version": "1.2.4"
     },
+    "doctrine/orm": {
+        "version": "v2.6.1"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
