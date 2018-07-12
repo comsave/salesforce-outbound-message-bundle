@@ -1,8 +1,24 @@
 /.web-server-pid
 app/
+config/
 bin/
 web/
 var/
 vendor/
 .idea
 /phpunit.xml
+###> symfony/framework-bundle ###
+/.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###

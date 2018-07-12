@@ -1,8 +1,8 @@
 <?php
 
-namespace Comsave\SalesforceOutboundMessageBundle\Services;
+namespace App\Comsave\SalesforceOutboundMessageBundle\Services;
 
-use Comsave\SalesforceOutboundMessageBundle\Exception\ObjectNameNotFoundException;
+use App\Comsave\SalesforceOutboundMessageBundle\Exception\ObjectNameNotFoundException;
 
 /**
  * Class OutboundMessageObjectNameRetriever

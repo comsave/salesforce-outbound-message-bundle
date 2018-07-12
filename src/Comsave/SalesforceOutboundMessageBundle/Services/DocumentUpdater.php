@@ -1,6 +1,6 @@
 <?php
 
-namespace Comsave\SalesforceOutboundMessageBundle\Services;
+namespace App\Comsave\SalesforceOutboundMessageBundle\Services;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 

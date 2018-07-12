@@ -1,6 +1,6 @@
 <?php
 
-namespace Comsave\SalesforceOutboundMessageBundle\DependencyInjection;
+namespace App\Comsave\SalesforceOutboundMessageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -20,18 +20,15 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('comsave_salesforce_outbound_message');
-
         $rootNode
             ->children()
-                ->scalarNode('wsdl_directory')->isRequired()->end()
-                ->arrayNode('document_paths')
-                    ->useAttributeAsKey('name', false)
-                    ->prototype('array')
-                        ->append($this->getDocumentPath())
-                ->end()
+            ->scalarNode('wsdl_directory')->isRequired()->end()
+            ->arrayNode('document_paths')
+            ->useAttributeAsKey('name', false)
+            ->prototype('array')
+            ->append($this->getDocumentPath())
             ->end()
-        ;
-
+            ->end();
         return $treeBuilder;
     }
 

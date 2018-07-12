@@ -1,6 +1,6 @@
 <?php
 
-namespace Comsave\SalesforceOutboundMessageBundle\Exception;
+namespace App\Comsave\SalesforceOutboundMessageBundle\Exception;
 
 class DocumentNotFoundException extends SalesforceException
 {

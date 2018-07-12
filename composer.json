@@ -1,65 +1,56 @@
 {
-    "name": "comsave/salesforce-outbound-message-bundle",
-    "license": "proprietary",
-    "type": "project",
-    "autoload": {
-        "psr-4": {
-            "Comsave\\SalesforceOutboundMessageBundle\\": "src/Comsave/SalesforceOutboundMessageBundle"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        },
-        "files": [
-            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
-        ]
-    },
-    "provide" : {
-        "ext-mongo": "*"
-    },
-    "require": {
-        "php": ">=7.2.0",
-        "comsave/salesforce-mapper-bundle": "^3.0.6",
-        "doctrine/doctrine-bundle": "^1.9",
-        "doctrine/mongodb-odm": "^1.2",
-        "doctrine/orm": "^2.5",
-        "incenteev/composer-parameter-handler": "^2.0",
-        "sensio/framework-extra-bundle": "^5.0.0",
-        "symfony/monolog-bundle": "^3.1.0",
-        "symfony/polyfill-apcu": "^1.0",
-        "twig/twig": "^1.0||^2.0"
-    },
-    "require-dev": {
-        "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
-        "phpunit/php-code-coverage": "^6.0",
-        "phpunit/phpunit": "^7.0"
-    },
-    "scripts": {
-        "symfony-scripts": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
-        ],
-        "post-install-cmd": [
-            "@symfony-scripts"
-        ],
-        "post-update-cmd": [
-            "@symfony-scripts"
-        ]
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
-        "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        },
-        "branch-alias": null
+  "name": "comsave/salesforce-outbound-message-bundle",
+  "license": "MIT",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
     }
+  },
+  "provide": {
+    "ext-mongo": "*"
+  },
+  "require": {
+    "php": ">=7.2.0",
+    "comsave/salesforce-mapper-bundle": "^3.0.6",
+    "doctrine/doctrine-bundle": "^1.9",
+    "doctrine/mongodb-odm": "^1.2",
+    "sensio/framework-extra-bundle": "^5.0.0",
+    "symfony/dotenv": "^4.1",
+    "symfony/flex": "^1.0",
+    "symfony/monolog-bundle": "^3.1.0|^4.0",
+    "symfony/polyfill-apcu": "^1.0"
+  },
+  "require-dev": {
+    "sensio/generator-bundle": "^3.0",
+    "symfony/phpunit-bridge": "^3.0|^4.0",
+    "phpunit/php-code-coverage": "^6.0",
+    "phpunit/phpunit": "^7.0"
+  },
+  "conflict": {
+    "symfony/symfony": "*"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@auto-scripts"
+    ],
+    "post-update-cmd": [
+      "@auto-scripts"
+    ],
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "symfony-app-dir": "app",
+    "symfony-bin-dir": "bin",
+    "symfony-var-dir": "var",
+    "symfony-web-dir": "web",
+    "symfony-tests-dir": "tests",
+    "symfony-assets-install": "relative"
+  }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Comsave\SalesforceOutboundMessageBundle\Services\Factory;
+namespace App\Comsave\SalesforceOutboundMessageBundle\Services\Factory;
 
-use Comsave\SalesforceOutboundMessageBundle\Exception\WsdlFileNotFound;
-use Comsave\SalesforceOutboundMessageBundle\Interfaces\WsdlPathFactoryInterface;
-use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
+use App\Comsave\SalesforceOutboundMessageBundle\Exception\WsdlFileNotFound;
+use App\Comsave\SalesforceOutboundMessageBundle\Interfaces\WsdlPathFactoryInterface;
+use App\Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 
 class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
 {

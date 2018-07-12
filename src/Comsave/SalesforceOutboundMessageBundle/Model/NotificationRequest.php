@@ -1,10 +1,10 @@
 <?php
 
-namespace Comsave\SalesforceOutboundMessageBundle\Model;
+namespace App\Comsave\SalesforceOutboundMessageBundle\Model;
 
 /**
  * Class NotificationRequest
- * @package SalesforceOutboundMessageBundle\Model
+ * @package App\Comsave\SalesforceOutboundMessageBundle\Model
  */
 class NotificationRequest
 {

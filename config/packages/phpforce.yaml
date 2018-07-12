@@ -1,0 +1,6 @@
+phpforce_salesforce:
+    soap_client:
+        wsdl: '%kernel.root_dir%/Resources/wsdl/sandbox.enterprise.wsdl.xml'
+        username:
+        password:
+        token:

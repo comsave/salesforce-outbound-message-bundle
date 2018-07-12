@@ -1,14 +1,17 @@
 services:
-    Comsave\SalesforceOutboundMessageBundle\:
-            autowire: true
-            autoconfigure: true
-            public: true
-            resource: '../../*'
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\:
+        resource: '../*'
+        exclude: '../{DependencyInjection,Entity,Exception,Migrations,Tests,Kernel.php}'
 
     Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
-            arguments:
-                - '%comsave_salesforce_outbound_message.wsdl_directory%'
+        arguments:
+            - '%comsave_salesforce_outbound_message.wsdl_directory%'
 
     Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
-            arguments:
-                - '%comsave_salesforce_outbound_message.document_paths%'
+        arguments:
+            - '%comsave_salesforce_outbound_message.document_paths%'
