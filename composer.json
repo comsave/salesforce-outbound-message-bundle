@@ -1,7 +1,8 @@
 {
   "name": "comsave/salesforce-outbound-message-bundle",
   "license": "MIT",
-  "type": "project",
+  "type": "symfony-bundle",
+  "description": "This bundle allows you to easily process outbound messages sent by Salesforce.",
   "autoload": {
     "psr-4": {
       "Comsave\\": "src/Comsave/"
