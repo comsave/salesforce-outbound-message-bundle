@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Comsave\SalesforceOutboundMessageBundle\Services\Factory;
+namespace Comsave\SalesforceOutboundMessageBundle\Services\Factory;
 
-use App\Comsave\SalesforceOutboundMessageBundle\Exception\DocumentNotFoundException;
+use Comsave\SalesforceOutboundMessageBundle\Exception\DocumentNotFoundException;
 
 /**
  * Class OutboundMessageDocumentClassNameFactory

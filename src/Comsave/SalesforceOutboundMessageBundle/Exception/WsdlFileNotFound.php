@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Comsave\SalesforceOutboundMessageBundle\Exception;
-
-use Throwable;
+namespace Comsave\SalesforceOutboundMessageBundle\Exception;
 
 class WsdlFileNotFound extends SalesforceException
 {

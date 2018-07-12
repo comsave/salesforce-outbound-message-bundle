@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
+namespace Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
-use App\Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
-use App\Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
+use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
+use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 
 class OutboundMessageSoapServerBuilder
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Comsave\SalesforceOutboundMessageBundle\Exception;
+namespace Comsave\SalesforceOutboundMessageBundle\Exception;
 
 class ObjectNameNotFoundException extends SalesforceException
 {

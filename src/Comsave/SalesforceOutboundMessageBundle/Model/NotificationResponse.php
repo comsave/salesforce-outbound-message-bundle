@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Comsave\SalesforceOutboundMessageBundle\Model;
+namespace Comsave\SalesforceOutboundMessageBundle\Model;
 
 class NotificationResponse
 {

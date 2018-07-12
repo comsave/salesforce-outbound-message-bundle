@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
+namespace Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
 use Symfony\Component\HttpFoundation\Response;
 

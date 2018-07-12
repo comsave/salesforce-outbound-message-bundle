@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Comsave\SalesforceOutboundMessageBundle\Event;
+namespace Comsave\SalesforceOutboundMessageBundle\Event;
 
-use LogicItLab\Salesforce\MapperBundle\Model\AbstractModel;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Symfony\Component\EventDispatcher\Event;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
+namespace Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
 use LogicItLab\Salesforce\MapperBundle\Mapper;
-use App\Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
-use App\Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
-use App\Comsave\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
+use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
+use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
+use Comsave\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
