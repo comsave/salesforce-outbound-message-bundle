@@ -1,5 +1,4 @@
 /.web-server-pid
-app/
 config/
 bin/
 web/
@@ -9,9 +8,6 @@ vendor/
 /phpunit.xml
 ###> symfony/framework-bundle ###
 /.env
-/public/bundles/
-/var/
-/vendor/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
