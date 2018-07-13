@@ -1,11 +1,11 @@
 /.web-server-pid
-config/
 bin/
 web/
 var/
 vendor/
 .idea
 /phpunit.xml
+composer.lock
 ###> symfony/framework-bundle ###
 /.env
 ###< symfony/framework-bundle ###
