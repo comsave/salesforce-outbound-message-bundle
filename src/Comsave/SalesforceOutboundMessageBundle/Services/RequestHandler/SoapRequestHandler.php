@@ -108,13 +108,10 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $mappedDocument = $this->mapper->mapToDomainObject($sObject, $this->documentClassName);
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
 
-        if($mappedDocument instanceof DocumentInterface) {
-            $beforeFlushEvent = new OutboundMessageBeforeFlushEvent();
-            $beforeFlushEvent->setDocument($mappedDocument);
-            $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
-        } else {
-            $this->logger->warning('Your document does not implement DocumentInterface. Event cannot be dispatched.');
-        }
+        $beforeFlushEvent = new OutboundMessageBeforeFlushEvent();
+        $beforeFlushEvent->setNewDocument($mappedDocument);
+        $beforeFlushEvent->setExistingDocument($existingDocument);
+        $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
 
         if ($mappedDocument->getName() != 'Skip') {
             if ($existingDocument) {

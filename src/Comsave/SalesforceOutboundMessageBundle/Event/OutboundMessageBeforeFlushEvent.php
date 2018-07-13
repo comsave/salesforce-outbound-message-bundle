@@ -13,24 +13,39 @@ class OutboundMessageBeforeFlushEvent extends Event
 {
     const NAME = 'comsave.salesforce_outbound_message.before_flush';
 
-    /**
-     * @var DocumentInterface
-     */
-    private $document;
+    private $newDocument;
+
+    private $existingDocument;
 
     /**
-     * @return DocumentInterface
+     * @return mixed
      */
-    public function getDocument()
+    public function getNewDocument()
     {
-        return $this->document;
+        return $this->newDocument;
     }
 
     /**
-     * @param DocumentInterface $document
+     * @param mixed $newDocument
      */
-    public function setDocument(DocumentInterface $document): void
+    public function setNewDocument($newDocument): void
     {
-        $this->document = $document;
+        $this->newDocument = $newDocument;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExistingDocument()
+    {
+        return $this->existingDocument;
+    }
+
+    /**
+     * @param mixed $existingDocument
+     */
+    public function setExistingDocument($existingDocument): void
+    {
+        $this->existingDocument = $existingDocument;
     }
 }
