@@ -16,11 +16,6 @@ class DocumentUpdater
     private $propertyAccessor;
 
     /**
-     * @var AnnotationReader
-     */
-    private $annotationReader;
-
-    /**
      * @var array
      */
     private $ignoredProperties = ['id'];
@@ -30,10 +25,9 @@ class DocumentUpdater
      * @param AnnotationReader $annotationReader
      * @codeCoverageIgnore
      */
-    public function __construct(PropertyAccessor $propertyAccessor, AnnotationReader $annotationReader)
+    public function __construct(PropertyAccessor $propertyAccessor)
     {
         $this->propertyAccessor = $propertyAccessor;
-        $this->annotationReader = $annotationReader;
     }
 
     /**
