@@ -17,6 +17,10 @@ class OutboundMessageBeforeFlushEvent extends Event
 
     private $existingDocument;
 
+    private $deleteDocument = false;
+
+    private $skipDocument = false;
+
     /**
      * @return mixed
      */
@@ -47,5 +51,37 @@ class OutboundMessageBeforeFlushEvent extends Event
     public function setExistingDocument($existingDocument): void
     {
         $this->existingDocument = $existingDocument;
+    }
+
+    /**
+     * @return null|bool
+     */
+    public function isDeleteDocument(): ? bool
+    {
+        return $this->deleteDocument;
+    }
+
+    /**
+     * @param null|bool $deleteDocument
+     */
+    public function setDeleteDocument(?bool $deleteDocument): void
+    {
+        $this->deleteDocument = $deleteDocument;
+    }
+
+    /**
+     * @return null|bool
+     */
+    public function isSkipDocument(): ? bool
+    {
+        return $this->skipDocument;
+    }
+
+    /**
+     * @param null|bool $skipDocument
+     */
+    public function setSkipDocument(?bool $skipDocument): void
+    {
+        $this->skipDocument = $skipDocument;
     }
 }

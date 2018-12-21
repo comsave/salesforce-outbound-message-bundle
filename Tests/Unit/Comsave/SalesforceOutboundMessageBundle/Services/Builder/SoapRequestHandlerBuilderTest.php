@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
+use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
@@ -25,34 +26,34 @@ class SoapRequestHandlerBuilderTest extends TestCase
     protected $soapRequestHandlerBuilder;
 
     /**
-     * @var MockObject
+     * @var MockObject|DocumentManager
      */
     private $documentManager;
 
     /**
-     * @var MockObject
+     * @var MockObject|Mapper
      */
     private $mapper;
 
     /**
-     * @var MockObject
+     * @var MockObject|DocumentUpdater
      */
     private $documentUpdater;
 
     /**
-     * @var MockObject
-     */
-    private $outboundMessageEntityClassNameFactory;
-
-    /**
-     * @var MockObject
+     * @var MockObject|EventDispatcherInterface
      */
     private $eventDispatcher;
 
     /**
-     * @var MockObject
+     * @var MockObject|LoggerInterface
      */
     private $logger;
+
+    /**
+     * @var MockObject|OutboundMessageBeforeFlushEventBuilder
+     */
+    private $outboundMessageBeforeFlushEventBuilder;
 
     public function setUp()
     {
@@ -61,13 +62,15 @@ class SoapRequestHandlerBuilderTest extends TestCase
         $this->documentUpdater = $this->createMock(DocumentUpdater::class);
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $this->logger = $this->createMock(LoggerInterface::class);
+        $this->outboundMessageBeforeFlushEventBuilder = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
 
         $this->soapRequestHandlerBuilder = new SoapRequestHandlerBuilder(
             $this->documentManager,
             $this->mapper,
             $this->documentUpdater,
             $this->eventDispatcher,
-            $this->logger
+            $this->logger,
+            $this->outboundMessageBeforeFlushEventBuilder
         );
     }
 
