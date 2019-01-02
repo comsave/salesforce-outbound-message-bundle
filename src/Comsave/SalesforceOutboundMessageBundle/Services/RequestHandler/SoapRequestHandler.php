@@ -118,7 +118,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         if (!$beforeFlushEvent->isSkipDocument()) {
             if($beforeFlushEvent->isDeleteDocument()){
                 $this->logger->info('deleting document');
-                $this->documentManager->remove($mappedDocument);
+                $this->documentManager->remove($existingDocument);
             } else {
                 if ($existingDocument) {
                     $this->logger->info('saving existing');
