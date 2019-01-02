@@ -29,9 +29,6 @@
     "phpunit/php-code-coverage": "^6.0",
     "phpunit/phpunit": "^7.0"
   },
-  "conflict": {
-    "symfony/symfony": "*"
-  },
   "scripts": {
     "post-install-cmd": [
       "@auto-scripts"
