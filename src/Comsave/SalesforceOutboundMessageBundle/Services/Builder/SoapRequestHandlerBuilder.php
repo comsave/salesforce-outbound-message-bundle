@@ -38,26 +38,27 @@ class SoapRequestHandlerBuilder
     private $logger;
 
     /**
-     * SoapRequestHandlerBuilder constructor.
+     * @var OutboundMessageBeforeFlushEventBuilder
+     */
+    private $outboundMessageBeforeFlushEventBuilder;
+
+    /**
      * @param DocumentManager $documentManager
      * @param Mapper $mapper
      * @param DocumentUpdater $documentUpdater
      * @param EventDispatcherInterface $eventDispatcher
      * @param LoggerInterface $logger
+     * @param OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder
      * @codeCoverageIgnore
      */
-    public function __construct(
-        DocumentManager $documentManager,
-        Mapper $mapper,
-        DocumentUpdater $documentUpdater,
-        EventDispatcherInterface $eventDispatcher,
-        LoggerInterface $logger)
+    public function __construct(DocumentManager $documentManager, Mapper $mapper, DocumentUpdater $documentUpdater, EventDispatcherInterface $eventDispatcher, LoggerInterface $logger, OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder)
     {
         $this->documentManager = $documentManager;
         $this->mapper = $mapper;
         $this->documentUpdater = $documentUpdater;
         $this->eventDispatcher = $eventDispatcher;
         $this->logger = $logger;
+        $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageBeforeFlushEventBuilder;
     }
 
     /**
@@ -72,7 +73,8 @@ class SoapRequestHandlerBuilder
             $this->documentUpdater,
             $this->eventDispatcher,
             $this->logger,
-            $documentName
+            $documentName,
+            $this->outboundMessageBeforeFlushEventBuilder
         );
     }
 }
