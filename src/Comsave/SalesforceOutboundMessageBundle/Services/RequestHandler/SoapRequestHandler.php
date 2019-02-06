@@ -107,6 +107,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $this->logger->debug('Document name: ' . $this->documentClassName);
         $this->logger->debug('SoapRequestHandler: ' . \json_encode($sObject));
 
+        $this->mapper->getUnitOfWork()->clear();
         $mappedDocument = $this->mapper->mapToDomainObject($sObject, $this->documentClassName);
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
 
