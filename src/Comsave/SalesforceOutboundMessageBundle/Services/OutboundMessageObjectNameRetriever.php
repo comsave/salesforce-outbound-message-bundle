@@ -21,6 +21,6 @@ class OutboundMessageObjectNameRetriever
 
         if (isset($matches[1])) return $matches[1];
 
-        throw new ObjectNameNotFoundException();
+        throw new ObjectNameNotFoundException($xml);
     }
 }
