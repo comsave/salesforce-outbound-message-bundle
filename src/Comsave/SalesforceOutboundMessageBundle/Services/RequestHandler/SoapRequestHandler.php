@@ -129,7 +129,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
 
         $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
-        $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
+        $this->eventDispatcher->dispatch($beforeFlushEvent, OutboundMessageBeforeFlushEvent::NAME);
 
         if ($beforeFlushEvent->isSkipDocument()) {
             $this->logger->info('Skipping save');
@@ -151,6 +151,6 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $this->documentManager->flush();
 
         $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument ?: $mappedDocument);
-        $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
+        $this->eventDispatcher->dispatch($afterFlushEvent, OutboundMessageAfterFlushEvent::NAME);
     }
 }

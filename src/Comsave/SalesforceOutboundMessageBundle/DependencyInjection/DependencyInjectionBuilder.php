@@ -25,6 +25,7 @@ class DependencyInjectionBuilder
     public static function setupConfigurationParameter(ContainerInterface $container, $key, $child, $rootNode)
     {
         $container->setParameter(sprintf('%s.%s', $rootNode, $key), $child);
+
         if (is_array($child)) {
             foreach ($child as $k => $value) self::setupConfigurationParameter($container, $k, $value, sprintf('%s.%s', $rootNode, $key));
         }

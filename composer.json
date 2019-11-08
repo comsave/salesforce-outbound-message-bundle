@@ -15,30 +15,16 @@
     "php": ">=7.2.0",
     "ext-soap": "^7.3",
     "comsave/salesforce-mapper-bundle": "^3.0.6",
-    "doctrine/doctrine-bundle": "^1.9",
-    "doctrine/mongodb-odm": "^1.2",
-    "doctrine/orm": "^2.6",
-    "sensio/framework-extra-bundle": "^5.0.0",
-    "symfony/dotenv": "^3.3|^4.0",
-    "symfony/flex": "^1.0",
-    "symfony/monolog-bundle": "^3.1.0|^4.0",
-    "symfony/polyfill-apcu": "^1.0"
+    "doctrine/mongodb-odm": "^1.1",
+    "symfony/monolog-bundle": "^3.4|^4.0",
+    "symfony/polyfill-apcu": "^1.12"
   },
   "require-dev": {
-    "sensio/generator-bundle": "^3.0",
     "symfony/phpunit-bridge": "^3.0|^4.0",
     "phpunit/php-code-coverage": "^6.0",
     "phpunit/phpunit": "^7.0"
   },
   "config": {
     "sort-packages": true
-  },
-  "extra": {
-    "symfony-app-dir": "app",
-    "symfony-bin-dir": "bin",
-    "symfony-var-dir": "var",
-    "symfony-web-dir": "web",
-    "symfony-tests-dir": "tests",
-    "symfony-assets-install": "relative"
   }
 }

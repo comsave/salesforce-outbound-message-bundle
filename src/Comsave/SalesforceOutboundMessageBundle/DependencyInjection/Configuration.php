@@ -24,10 +24,10 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->scalarNode('wsdl_directory')->isRequired()->end()
             ->arrayNode('document_paths')
-            ->useAttributeAsKey('name', false)
-            ->prototype('array')
-            ->append($this->getDocumentPath())
-            ->end()
+                ->useAttributeAsKey('name', false)
+                ->prototype('array')
+                ->append($this->getDocumentPath())
+                ->end()
             ->end();
         return $treeBuilder;
     }
