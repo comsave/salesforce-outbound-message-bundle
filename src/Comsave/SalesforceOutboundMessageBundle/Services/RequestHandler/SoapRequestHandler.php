@@ -68,6 +68,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
      * @param LoggerInterface $logger
      * @param string $documentClassName
      * @param OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder
+     * @param OutboundMessageAfterFlushEventBuilder $outboundMessageAfterFlushEventBuilder
      * @codeCoverageIgnore
      */
     public function __construct(
@@ -87,7 +88,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $this->logger = $logger;
         $this->documentClassName = $documentClassName;
         $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageBeforeFlushEventBuilder;
-        $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageAfterFlushEventBuilder;
+        $this->outboundMessageAfterFlushEventBuilder = $outboundMessageAfterFlushEventBuilder;
     }
 
     /**
@@ -130,25 +131,26 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
 
-        if (!$beforeFlushEvent->isSkipDocument()) {
-            if ($beforeFlushEvent->isDeleteDocument()) {
-                $this->logger->info('deleting document');
-                $this->documentManager->remove($existingDocument);
-            } else {
-                if ($existingDocument) {
-                    $this->logger->info('saving existing');
-                    $this->documentUpdater->updateWithDocument($existingDocument, $mappedDocument);
-                } else {
-                    $this->logger->info('saving new');
-                    $this->documentManager->persist($mappedDocument);
-                }
-            }
-            $this->documentManager->flush();
-        } else {
+        if ($beforeFlushEvent->isSkipDocument()) {
             $this->logger->info('Skipping save');
+
+            return;
         }
 
-        $afterFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument);
+        if ($beforeFlushEvent->isDeleteDocument()) {
+            $this->logger->info('deleting document');
+            $this->documentManager->remove($existingDocument);
+        } else if ($existingDocument) {
+            $this->logger->info('saving existing');
+            $this->documentUpdater->updateWithDocument($existingDocument, $mappedDocument);
+        } else {
+            $this->logger->info('saving new');
+            $this->documentManager->persist($mappedDocument);
+        }
+
+        $this->documentManager->flush();
+
+        $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument ?: $mappedDocument);
         $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
     }
 }

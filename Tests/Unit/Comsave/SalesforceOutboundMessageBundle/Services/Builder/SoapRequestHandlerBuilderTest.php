@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
+use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
@@ -55,6 +56,11 @@ class SoapRequestHandlerBuilderTest extends TestCase
      */
     private $outboundMessageBeforeFlushEventBuilder;
 
+    /**
+     * @var MockObject|OutboundMessageAfterFlushEventBuilder
+     */
+    private $outboundMessageAfterFlushEventBuilder;
+
     public function setUp()
     {
         $this->documentManager = $this->createMock(DocumentManager::class);
@@ -63,6 +69,7 @@ class SoapRequestHandlerBuilderTest extends TestCase
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->outboundMessageBeforeFlushEventBuilder = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
+        $this->outboundMessageAfterFlushEventBuilder = $this->createMock(OutboundMessageAfterFlushEventBuilder::class);
 
         $this->soapRequestHandlerBuilder = new SoapRequestHandlerBuilder(
             $this->documentManager,
@@ -70,7 +77,8 @@ class SoapRequestHandlerBuilderTest extends TestCase
             $this->documentUpdater,
             $this->eventDispatcher,
             $this->logger,
-            $this->outboundMessageBeforeFlushEventBuilder
+            $this->outboundMessageBeforeFlushEventBuilder,
+            $this->outboundMessageAfterFlushEventBuilder
         );
     }
 
