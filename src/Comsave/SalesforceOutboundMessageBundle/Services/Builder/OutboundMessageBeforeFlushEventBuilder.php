@@ -10,11 +10,12 @@ use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEven
  */
 class OutboundMessageBeforeFlushEventBuilder
 {
-    /**
-     * @return OutboundMessageBeforeFlushEvent
-     */
-    public function build()
+    public function build($newDocument, $existingDocument)
     {
-        return new OutboundMessageBeforeFlushEvent();
+        $event = new OutboundMessageBeforeFlushEvent();
+        $event->setNewDocument($newDocument);
+        $event->setExistingDocument($existingDocument);
+
+        return $event;
     }
 }

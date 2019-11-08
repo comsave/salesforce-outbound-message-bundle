@@ -2,6 +2,7 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler;
 
+use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageAfterFlushEvent;
 use Comsave\SalesforceOutboundMessageBundle\Exception\InvalidRequestException;
 use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
@@ -9,6 +10,7 @@ use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationRequest;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationResponse;
+use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -54,6 +56,11 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
     private $outboundMessageBeforeFlushEventBuilder;
 
     /**
+     * @var OutboundMessageAfterFlushEventBuilder
+     */
+    private $outboundMessageAfterFlushEventBuilder;
+
+    /**
      * @param DocumentManager $documentManager
      * @param Mapper $mapper
      * @param DocumentUpdater $documentUpdater
@@ -63,8 +70,16 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
      * @param OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder
      * @codeCoverageIgnore
      */
-    public function __construct(DocumentManager $documentManager, Mapper $mapper, DocumentUpdater $documentUpdater, EventDispatcherInterface $eventDispatcher, LoggerInterface $logger, string $documentClassName, OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder)
-    {
+    public function __construct(
+        DocumentManager $documentManager,
+        Mapper $mapper,
+        DocumentUpdater $documentUpdater,
+        EventDispatcherInterface $eventDispatcher,
+        LoggerInterface $logger,
+        string $documentClassName,
+        OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder,
+        OutboundMessageAfterFlushEventBuilder $outboundMessageAfterFlushEventBuilder
+    ) {
         $this->documentManager = $documentManager;
         $this->mapper = $mapper;
         $this->documentUpdater = $documentUpdater;
@@ -72,6 +87,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $this->logger = $logger;
         $this->documentClassName = $documentClassName;
         $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageBeforeFlushEventBuilder;
+        $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageAfterFlushEventBuilder;
     }
 
     /**
@@ -104,20 +120,18 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
             throw new InvalidRequestException();
         }
 
-        $this->logger->debug('Document name: ' . $this->documentClassName);
-        $this->logger->debug('SoapRequestHandler: ' . \json_encode($sObject));
+        $this->logger->debug('Document name: '.$this->documentClassName);
+        $this->logger->debug('SoapRequestHandler: '.\json_encode($sObject));
 
         $this->mapper->getUnitOfWork()->clear();
         $mappedDocument = $this->mapper->mapToDomainObject($sObject, $this->documentClassName);
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
 
-        $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build();
-        $beforeFlushEvent->setNewDocument($mappedDocument);
-        $beforeFlushEvent->setExistingDocument($existingDocument);
+        $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
 
         if (!$beforeFlushEvent->isSkipDocument()) {
-            if($beforeFlushEvent->isDeleteDocument()){
+            if ($beforeFlushEvent->isDeleteDocument()) {
                 $this->logger->info('deleting document');
                 $this->documentManager->remove($existingDocument);
             } else {
@@ -133,5 +147,8 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         } else {
             $this->logger->info('Skipping save');
         }
+
+        $afterFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument);
+        $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
     }
 }
