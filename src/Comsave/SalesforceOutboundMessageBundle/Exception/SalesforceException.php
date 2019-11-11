@@ -2,7 +2,9 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Exception;
 
-class SalesforceException extends \Exception
+use Exception;
+
+class SalesforceException extends Exception
 {
 
 }

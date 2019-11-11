@@ -2,9 +2,9 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services\Factory;
 
+use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 use Comsave\SalesforceOutboundMessageBundle\Exception\WsdlFileNotFound;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\WsdlPathFactoryInterface;
-use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 
 class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
 {
@@ -29,7 +29,7 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
         $wsdlPath = sprintf('%s%s.wsdl', $this->abstractWsdlPath, $objectName);
 
         if (!file_exists($wsdlPath)) {
-            throw new WsdlFileNotFound($objectName, $wsdlPath);
+            throw new WsdlFileNotFound($wsdlPath, $objectName);
         }
 
         return $wsdlPath;

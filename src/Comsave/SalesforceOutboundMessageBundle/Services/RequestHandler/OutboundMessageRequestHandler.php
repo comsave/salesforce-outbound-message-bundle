@@ -3,8 +3,8 @@
 namespace Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler;
 
 use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
-use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
+use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\OutboundMessageObjectNameRetriever;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,8 +35,8 @@ class OutboundMessageRequestHandler
     public function __construct(
         OutboundMessageSoapServerBuilder $outboundMessageSoapServerBuilder,
         SoapResponseBuilder $soapServerResponseBuilder,
-        OutboundMessageObjectNameRetriever $outboundMessageObjectNameRetriever)
-    {
+        OutboundMessageObjectNameRetriever $outboundMessageObjectNameRetriever
+    ) {
         $this->outboundMessageSoapServerBuilder = $outboundMessageSoapServerBuilder;
         $this->soapServerResponseBuilder = $soapServerResponseBuilder;
         $this->outboundMessageObjectNameRetriever = $outboundMessageObjectNameRetriever;
@@ -50,6 +50,7 @@ class OutboundMessageRequestHandler
     public function handle(string $xml): Response
     {
         $soapServer = $this->outboundMessageSoapServerBuilder->build($this->outboundMessageObjectNameRetriever->retrieve($xml));
+
         ob_start();
         $soapServer->handle($xml);
         $responseContent = ob_get_contents();

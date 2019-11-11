@@ -2,10 +2,6 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Model;
 
-/**
- * Class NotificationRequest
- * @package Comsave\SalesforceOutboundMessageBundle\Model
- */
 class NotificationRequest
 {
     protected $OrganizationId;

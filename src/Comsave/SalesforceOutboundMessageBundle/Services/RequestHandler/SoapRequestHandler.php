@@ -3,10 +3,9 @@
 namespace Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler;
 
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageAfterFlushEvent;
+use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
 use Comsave\SalesforceOutboundMessageBundle\Exception\InvalidRequestException;
 use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
-use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
-use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationRequest;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationResponse;
@@ -14,9 +13,12 @@ use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfte
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
 use Psr\Log\LoggerInterface;
+use ReflectionException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use TypeError;
+use function json_encode;
 
 class SoapRequestHandler implements SoapRequestHandlerInterface
 {
@@ -95,8 +97,8 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
      * @param NotificationRequest $request
      * @return NotificationResponse
      * @throws SalesforceException
-     * @throws \ReflectionException
-     * @throws \TypeError
+     * @throws ReflectionException
+     * @throws TypeError
      */
     public function notifications(NotificationRequest $request): NotificationResponse
     {
@@ -106,14 +108,14 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
             $this->process($notification->sObject);
         }
 
-        return (new NotificationResponse())->setAct(true);
+        return (new NotificationResponse())->setAck(true);
     }
 
     /**
      * @param $sObject
      * @throws SalesforceException
-     * @throws \ReflectionException
-     * @throws \TypeError
+     * @throws ReflectionException
+     * @throws TypeError
      */
     public function process($sObject)
     {
@@ -122,7 +124,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         }
 
         $this->logger->debug('Document name: '.$this->documentClassName);
-        $this->logger->debug('SoapRequestHandler: '.\json_encode($sObject));
+        $this->logger->debug('SoapRequestHandler: '.json_encode($sObject));
 
         $this->mapper->getUnitOfWork()->clear();
         $mappedDocument = $this->mapper->mapToDomainObject($sObject, $this->documentClassName);
