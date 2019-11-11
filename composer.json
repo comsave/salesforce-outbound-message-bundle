@@ -13,7 +13,7 @@
   },
   "require": {
     "php": ">=7.2.0",
-    "ext-json": "^1.7",
+    "ext-json": "^1.6",
     "ext-soap": "^7.2",
     "comsave/salesforce-mapper-bundle": "^3.0.6",
     "doctrine/mongodb-odm": "^1.1",
