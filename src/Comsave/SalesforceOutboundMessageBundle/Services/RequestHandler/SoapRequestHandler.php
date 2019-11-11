@@ -18,7 +18,6 @@ use Psr\Log\LoggerInterface;
 use ReflectionException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TypeError;
-use function json_encode;
 
 class SoapRequestHandler implements SoapRequestHandlerInterface
 {
@@ -131,7 +130,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
 
         $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
-        $this->eventDispatcher->dispatch($beforeFlushEvent, OutboundMessageBeforeFlushEvent::NAME);
+        $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
 
         if ($beforeFlushEvent->isSkipDocument()) {
             $this->logger->info('Skipping save');
@@ -153,6 +152,6 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $this->documentManager->flush();
 
         $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument ?: $mappedDocument);
-        $this->eventDispatcher->dispatch($afterFlushEvent, OutboundMessageAfterFlushEvent::NAME);
+        $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
     }
 }

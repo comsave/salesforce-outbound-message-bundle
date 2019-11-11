@@ -13,14 +13,17 @@
   },
   "require": {
     "php": ">=7.2.0",
+    "ext-json": "^1.7",
     "ext-soap": "^7.2",
     "comsave/salesforce-mapper-bundle": "^3.0.6",
     "doctrine/mongodb-odm": "^1.1",
-    "symfony/monolog-bundle": "^3.4|^4.0",
+    "symfony/config": "^3.4",
+    "symfony/dependency-injection": "^3.4",
+    "symfony/event-dispatcher": "^3.4.9",
+    "symfony/http-foundation": "^3.4",
     "symfony/polyfill-apcu": "^1.12"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^3.0|^4.0",
     "phpunit/php-code-coverage": "^6.0",
     "phpunit/phpunit": "^7.0"
   },
