@@ -147,11 +147,12 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         } else {
             $this->logger->info('saving new');
             $this->documentManager->persist($mappedDocument);
+            $existingDocument = $mappedDocument;
         }
 
         $this->documentManager->flush();
 
-        $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument ?: $mappedDocument);
+        $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
     }
 }
