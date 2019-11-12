@@ -4,17 +4,14 @@ namespace Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
 
-/**
- * Class OutboundMessageBeforeFlushEventBuilder
- * @package Comsave\SalesforceOutboundMessageBundle\Services\Builder
- */
 class OutboundMessageBeforeFlushEventBuilder
 {
-    /**
-     * @return OutboundMessageBeforeFlushEvent
-     */
-    public function build()
+    public function build($newDocument, $existingDocument)
     {
-        return new OutboundMessageBeforeFlushEvent();
+        $event = new OutboundMessageBeforeFlushEvent();
+        $event->setNewDocument($newDocument);
+        $event->setExistingDocument($existingDocument);
+
+        return $event;
     }
 }

@@ -4,13 +4,14 @@ namespace Comsave\SalesforceOutboundMessageBundle\Exception;
 
 class WsdlFileNotFound extends SalesforceException
 {
-    /**
-     * @var string
-     */
-    protected $message;
-
-    public function __construct(string $objectname = "Could not find wsdl file.", string $wsdlPath)
+    public function __construct(string $wsdlPath, ?string $objectName = 'Could not find wsdl file.')
     {
-        $this->message = sprintf('WSDL details for object `%s` are not found. Looked for: %s.', $objectname, $wsdlPath);
+        parent::__construct(
+            sprintf(
+                'WSDL details for object `%s` are not found. Looked for: %s.',
+                $objectName,
+                $wsdlPath
+            )
+        );
     }
 }

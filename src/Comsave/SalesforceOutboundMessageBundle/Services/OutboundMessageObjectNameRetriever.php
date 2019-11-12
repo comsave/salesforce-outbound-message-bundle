@@ -4,10 +4,6 @@ namespace Comsave\SalesforceOutboundMessageBundle\Services;
 
 use Comsave\SalesforceOutboundMessageBundle\Exception\ObjectNameNotFoundException;
 
-/**
- * Class OutboundMessageObjectNameRetriever
- * @package Comsave\SalesforceOutboundMessageBundle\Services
- */
 class OutboundMessageObjectNameRetriever
 {
     /**
@@ -19,7 +15,9 @@ class OutboundMessageObjectNameRetriever
     {
         preg_match("/sObject\sxsi:type=\"sf:([a-z0-9_]+)\"/i", $xml, $matches);
 
-        if (isset($matches[1])) return $matches[1];
+        if (isset($matches[1])) {
+            return $matches[1];
+        }
 
         throw new ObjectNameNotFoundException($xml);
     }

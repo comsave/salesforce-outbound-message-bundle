@@ -2,10 +2,6 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services;
 
-/**
- * Class PropertyAccessor
- * @package Comsave\SalesforceOutboundMessageBundle\Services
- */
 class PropertyAccessor
 {
     /**
@@ -18,7 +14,9 @@ class PropertyAccessor
         if (method_exists($document, $fieldName)) {
             return $document->$fieldName();
         }
+
         $getter = $this->getPropertyGetter($fieldName);
+
         return $document->$getter();
     }
 
@@ -30,6 +28,7 @@ class PropertyAccessor
     public function setValue($document, $fieldName, $value)
     {
         $setter = $this->getPropertysetter($fieldName);
+
         $document->$setter($value);
     }
 
@@ -41,6 +40,7 @@ class PropertyAccessor
     public function isReadable($document, $fieldName)
     {
         $getter = $this->getPropertyGetter($fieldName);
+
         return (method_exists($document, $getter) || method_exists($document, $fieldName));
     }
 
@@ -52,6 +52,7 @@ class PropertyAccessor
     public function isWritable($document, $fieldName)
     {
         $setter = $this->getPropertySetter($fieldName);
+
         return method_exists($document, $setter);
     }
 
@@ -61,7 +62,7 @@ class PropertyAccessor
      */
     private function getPropertyGetter($fieldName)
     {
-        return 'get' . ucfirst($fieldName);
+        return 'get'.ucfirst($fieldName);
     }
 
     /**
@@ -70,6 +71,6 @@ class PropertyAccessor
      */
     private function getPropertySetter($fieldName)
     {
-        return 'set' . ucfirst($fieldName);
+        return 'set'.ucfirst($fieldName);
     }
 }

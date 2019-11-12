@@ -4,15 +4,8 @@ namespace Comsave\SalesforceOutboundMessageBundle\Services\Factory;
 
 use Comsave\SalesforceOutboundMessageBundle\Exception\DocumentNotFoundException;
 
-/**
- * Class OutboundMessageDocumentClassNameFactory
- * @package Comsave\SalesforceOutboundMessageBundle\Services\Factory
- */
 class OutboundMessageDocumentClassNameFactory
 {
-    /**
-     * @var array
-     */
     protected $documentLocations;
 
     public function __construct(array $documentLocations)
@@ -27,7 +20,7 @@ class OutboundMessageDocumentClassNameFactory
      */
     public function getClassName(string $objectName): string
     {
-        if(isset($this->documentLocations[$objectName])) {
+        if (isset($this->documentLocations[$objectName])) {
             return $this->documentLocations[$objectName]['path'];
         }
         throw new DocumentNotFoundException();

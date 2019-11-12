@@ -2,19 +2,11 @@
 
 The Salesforce outbound message bundle will read and save your Salesforce outbound messages for you. 
 
-## Getting Started
+## Prerequisites
 
-Follow the steps below to quickly set up the project and start processing your Salesforce outbound messages automatically. 
+This project currently only works with the doctrine ODM and the Salesforce mapper bundle. These packages are included in `composer.json`.
 
-### Prerequisites
-
-This project currently only works with the doctrine ODM and the Salesforce mapper bundle. You can download these packages with the following commands:
-
-```bash
-$ composer require comsave/salesforce-mapper-bundle
-$ composer require doctrine/mongodb-odm
-```
-### Installing
+## Installing
 
 After meeting the Prerequisites you can install this project with the following command: 
 
@@ -22,7 +14,7 @@ After meeting the Prerequisites you can install this project with the following 
    $ composer require comsave/salesforce-outbound-message-bundle
 ```
 
-From the endpoint that receives your outbound message you can simply grab the raw post data from the request and pass it along to the OutboundMessageRequestHandler. 
+From the endpoint that receives your outbound message you can simply grab the raw post data from the request and pass it along to the `OutboundMessageRequestHandler`. 
 
 Your controller could look something like this:
 
@@ -56,9 +48,16 @@ comsave_salesforce_outbound_message:
             path: 'path/to/document/Product'
 ```
 
-In order for your documents to be readable, they should implement the DocumentInterface included in this bundle.
+In order for your documents to be readable, they should implement the `DocumentInterface` included in this bundle.
 
-If you want to add custom actions to your outbound message you can do so by listening to the OutboundMessageBeforeFlushEvent.
+If you want to add custom actions to your outbound message you can do so by listening to the `OutboundMessageBeforeFlushEvent` or `OutboudMessageAfterFlushEvent`.
+
+## Running tests
+
+```bash
+   $ composer run-tests
+```
+
 
 ## License
 

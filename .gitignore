@@ -1,20 +1,12 @@
-/.web-server-pid
-bin/
-web/
-var/
 vendor/
 .idea
-/phpunit.xml
+
+# Important! As this bundle is a dependancy for other projects
+# it shouldn't be strictly locked to specific versions of dependancies
 composer.lock
-###> symfony/framework-bundle ###
-/.env
-###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
 /phpunit.xml
 ###< phpunit/phpunit ###
 
-###> symfony/phpunit-bridge ###
-.phpunit
-/phpunit.xml
-###< symfony/phpunit-bridge ###
+.DS_Store

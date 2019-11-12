@@ -6,14 +6,24 @@ class NotificationResponse
 {
     public $Ack = true;
 
-    public function getAck()
+    /**
+     * @deprecated
+     */
+    public function setAct($ack)
+    {
+        $this->setAck((bool)$ack);
+
+        return $this;
+    }
+
+    public function getAck(): bool
     {
         return $this->Ack;
     }
 
-    public function setAct($ack)
+    public function setAck(bool $Ack): self
     {
-        $this->Ack = $ack;
+        $this->Ack = $Ack;
 
         return $this;
     }
