@@ -52,6 +52,13 @@ In order for your documents to be readable, they should implement the `DocumentI
 
 If you want to add custom actions to your outbound message you can do so by listening to the `OutboundMessageBeforeFlushEvent` or `OutboudMessageAfterFlushEvent`.
 
+## Running tests
+
+```bash
+   $ composer run-tests
+```
+
+
 ## License
 
 This project is licensed under the MIT License.
