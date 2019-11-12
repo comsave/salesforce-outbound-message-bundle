@@ -152,8 +152,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
 
         $this->documentManager->flush();
 
-//        $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument);
-        $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($this->documentManager->find($this->documentClassName, $existingDocument->getId()));
+        $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
     }
 }
