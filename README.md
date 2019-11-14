@@ -55,12 +55,14 @@ If you want to add custom actions to your outbound message you can do so by list
 ## on delete trigger; what why how
 
 Why this way?
+How does it work?
 
-Salesforce: Create custom object `ObjectToBeRemoved`
+Salesforce: Create custom object `ObjectToBeRemoved` (needs to be in your `.wsdl` file as well)
 ```java 
     text 18  ObjectId__c
     text 100 ObjectClass__c
 ```
+
 
 Salesforce: Add class ObjectsToRemoveScheduler
 ```java 
@@ -82,9 +84,9 @@ public without sharing class ObjectsToRemoveScheduler {
 }
 ```
 
-add trigger
+add trigger for every object you want to tract deletion for
 ```java
-trigger OpportunityLineItemTrigger on OpportunityLineItem (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
+trigger SomeObjectYoureTrackingTrigger on SomeObjectYoureTracking (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
     if (Trigger.isBefore && Trigger.isDelete) {
         ObjectsToRemoveScheduler.scheduleForRemoval(Trigger.old);
     }
@@ -100,7 +102,6 @@ comsave_salesforce_outbound_message:
         path: 'Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved'
 ```
 
-How it works?
 
 ## Running tests
 

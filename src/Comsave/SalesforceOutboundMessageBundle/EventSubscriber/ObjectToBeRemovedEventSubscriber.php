@@ -71,5 +71,7 @@ class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
 
         $this->documentManager->remove($removableDocument);
         $this->mapper->delete([$objectToBeRemoved]);
+
+        $event->setSkipDocument(true);
     }
 }
