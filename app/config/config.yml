@@ -1,5 +1,4 @@
 comsave_salesforce_outbound_message:
     document_paths:
-      # copy this to your config in order to have the on delete trigger working
       ObjectToBeRemoved__c:
         path: 'Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved'
