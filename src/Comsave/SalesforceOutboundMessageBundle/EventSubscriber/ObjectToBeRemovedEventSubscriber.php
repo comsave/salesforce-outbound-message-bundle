@@ -4,6 +4,7 @@ namespace Comsave\SalesforceOutboundMessageBundle\EventSubscriber;
 
 use Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved;
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
+use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
@@ -45,7 +46,7 @@ class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function supports($document): bool
+    public function supports(DocumentInterface $document): bool
     {
         $documentClass = get_class($document);
 
