@@ -2,6 +2,7 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Document;
 
+use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use LogicItLab\Salesforce\MapperBundle\Annotation as Salesforce;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
@@ -9,7 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  * @ODM\Document(collection="objectsToBeRemoved", repositoryClass="Comsave\SalesforceOutboundMessageBundle\Repository\ObjectToBeRemovedRepository")
  * @Salesforce\SObject(name="ObjectToBeRemoved__c")
  */
-class ObjectToBeRemoved
+class ObjectToBeRemoved implements DocumentInterface
 {
     /**
      * @var string
