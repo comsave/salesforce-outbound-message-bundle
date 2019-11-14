@@ -63,6 +63,8 @@ Salesforce: Create custom object `ObjectToBeRemoved` (needs to be in your `.wsdl
     text 100 ObjectClass__c
 ```
 
+Add the ObjectToBeRemoved object to the outbound messages.
+
 
 Salesforce: Add class ObjectsToRemoveScheduler
 ```java 
