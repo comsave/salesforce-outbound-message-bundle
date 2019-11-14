@@ -52,10 +52,14 @@ In order for your documents to be readable, they should implement the `DocumentI
 
 If you want to add custom actions to your outbound message you can do so by listening to the `OutboundMessageBeforeFlushEvent` or `OutboudMessageAfterFlushEvent`.
 
-## For object removal
+## on delete trigger; what why how
 
-Salesforce: Create custom object to ObjectToBeRemoved
+Why this way?
+
+Salesforce: Create custom object `ObjectToBeRemoved`
 ```java 
+    text 18  ObjectId__c
+    text 100 ObjectClass__c
 ```
 
 Salesforce: Add class ObjectsToRemoveScheduler
@@ -74,6 +78,15 @@ public without sharing class ObjectsToRemoveScheduler {
         }
         
         insert objectsToBeRemoved;
+    }
+}
+```
+
+add trigger
+```java
+trigger OpportunityLineItemTrigger on OpportunityLineItem (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
+    if (Trigger.isBefore && Trigger.isDelete) {
+        ObjectsToRemoveScheduler.scheduleForRemoval(Trigger.old);
     }
 }
 ```
