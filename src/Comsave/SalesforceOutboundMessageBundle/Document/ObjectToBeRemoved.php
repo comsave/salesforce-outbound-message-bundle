@@ -5,7 +5,7 @@ namespace Comsave\SalesforceOutboundMessageBundle\Document;
 use LogicItLab\Salesforce\MapperBundle\Annotation as Salesforce;
 
 /**
- * @Salesforce\SObject(name="PortalUser__c")
+ * @Salesforce\SObject(name="ObjectToBeRemoved__c")
  */
 class ObjectToBeRemoved
 {

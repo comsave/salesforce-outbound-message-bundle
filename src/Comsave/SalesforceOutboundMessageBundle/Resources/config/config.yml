@@ -1,4 +1,0 @@
-comsave_salesforce_outbound_message:
-    document_paths:
-      ObjectToBeRemoved__c:
-        path: 'Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved'
