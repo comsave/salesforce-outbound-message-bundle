@@ -14,8 +14,8 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
     public function __construct(string $wsdlPath)
     {
         $this->abstractWsdlPaths = [
-            rtrim($wsdlPath, '/') . '/',
-            realpath(getcwd() . '/../vendor/comsave/salesforce-outbound-message-bundle/src/Comsave/SalesforceOutboundMessageBundle/Resources/wsdl/'),
+            rtrim($wsdlPath, '/'),
+            realpath(getcwd() . '/../vendor/comsave/salesforce-outbound-message-bundle/src/Comsave/SalesforceOutboundMessageBundle/Resources/wsdl'),
         ];
     }
 
@@ -39,6 +39,6 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
 
     private function buildFullObjectWsdlPath(string $abstractPath, string $objectName): string
     {
-        return sprintf('%s%s.wsdl', $abstractPath, $objectName);
+        return sprintf('%s/%s.wsdl', $abstractPath, $objectName);
     }
 }
