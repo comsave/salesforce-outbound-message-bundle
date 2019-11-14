@@ -15,3 +15,4 @@ services:
   Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
     arguments:
       - '%comsave_salesforce_outbound_message.document_paths%'
+

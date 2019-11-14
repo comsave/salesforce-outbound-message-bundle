@@ -52,12 +52,48 @@ In order for your documents to be readable, they should implement the `DocumentI
 
 If you want to add custom actions to your outbound message you can do so by listening to the `OutboundMessageBeforeFlushEvent` or `OutboudMessageAfterFlushEvent`.
 
+## For object removal
+
+Salesforce: Create custom object to ObjectToBeRemoved
+```java 
+```
+
+Salesforce: Add class ObjectsToRemoveScheduler
+```java 
+public without sharing class ObjectsToRemoveScheduler {
+    public static void scheduleForRemoval(List<SObject> objectItems) {
+        List<ObjectToBeRemoved__c> objectsToBeRemoved = new List<ObjectToBeRemoved__c>();
+        
+        for (SObject objectItem: objectItems) {
+            ObjectToBeRemoved__c objectToBeRemoved = new ObjectToBeRemoved__c(
+                ObjectId__c = objectItem.Id,
+                ObjectClass__c = String.valueOf(objectItem).substring(0, String.valueOf(objectItem).indexOf(':'))
+            );
+            
+            objectsToBeRemoved.add(objectToBeRemoved);
+        }
+        
+        insert objectsToBeRemoved;
+    }
+}
+```
+
+Add this document to your config.
+
+```yaml
+comsave_salesforce_outbound_message:
+    document_paths:
+      ObjectToBeRemoved__c:
+        path: 'Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved'
+```
+
+How it works?
+
 ## Running tests
 
 ```bash
    $ composer run-tests
 ```
-
 
 ## License
 
