@@ -2,6 +2,9 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services;
 
+/**
+ * @todo moveout to a separate repo
+ */
 class PropertyAccessor
 {
     /**
