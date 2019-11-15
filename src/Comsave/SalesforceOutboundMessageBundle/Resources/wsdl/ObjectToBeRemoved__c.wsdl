@@ -132,7 +132,7 @@ All Rights Reserved
     <service name="NotificationService">
         <documentation>Notification Service Implementation</documentation>
         <port binding="tns:NotificationBinding" name="Notification">
-            <soap:address location="http://webhook.site/771e9a40-077b-4ca2-9651-f20e1d2a48ad"/>
+            <soap:address location="https://some.site"/>
         </port>
     </service>
 
