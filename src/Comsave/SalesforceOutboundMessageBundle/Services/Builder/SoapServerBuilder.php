@@ -8,12 +8,20 @@ use SoapServer;
 
 class SoapServerBuilder
 {
-    private const SOAP_SERVER_PROPERTIES = [
+    /** @var array */
+    private $soapServerOptions = [
         'classmap' => [
             'notifications' => NotificationRequest::class,
         ],
         'encoding' => 'UTF-8',
     ];
+
+    public function __construct(string $wsdlCache)
+    {
+        $this->soapServerOptions = array_merge($this->soapServerOptions, [
+            'cache_wsdl' => constant($wsdlCache)
+        ]);
+    }
 
     /**
      * @param string $wsdlPath
@@ -22,7 +30,7 @@ class SoapServerBuilder
      */
     public function build(string $wsdlPath, SoapRequestHandlerInterface $requestHandler): SoapServer
     {
-        $soapServer = new SoapServer($wsdlPath, static::SOAP_SERVER_PROPERTIES);
+        $soapServer = new SoapServer($wsdlPath, $this->soapServerOptions);
         $soapServer->setObject($requestHandler);
 
         return $soapServer;

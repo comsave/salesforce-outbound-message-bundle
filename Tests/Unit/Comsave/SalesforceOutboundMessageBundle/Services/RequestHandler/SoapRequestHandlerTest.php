@@ -137,7 +137,7 @@ class SoapRequestHandlerTest extends TestCase
 
         $existingDocumentMock = $this->createMock(DocumentInterface::class);
 
-        $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, false, false);
+        $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, false);
 
         $this->outboundMessageBeforeFlushEventBuilder->expects($this->once())
             ->method('build')
@@ -199,7 +199,7 @@ class SoapRequestHandlerTest extends TestCase
 
         $existingDocumentMock = null;
 
-        $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, false, false);
+        $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, false);
 
         $this->outboundMessageBeforeFlushEventBuilder->expects($this->once())
             ->method('build')
@@ -257,7 +257,7 @@ class SoapRequestHandlerTest extends TestCase
 
         $existingDocumentMock = null;
 
-        $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, true, false);
+        $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, true);
 
         $this->outboundMessageBeforeFlushEventBuilder->expects($this->once())
             ->method('build')
@@ -281,68 +281,7 @@ class SoapRequestHandlerTest extends TestCase
         $this->assertTrue($response->getAck());
     }
 
-    /**
-     * @covers ::notifications()
-     * @covers ::process()
-     */
-    public function testNotificationsDeleteSuccessful()
-    {
-        $notification = new \stdClass();
-        $notification->sObject = new \stdClass();
-
-        $notificationRequestMock = $this->createMock(NotificationRequest::class);
-        $notificationRequestMock->expects($this->atLeastOnce())
-            ->method('getNotification')
-            ->willReturn($notification);
-
-        $unitOfWorkMock = $this->createMock(UnitOfWork::class);
-        $this->mapper->expects($this->once())
-            ->method('getUnitOfWork')
-            ->willReturn($unitOfWorkMock);
-
-        $mappedDocumentMock = $this->createMock(Product::class);
-        $mappedDocumentMock->expects($this->once())
-            ->method('getId')
-            ->willReturn('897D6FGSD');
-
-        $this->mapper->expects($this->once())
-            ->method('mapToDomainObject')
-            ->willReturn($mappedDocumentMock);
-
-        $this->documentManager->expects($this->once())
-            ->method('find')
-            ->willReturn(null);
-
-        $existingDocumentMock = null;
-
-        $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, false, true);
-
-        $this->outboundMessageBeforeFlushEventBuilder->expects($this->once())
-            ->method('build')
-            ->with($mappedDocumentMock, $existingDocumentMock)
-            ->willReturn($beforeFlushEventMock);
-
-        $this->eventDispatcher->expects($this->exactly(2))
-            ->method('dispatch');
-
-        $this->documentManager->expects($this->once())
-            ->method('remove');
-
-        $this->documentManager->expects($this->never())
-            ->method('persist');
-
-        $this->documentManager->expects($this->once())
-            ->method('flush');
-
-        $afterFlushEventMock = $this->generateAfterFlushEventMock($mappedDocumentMock);
-
-        $response = $this->soapRequestHandler->notifications($notificationRequestMock);
-
-        $this->assertInstanceOf(NotificationResponse::class, $response);
-        $this->assertTrue($response->getAck());
-    }
-
-    public function generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, $isSkipDocument = false, $isDeleteDocument = false) {
+    public function generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, $isSkipDocument = false) {
         $eventMock = $this->createMock(OutboundMessageBeforeFlushEvent::class);
 
         $eventMock->expects($this->any())
@@ -354,9 +293,6 @@ class SoapRequestHandlerTest extends TestCase
         $eventMock->expects($this->any())
             ->method('isSkipDocument')
             ->willReturn($isSkipDocument);
-        $eventMock->expects($this->any())
-            ->method('isDeleteDocument')
-            ->willReturn($isDeleteDocument);
 
         return $eventMock;
     }

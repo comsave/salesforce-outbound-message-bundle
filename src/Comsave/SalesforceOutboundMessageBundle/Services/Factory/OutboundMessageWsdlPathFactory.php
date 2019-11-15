@@ -8,11 +8,15 @@ use Comsave\SalesforceOutboundMessageBundle\Interfaces\WsdlPathFactoryInterface;
 
 class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
 {
-    private $abstractWsdlPath;
+    /** @var array */
+    private $abstractWsdlPaths;
 
     public function __construct(string $wsdlPath)
     {
-        $this->abstractWsdlPath = $wsdlPath;
+        $this->abstractWsdlPaths = [
+            rtrim($wsdlPath, '/'),
+            realpath(getcwd() . '/../vendor/comsave/salesforce-outbound-message-bundle/src/Comsave/SalesforceOutboundMessageBundle/Resources/wsdl'),
+        ];
     }
 
     /**
@@ -22,16 +26,19 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
      */
     public function getWsdlPath(string $objectName): string
     {
-        if (substr($this->abstractWsdlPath, -1, 1) != '/') {
-            $this->abstractWsdlPath .= '/';
+        foreach($this->abstractWsdlPaths as $abstractWsdlPath) {
+            $wsdlPath = $this->buildFullObjectWsdlPath($abstractWsdlPath, $objectName);
+
+            if (file_exists($wsdlPath)) {
+                return $wsdlPath;
+            }
         }
 
-        $wsdlPath = sprintf('%s%s.wsdl', $this->abstractWsdlPath, $objectName);
+        throw new WsdlFileNotFound($wsdlPath, $objectName);
+    }
 
-        if (!file_exists($wsdlPath)) {
-            throw new WsdlFileNotFound($wsdlPath, $objectName);
-        }
-
-        return $wsdlPath;
+    private function buildFullObjectWsdlPath(string $abstractPath, string $objectName): string
+    {
+        return sprintf('%s/%s.wsdl', $abstractPath, $objectName);
     }
 }

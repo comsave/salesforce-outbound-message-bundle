@@ -1,63 +1,145 @@
-# Salesforce outbound message bundle
+# Symfony OutboundMessageBundle for Salesforce
 
-The Salesforce outbound message bundle will read and save your Salesforce outbound messages for you. 
+Create, update, remove objects in Symfony sent through Salesforce outbound messages. 
 
-## Prerequisites
+![](https://img.shields.io/github/v/release/comsave/salesforce-outbound-message-bundle)
+![](https://img.shields.io/travis/comsave/salesforce-outbound-message-bundle)
 
-This project currently only works with the doctrine ODM and the Salesforce mapper bundle. These packages are included in `composer.json`.
+---
 
-## Installing
+## Requirements
 
-After meeting the Prerequisites you can install this project with the following command: 
+This bundle assumes you're using:
 
-```bash
-   $ composer require comsave/salesforce-outbound-message-bundle
-```
+1) MongoDB database (and specifically [`doctrine/mongodb-odm`](https://github.com/doctrine/mongodb-odm)).
+2) [`comsave/salesforce-mapper-bundle`](https://github.com/comsave/salesforce-mapper-bundle) for Salesforce object mapping to your MongoDB `Document` classes.
 
-From the endpoint that receives your outbound message you can simply grab the raw post data from the request and pass it along to the `OutboundMessageRequestHandler`. 
+## Bundle features
 
-Your controller could look something like this:
+* Object `create`
+* Object `update`
+* Object `delete`. To enable this complete [additional setup steps](README-setup-removal.md).
+* Object custom handling `beforeFlush`
+* Object custom handling `afterFlush`
 
+## Installation
+
+* ```composer require comsave/salesforce-outbound-message-bundle``` 
+* Register the bundle in your `AppKernel.php` by adding ```php new Comsave\SalesforceOutboundMessageBundle\ComsaveSalesforceOutboundMessageBundle() ```
+* To handle the Salesforce's incoming outbound messages create a route (for example `/sync`) and a method to a controller: 
 ```php
-/**
- * @Rest\Post("/sync")
- * @Rest\View()
- */
-public function indexAction(Request $request, OutboundMessageRequestHandler $requestHandler)
+<?php
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler;
+
+class OutboundMessageController extends Controller
 {
-    try {
-        return $requestHandler->handle($request->getContent());
-    }
-    catch (\Throwable $e) {
-        //Handle exceptions here...
+    public function syncAction(Request $request, OutboundMessageRequestHandler $requestHandler)
+    {
+        try {
+            $outboundMessageXml = $request->getContent();
+            return $requestHandler->handle($outboundMessageXml);
+        }
+        catch (\Throwable $e) {
+            throw new \SoapFault("Server", $e->getMessage());
+        }
     }
 }
 ```
-
-In order for the Salesforce outbound message bundle to know where your wsdl files and documents are located you have to specify these locations in your config.yml file.
-
-The example below shows you what the structure should look like:
-
+* add the bundle configuration in your `app/config/config.yml`
 ```yaml
 comsave_salesforce_outbound_message:
-    wsdl_directory: 'path/with/your/wsdl/files'
+    # WSDL_CACHE_NONE, WSDL_CACHE_DISK, WSDL_CACHE_MEMORY or WSDL_CACHE_BOTH
+    wsdl_cache: 'WSDL_CACHE_DISK'                     
+    # An absolute path to Salesforce object WSDL files
+    wsdl_directory: '/absolute/path/' 
     document_paths:
-        Account:
-            path: 'path/to/document/Account'
-        Product2:
-            path: 'path/to/document/Product'
+        # Map a document using its Salesforce name and your local class 
+        CustomObject__c:              
+            path: 'YourNamespace\Documents\CustomObject'
 ```
+* Add `DocumentInterface` to the document class you'd like to be tracked by the `OutboundMessageBundle`.
+```php
+<?php
 
-In order for your documents to be readable, they should implement the `DocumentInterface` included in this bundle.
+use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
+use LogicItLab\Salesforce\MapperBundle\Model\Account as BaseAccount;
 
-If you want to add custom actions to your outbound message you can do so by listening to the `OutboundMessageBeforeFlushEvent` or `OutboudMessageAfterFlushEvent`.
-
-## Running tests
-
-```bash
-   $ composer run-tests
+class Account extends BaseAccount implements DocumentInterface
+{
+}
 ```
+* Create an `EventSubscriber` for an object you'd like to sync. It would look something like this for the `Account` object:
+```php
+<?php
 
+namespace YourNamespace\EventSubscriber;
+
+use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
+use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageAfterFlushEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface; 
+use Comsave\Webservice\Core\UserBundle\Document\Account;
+
+class AccountSoapRequestSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents()
+    {
+        return [
+            OutboundMessageBeforeFlushEvent::NAME => [
+                ['onBeforeFlush'],
+            ],
+            OutboundMessageAfterFlushEvent::NAME => [
+                ['onAfterFlush'],
+            ],
+        ];
+    }
+
+    public function supports(DocumentInterface $document): bool
+    {
+        $documentClass = get_class($document);
+
+        return Account::class == $documentClass || $document instanceof Account;
+    }
+
+    public function onBeforeFlush(OutboundMessageBeforeFlushEvent $event)
+    {
+        /** @var Account $account */
+        $newAccount = $event->getNewDocument();
+
+        /**
+         * Make sure to do call $this->supports() before you start processing the object
+         * You only want to process the correct object in this EventSubscriber (which is Account in this case)
+         */
+        if (!$this->supports($account)) return; 
+    
+        $existingAccount = $event->getExistingDocument();
+        
+        /**
+         * You can do any modifications you want to the object before it get's saved (flushed) to the database.
+         * - - -
+         * $event->getExistingDocument() provides you access to the existing object (if it exists) 
+         * $event->getNewDocument() provides you access to the new object delivered by the outbound message
+         */
+    }
+
+    public function onAfterFlush(OutboundMessageAfterFlushEvent $event)
+    {
+        /** @var Account $account */
+        $account = $event->getDocument();
+
+        if (!$this->supports($account)) return; 
+
+        /**
+         * You can process the object further if necessary after it has been saved (flushed) to the database.
+         */
+    }
+}
+```
+* Add your newly created route to the Salesforce outbound message for the object you want to sync (`Account` in our example).
+* That's it! Trigger an outbound message to be sent out and see everything happen automagically. 😎 👍
 
 ## License
 

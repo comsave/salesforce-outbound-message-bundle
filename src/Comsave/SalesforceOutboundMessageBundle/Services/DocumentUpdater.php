@@ -7,6 +7,9 @@ use ReflectionClass;
 use ReflectionException;
 use TypeError;
 
+/**
+ * @todo moveout to a separate repo
+ */
 class DocumentUpdater
 {
     /**

@@ -28,7 +28,8 @@
     "phpunit/phpunit": "^7.0"
   },
   "scripts": {
-    "run-tests": "vendor/bin/phpunit Tests"
+    "dev-phpunit": "vendor/bin/phpunit",
+    "run-tests": "@dev-phpunit Tests"
   },
   "config": {
     "sort-packages": true
