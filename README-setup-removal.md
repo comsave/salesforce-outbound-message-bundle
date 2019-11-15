@@ -64,3 +64,11 @@ trigger AccountTrigger on Account (after delete, after insert, after undelete, a
 }
 ```
 
+* BONUS: It would be wise to add a savepoint for the database. In case an exception happens and the object actually never gets removed in Salesforce. This will allow us to rollback.
+```java
+// At the start:
+Savepoint sp = Database.setSavepoint();
+
+//In the catch:
+Database.rollback(sp);
+```
