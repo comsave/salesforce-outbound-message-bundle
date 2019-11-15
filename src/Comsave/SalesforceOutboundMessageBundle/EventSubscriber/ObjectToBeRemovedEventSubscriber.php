@@ -22,10 +22,10 @@ class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
     private $outboundMessageDocumentClassNameFactory;
 
     /**
-     * ObjectToBeRemovedEventSubscriber constructor.
      * @param DocumentManager $documentManager
      * @param Mapper $mapper
      * @param OutboundMessageDocumentClassNameFactory $outboundMessageDocumentClassNameFactory
+     * @codeCoverageIgnore
      */
     public function __construct(
         DocumentManager $documentManager,
