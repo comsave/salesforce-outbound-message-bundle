@@ -1,115 +1,78 @@
-# Salesforce outbound message bundle
+# Symfony OutboundMessageBundle for Salesforce
 
-The Salesforce outbound message bundle will read and save your Salesforce outbound messages for you. 
+Create, update, remove objects in Symfony sent through Salesforce outbound messages. 
 
-## Prerequisites
+---
 
-This project currently only works with the doctrine ODM and the Salesforce mapper bundle. These packages are included in `composer.json`.
+## Requirements
 
-## Installing
+This bundle is designed to work with these prerequisites:
 
-After meeting the Prerequisites you can install this project with the following command: 
+1) MongoDB database (and specifically [`doctrine/mongodb-odm`](https://github.com/doctrine/mongodb-odm)).
+2) [`comsave/salesforce-mapper-bundle`](https://github.com/comsave/salesforce-mapper-bundle)
 
-```bash
-   $ composer require comsave/salesforce-outbound-message-bundle
+## Bundle features
+
+* Object `create`
+* Object `update`
+* Object `delete`. To enable this complete [additional setup steps](README-setup-removal.md).
+* Object custom handling `beforeFlush`
+* Object custom handling `afterFlush`
+
+## Installation
+
+* ```composer require comsave/salesforce-outbound-message-bundle``` 
+* Register the bundle in your `AppKernel.php` by adding ```php new Comsave\SalesforceOutboundMessageBundle\ComsaveSalesforceOutboundMessageBundle() ```
+* To handle the Salesforce's incoming outbound messages create a route (for example `/sync`) and a method to a controller: 
+```php
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler;
+
+class OutboundMessageController extends Controller
+{
+    public function syncAction(Request $request, OutboundMessageRequestHandler $requestHandler)
+    {
+        try {
+            $outboundMessageXml = $request->getContent();
+            return $requestHandler->handle($outboundMessageXml);
+        }
+        catch (\Throwable $e) {
+            throw new \SoapFault("Server", $e->getMessage());
+        }
+    }
+}
 ```
+* add the bundle configuration in your `app/config/config.yml`
+```yaml
+comsave_salesforce_outbound_message:
+    # WSDL_CACHE_NONE, WSDL_CACHE_DISK, WSDL_CACHE_MEMORY or WSDL_CACHE_BOTH
+    wsdl_cache: 'WSDL_CACHE_DISK'                     
+    # An absolute path to Salesforce object WSDL files
+    wsdl_directory: '/absolute/path/' 
+    document_paths:
+        # Map a document using its Salesforce name and your local class 
+        CustomObject__c:              
+            path: 'Namespace\Documents\CustomObject'
+```
+* 
 
+## x
 From the endpoint that receives your outbound message you can simply grab the raw post data from the request and pass it along to the `OutboundMessageRequestHandler`. 
 
 Your controller could look something like this:
 
-```php
-/**
- * @Rest\Post("/sync")
- * @Rest\View()
- */
-public function indexAction(Request $request, OutboundMessageRequestHandler $requestHandler)
-{
-    try {
-        return $requestHandler->handle($request->getContent());
-    }
-    catch (\Throwable $e) {
-        //Handle exceptions here...
-    }
-}
-```
+x
 
 In order for the Salesforce outbound message bundle to know where your wsdl files and documents are located you have to specify these locations in your config.yml file.
 
 The example below shows you what the structure should look like:
 
-```yaml
-comsave_salesforce_outbound_message:
-    wsdl_directory: 'path/with/your/wsdl/files'
-    document_paths:
-        Account:
-            path: 'path/to/document/Account'
-        Product2:
-            path: 'path/to/document/Product'
-```
 
 In order for your documents to be readable, they should implement the `DocumentInterface` included in this bundle.
 
 If you want to add custom actions to your outbound message you can do so by listening to the `OutboundMessageBeforeFlushEvent` or `OutboudMessageAfterFlushEvent`.
 
-## on delete trigger; what why how
-
-Why this way?
-How does it work?
-
-Salesforce: Create custom object `ObjectToBeRemoved` (needs to be in your `.wsdl` file as well)
-```java 
-    text 18  ObjectId__c
-    text 100 ObjectClass__c
-```
-
-Add the ObjectToBeRemoved object to the outbound messages.
-
-
-Salesforce: Add class ObjectsToRemoveScheduler
-```java 
-public without sharing class ObjectsToRemoveScheduler {
-    public static void scheduleForRemoval(List<SObject> objectItems) {
-        List<ObjectToBeRemoved__c> objectsToBeRemoved = new List<ObjectToBeRemoved__c>();
-        
-        for (SObject objectItem: objectItems) {
-            ObjectToBeRemoved__c objectToBeRemoved = new ObjectToBeRemoved__c(
-                ObjectId__c = objectItem.Id,
-                ObjectClass__c = String.valueOf(objectItem).substring(0, String.valueOf(objectItem).indexOf(':'))
-            );
-            
-            objectsToBeRemoved.add(objectToBeRemoved);
-        }
-        
-        insert objectsToBeRemoved;
-    }
-}
-```
-
-add trigger for every object you want to tract deletion for
-```java
-trigger SomeObjectYoureTrackingTrigger on SomeObjectYoureTracking (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
-    if (Trigger.isBefore && Trigger.isDelete) {
-        ObjectsToRemoveScheduler.scheduleForRemoval(Trigger.old);
-    }
-}
-```
-
-Add this document to your config.
-
-```yaml
-comsave_salesforce_outbound_message:
-    document_paths:
-      ObjectToBeRemoved__c:
-        path: 'Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved'
-```
-
-
-## Running tests
-
-```bash
-   $ composer run-tests
-```
 
 ## License
 
