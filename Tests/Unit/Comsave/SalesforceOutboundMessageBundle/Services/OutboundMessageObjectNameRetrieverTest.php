@@ -2,28 +2,28 @@
 
 namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services;
 
-use Comsave\SalesforceOutboundMessageBundle\Services\OutboundMessageObjectNameRetriever;
+use Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObjectNameResolver;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class OutboundMessageObjectNameRetrieverTest
  * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services
- * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\OutboundMessageObjectNameRetriever
+ * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObjectNameResolver
  */
 class OutboundMessageObjectNameRetrieverTest extends TestCase
 {
     /**
-     * @var OutboundMessageObjectNameRetriever
+     * @var OutboundMessageObjectNameResolver
      */
-    protected $outboundMessageObjectNameRetriever;
+    protected $outboundMessageObjectNameResolver;
 
     public function setUp()
     {
-        $this->outboundMessageObjectNameRetriever = new OutboundMessageObjectNameRetriever();
+        $this->outboundMessageObjectNameResolver = new OutboundMessageObjectNameResolver();
     }
 
     /**
-     * @covers ::retrieve()
+     * @covers ::resolve()
      */
     public function testRetrieveReturnsObjectNameOnValidXml()
     {
@@ -55,13 +55,13 @@ class OutboundMessageObjectNameRetrieverTest extends TestCase
                  </soapenv:Body>
                 </soapenv:Envelope>';
 
-        $objectName = $this->outboundMessageObjectNameRetriever->retrieve($xml);
+        $objectName = $this->outboundMessageObjectNameResolver->resolve($xml);
 
         $this->assertEquals('DiscountRule__c', $objectName);
     }
 
     /**
-     * @covers ::retrieve()
+     * @covers ::resolve()
      * @expectedException \Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
     public function testRetrieveThrowsExceptionOnInvalidXml()
@@ -93,17 +93,17 @@ class OutboundMessageObjectNameRetrieverTest extends TestCase
                  </soapenv:Body>
                 </soapenv:Envelope>';
 
-        $this->outboundMessageObjectNameRetriever->retrieve($xml);
+        $this->outboundMessageObjectNameResolver->resolve($xml);
     }
 
     /**
-     * @covers ::retrieve()
+     * @covers ::resolve()
      * @expectedException \Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
     public function testRetrieveThrowsExceptionOnEmptyXml()
     {
         $xml = '';
 
-        $this->outboundMessageObjectNameRetriever->retrieve($xml);
+        $this->outboundMessageObjectNameResolver->resolve($xml);
     }
 }

@@ -16,3 +16,7 @@ services:
     arguments:
       - '%comsave_salesforce_outbound_message.document_paths%'
 
+  Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapServerBuilder:
+    arguments:
+      - '%comsave_salesforce_outbound_message.wsdl_cache%'
+

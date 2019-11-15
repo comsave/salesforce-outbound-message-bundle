@@ -4,6 +4,7 @@ namespace Comsave\SalesforceOutboundMessageBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/** @todo move out to a separate repo */
 class DependencyInjectionBuilder
 {
     /**

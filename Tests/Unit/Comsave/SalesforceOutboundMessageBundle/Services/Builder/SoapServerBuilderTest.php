@@ -20,7 +20,9 @@ class SoapServerBuilderTest extends TestCase
 
     public function setUp()
     {
-        $this->soapServerBuilder = new SoapServerBuilder();
+        $wsdlCache = 'WSDL_CACHE_DISK';
+
+        $this->soapServerBuilder = new SoapServerBuilder($wsdlCache);
     }
 
     /**
@@ -30,6 +32,7 @@ class SoapServerBuilderTest extends TestCase
     {
         $wsdlPath = 'Tests/Resources/wsdl/DiscountRule__c.wsdl';
         $soapRequestHandler = $this->createMock(SoapRequestHandler::class);
+
         $soapServer = $this->soapServerBuilder->build($wsdlPath, $soapRequestHandler);
 
         $this->assertInstanceOf(\SoapServer::class, $soapServer);

@@ -5,7 +5,7 @@ namespace Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler;
 use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder;
-use Comsave\SalesforceOutboundMessageBundle\Services\OutboundMessageObjectNameRetriever;
+use Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObjectNameResolver;
 use Symfony\Component\HttpFoundation\Response;
 
 class OutboundMessageRequestHandler
@@ -21,25 +21,25 @@ class OutboundMessageRequestHandler
     private $soapServerResponseBuilder;
 
     /**
-     * @var OutboundMessageObjectNameRetriever
+     * @var OutboundMessageObjectNameResolver
      */
-    private $outboundMessageObjectNameRetriever;
+    private $outboundMessageObjectNameResolver;
 
     /**
      * OutboundMessageRequestHandler constructor.
      * @param OutboundMessageSoapServerBuilder $outboundMessageSoapServerBuilder
      * @param SoapResponseBuilder $soapServerResponseBuilder
-     * @param OutboundMessageObjectNameRetriever $outboundMessageObjectNameRetriever
+     * @param OutboundMessageObjectNameResolver $outboundMessageObjectNameResolver
      * @codeCoverageIgnore
      */
     public function __construct(
         OutboundMessageSoapServerBuilder $outboundMessageSoapServerBuilder,
         SoapResponseBuilder $soapServerResponseBuilder,
-        OutboundMessageObjectNameRetriever $outboundMessageObjectNameRetriever
+        OutboundMessageObjectNameResolver $outboundMessageObjectNameResolver
     ) {
         $this->outboundMessageSoapServerBuilder = $outboundMessageSoapServerBuilder;
         $this->soapServerResponseBuilder = $soapServerResponseBuilder;
-        $this->outboundMessageObjectNameRetriever = $outboundMessageObjectNameRetriever;
+        $this->outboundMessageObjectNameResolver = $outboundMessageObjectNameResolver;
     }
 
     /**
@@ -49,7 +49,8 @@ class OutboundMessageRequestHandler
      */
     public function handle(string $xml): Response
     {
-        $soapServer = $this->outboundMessageSoapServerBuilder->build($this->outboundMessageObjectNameRetriever->retrieve($xml));
+        $objectName = $this->outboundMessageObjectNameResolver->resolve($xml);
+        $soapServer = $this->outboundMessageSoapServerBuilder->build($objectName);
 
         ob_start();
         $soapServer->handle($xml);

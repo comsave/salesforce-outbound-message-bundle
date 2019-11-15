@@ -4,7 +4,7 @@ namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\RequestHan
 
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder;
-use Comsave\SalesforceOutboundMessageBundle\Services\OutboundMessageObjectNameRetriever;
+use Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObjectNameResolver;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -23,30 +23,30 @@ class OutboundMessageRequestHandlerTest extends TestCase
     protected $outboundMessageRequestHandler;
 
     /**
-     * @var MockObject
+     * @var OutboundMessageSoapServerBuilder|MockObject
      */
     private $outboundMessageSoapServerBuilder;
 
     /**
-     * @var MockObject
+     * @var SoapResponseBuilder|MockObject
      */
     private $soapServerResponseBuilder;
 
     /**
-     * @var MockObject
+     * @var OutboundMessageObjectNameResolver|MockObject
      */
-    private $outboundMessageObjectNameRetriever;
+    private $outboundMessageObjectNameResolver;
 
     public function setUp()
     {
         $this->outboundMessageSoapServerBuilder = $this->createMock(OutboundMessageSoapServerBuilder::class);
         $this->soapServerResponseBuilder = $this->createMock(SoapResponseBuilder::class);
-        $this->outboundMessageObjectNameRetriever = $this->createMock(OutboundMessageObjectNameRetriever::class);
+        $this->outboundMessageObjectNameResolver = $this->createMock(OutboundMessageObjectNameResolver::class);
 
         $this->outboundMessageRequestHandler = new OutboundMessageRequestHandler(
             $this->outboundMessageSoapServerBuilder,
             $this->soapServerResponseBuilder,
-            $this->outboundMessageObjectNameRetriever
+            $this->outboundMessageObjectNameResolver
         );
     }
 
@@ -56,8 +56,8 @@ class OutboundMessageRequestHandlerTest extends TestCase
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>';
 
-        $this->outboundMessageObjectNameRetriever->expects($this->once())
-            ->method('retrieve')
+        $this->outboundMessageObjectNameResolver->expects($this->once())
+            ->method('resolve')
             ->willReturn('objectName');
 
         $soapServerMock = $this->createMock(\SoapServer::class);

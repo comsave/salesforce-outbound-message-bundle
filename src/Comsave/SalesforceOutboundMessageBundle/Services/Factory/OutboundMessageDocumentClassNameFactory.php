@@ -23,6 +23,7 @@ class OutboundMessageDocumentClassNameFactory
         if (isset($this->documentLocations[$objectName])) {
             return $this->documentLocations[$objectName]['path'];
         }
+        
         throw new DocumentNotFoundException();
     }
 }
