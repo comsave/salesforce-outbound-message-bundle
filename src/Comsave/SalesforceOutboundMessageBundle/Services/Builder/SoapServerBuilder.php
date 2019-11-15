@@ -30,7 +30,7 @@ class SoapServerBuilder
      */
     public function build(string $wsdlPath, SoapRequestHandlerInterface $requestHandler): SoapServer
     {
-        $soapServer = new SoapServer($wsdlPath, );
+        $soapServer = new SoapServer($wsdlPath, $this->soapServerOptions);
         $soapServer->setObject($requestHandler);
 
         return $soapServer;
