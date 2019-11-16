@@ -10,4 +10,4 @@ composer.lock
 ###< phpunit/phpunit ###
 
 .DS_Store
-Tests/_output
+tests/_output
