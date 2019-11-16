@@ -31,7 +31,7 @@
   },
   "scripts": {
     "run-tests": "vendor/bin/phpunit",
-    "run-coverage": "@run-tests --coverage-clover ./coverage.xml"
+    "run-coverage": "@run-tests --coverage-clover Tests/_output/coverage.xml"
   },
   "authors": [
     {

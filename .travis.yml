@@ -7,3 +7,16 @@ php:
 install: composer install
 
 script: composer run-coverage
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=ade3e812370d0201d8abc6f28208859b755b9cd188d2f9139cfbdcb3fc309dcf
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - mv tests/_output/coverage.xml clover.xml
+  - ./cc-test-reporter after-build --coverage-input-type clover --id $CC_TEST_REPORTER_ID --exit-code $TRAVIS_TEST_RESULT
