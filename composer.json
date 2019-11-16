@@ -1,15 +1,13 @@
 {
   "name": "comsave/salesforce-outbound-message-bundle",
-  "license": "MIT",
   "type": "symfony-bundle",
   "description": "This bundle allows you to easily process outbound messages sent by Salesforce.",
+  "homepage": "https://github.com/comsave/salesforce-outbound-message-bundle",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Comsave\\": "src/Comsave/"
     }
-  },
-  "provide": {
-    "ext-mongo": "*"
   },
   "require": {
     "php": ">=7.2.0",
@@ -27,10 +25,23 @@
     "phpunit/php-code-coverage": "^6.0",
     "phpunit/phpunit": "^7.0"
   },
+  "provide": {
+    "ext-mongo": "*"
+  },
   "scripts": {
     "dev-phpunit": "vendor/bin/phpunit",
     "run-tests": "@dev-phpunit Tests"
   },
+  "authors": [
+    {
+      "name": "Vaidas Bagdonas",
+      "email": "vaidas.bagdonas@comsave.com"
+    },
+    {
+      "name": "Dirk Scholten",
+      "email": "dirk.scholten@comsave.com"
+    }
+  ],
   "config": {
     "sort-packages": true
   }
