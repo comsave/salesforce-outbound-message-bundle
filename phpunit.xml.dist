@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.0/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
          backupGlobals="false"
@@ -16,33 +16,31 @@
         <ini name="intl.default_locale" value="en"/>
         <ini name="intl.error_level" value="0"/>
         <ini name="memory_limit" value="-1"/>
-        <server name="KERNEL_DIR" value="app/"/>
-        <server name="KERNEL_CLASS" value="Kernel"/>
-
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="dev"/>
-        <env name="APP_SECRET" value="bf76f2844543ac00ab5299328b1b70da"/>
-        <!-- env name="TRUSTED_PROXIES" value="127.0.0.1,127.0.0.2" -->
-        <!-- env name="TRUSTED_HOSTS" value="localhost,example.com" -->
-        <!-- ###- symfony/framework-bundle ### -->
-
-        <!-- ###+ doctrine/doctrine-bundle ### -->
-        <!-- Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url -->
-        <!-- For an SQLite database, use: "sqlite:///%kernel.project_dir%/var/data.db" -->
-        <!-- Configure your db driver and server_version in config/packages/doctrine.yaml -->
-        <env name="DATABASE_URL" value="mysql://db_user:db_password@127.0.0.1:3306/db_name"/>
-        <!-- ###- doctrine/doctrine-bundle ### -->
     </php>
 
     <testsuites>
-        <testsuite name="unit">
-            <directory>./Tests/Unit</directory>
+        <testsuite name="all">
+            <directory>./Tests</directory>
         </testsuite>
     </testsuites>
 
+<!--    <listeners>-->
+<!--        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>-->
+<!--        <listener class="Symfony\Bridge\PhpUnit\CoverageListener"/>-->
+<!--    </listeners>-->
+
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory>./src/</directory>
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <directory>vendor</directory>
+                <directory>Tests</directory>
+            </exclude>
         </whitelist>
     </filter>
+
+<!--    <logging>-->
+<!--        <log type="coverage-html" target="/tmp/report" lowUpperBound="35" highLowerBound="70"/>-->
+<!--        <log type="coverage-clover" target="./coverage.xml"/>-->
+<!--    </logging>-->
 </phpunit>

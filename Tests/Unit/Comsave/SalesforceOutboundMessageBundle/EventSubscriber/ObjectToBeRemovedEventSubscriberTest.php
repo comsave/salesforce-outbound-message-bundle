@@ -66,7 +66,7 @@ class ObjectToBeRemovedEventSubscriberTest extends TestCase
 
     /**
      * @covers ::supports()
-     * @covers ::testOnBeforeFlush()
+     * @covers ::onBeforeFlush()
      */
     public function testRemovesScheduledDocument(): void
     {
@@ -125,7 +125,7 @@ class ObjectToBeRemovedEventSubscriberTest extends TestCase
 
     /**
      * @covers ::supports()
-     * @covers ::testOnBeforeFlush()
+     * @covers ::onBeforeFlush()
      */
     public function testSkipsScheduledDocumentRemovalIfDocumentNotFound(): void
     {

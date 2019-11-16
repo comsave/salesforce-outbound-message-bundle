@@ -19,6 +19,7 @@
     "symfony/dependency-injection": "^3.4",
     "symfony/event-dispatcher": "^3.4.9",
     "symfony/http-foundation": "^3.4",
+    "symfony/http-kernel": "^3.4",
     "symfony/polyfill-apcu": "^1.12"
   },
   "require-dev": {
@@ -29,8 +30,8 @@
     "ext-mongo": "*"
   },
   "scripts": {
-    "dev-phpunit": "vendor/bin/phpunit",
-    "run-tests": "@dev-phpunit Tests"
+    "run-tests": "vendor/bin/phpunit",
+    "run-coverage": "@run-tests --coverage-clover ./coverage.xml"
   },
   "authors": [
     {

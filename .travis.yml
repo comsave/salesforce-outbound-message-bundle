@@ -6,4 +6,4 @@ php:
 
 install: composer install
 
-script: vendor/bin/phpunit Tests
+script: composer run-coverage
