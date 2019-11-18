@@ -8,7 +8,7 @@ class WsdlFileNotFound extends SalesforceException
     {
         parent::__construct(
             sprintf(
-                'WSDL details for object `%s` are not found. Looked for: %s.',
+                'WSDL details for object `%s` are not found. Looked for `%s`.',
                 $objectName,
                 $wsdlPath
             )
