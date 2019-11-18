@@ -66,6 +66,8 @@ class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $event->setSkipDocument(true);
+
         $removableDocumentClass = $this->outboundMessageDocumentClassNameFactory->getClassName($objectToBeRemoved->getObjectClass());
         $removableDocumentRepository = $this->documentManager->getRepository($removableDocumentClass);
 
@@ -76,8 +78,11 @@ class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
             $this->documentManager->flush();
         }
 
-        $this->mapper->delete([$objectToBeRemoved]);
-
-        $event->setSkipDocument(true);
+        try {
+            $this->mapper->delete([$objectToBeRemoved]);
+        }
+        catch (\Throwable $ex) {
+            // Quit silently if not available for removal anymore
+        }
     }
 }
