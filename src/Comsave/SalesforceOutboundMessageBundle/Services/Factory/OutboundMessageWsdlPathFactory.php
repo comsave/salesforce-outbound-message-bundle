@@ -15,7 +15,7 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
     {
         $this->abstractWsdlPaths = [
             rtrim($wsdlPath, '/'),
-            realpath(getcwd() . '/../vendor/comsave/salesforce-outbound-message-bundle/src/Comsave/SalesforceOutboundMessageBundle/Resources/wsdl'),
+            dirname(__FILE__) . '/../../Resources/wsdl',
         ];
     }
 
