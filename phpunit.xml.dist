@@ -33,7 +33,14 @@
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory>./src/</directory>
+            <directory suffix=".php">./src/</directory>
+            <exclude>
+                <directory>./src/**/DependencyInjection</directory>
+                <directory>./src/**/Document</directory>
+                <directory>./src/**/Exception</directory>
+                <directory>./src/**/Interfaces</directory>
+                <directory>./src/**/Model</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
