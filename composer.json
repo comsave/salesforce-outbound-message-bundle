@@ -1,8 +1,9 @@
 {
   "name": "comsave/salesforce-outbound-message-bundle",
-  "license": "MIT",
   "type": "symfony-bundle",
   "description": "This bundle allows you to easily process outbound messages sent by Salesforce.",
+  "homepage": "https://github.com/comsave/salesforce-outbound-message-bundle",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Comsave\\": "src/Comsave/"
@@ -11,9 +12,6 @@
   },
   "autoload-dev": {
     "files": ["src/Comsave/SalesforceOutboundMessageBundle/functions.php"]
-  },
-  "provide": {
-    "ext-mongo": "*"
   },
   "require": {
     "php": ">=7.2.0",
@@ -25,16 +23,31 @@
     "symfony/dependency-injection": "^3.4.26",
     "symfony/event-dispatcher": "^3.4.9",
     "symfony/http-foundation": "^3.4",
+    "symfony/http-kernel": "^3.4",
     "symfony/polyfill-apcu": "^1.12"
   },
   "require-dev": {
     "phpunit/php-code-coverage": "^6.0",
     "phpunit/phpunit": "^7.0"
   },
-  "scripts": {
-    "dev-phpunit": "vendor/bin/phpunit",
-    "run-tests": "@dev-phpunit Tests"
+  "provide": {
+    "ext-mongo": "*"
   },
+  "scripts": {
+    "run-tests": "vendor/bin/phpunit --no-coverage",
+    "run-coverage": "vendor/bin/phpunit --coverage-clover tests/_output/coverage.xml",
+    "run-coverage-text": "vendor/bin/phpunit --coverage-text=tests/_output/coverage.txt && cat tests/_output/coverage.txt"
+  },
+  "authors": [
+    {
+      "name": "Vaidas Bagdonas",
+      "email": "vaidas.bagdonas@comsave.com"
+    },
+    {
+      "name": "Dirk Scholten",
+      "email": "dirk.scholten@comsave.com"
+    }
+  ],
   "config": {
     "sort-packages": true
   }

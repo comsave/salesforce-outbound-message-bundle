@@ -25,7 +25,8 @@ This bundle assumes you're using:
 ## Installation
 
 * ```composer require comsave/salesforce-outbound-message-bundle``` 
-* Register the bundle in your `AppKernel.php` by adding ```php new Comsave\SalesforceOutboundMessageBundle\ComsaveSalesforceOutboundMessageBundle() ```
+* Register the bundle in your `AppKernel.php` by adding 
+```new Comsave\SalesforceOutboundMessageBundle\ComsaveSalesforceOutboundMessageBundle() ```
 * To handle the Salesforce's incoming outbound messages create a route (for example `/sync`) and a method to a controller: 
 ```php
 <?php
