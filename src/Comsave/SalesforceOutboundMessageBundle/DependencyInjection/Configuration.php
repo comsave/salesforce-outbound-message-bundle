@@ -14,13 +14,13 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('comsave_salesforce_outbound_message');
         $rootNode
             ->children()
-                ->scalarNode('wsdl_cache')->defaultValue('WSDL_CACHE_DISK')->end()
-                ->scalarNode('wsdl_directory')->isRequired()->end()
-                ->arrayNode('document_paths')
-                    ->useAttributeAsKey('name', false)
-                    ->prototype('array')
-                    ->append($this->getDocumentPath())
-                ->end()
+            ->scalarNode('wsdl_cache')->defaultValue('WSDL_CACHE_DISK')->end()
+            ->scalarNode('wsdl_directory')->isRequired()->end()
+            ->arrayNode('document_paths')
+            ->useAttributeAsKey('name', false)
+            ->prototype('array')
+            ->append($this->getDocumentPath())
+            ->end()
             ->end();
 
         return $treeBuilder;

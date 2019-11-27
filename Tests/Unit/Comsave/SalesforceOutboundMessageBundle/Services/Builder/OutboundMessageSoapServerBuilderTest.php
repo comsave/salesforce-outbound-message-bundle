@@ -10,6 +10,7 @@ use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdl
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use SoapServer;
 
 /**
  * Class OutboundMessageSoapServerBuilderTest
@@ -72,7 +73,7 @@ class OutboundMessageSoapServerBuilderTest extends TestCase
             ->method('build')
             ->willReturn($soapRequestHandler);
 
-        $soapServerMock = $this->createMock(\SoapServer::class);
+        $soapServerMock = $this->createMock(SoapServer::class);
 
         $this->soapServerBuilder->expects($this->once())
             ->method('build')

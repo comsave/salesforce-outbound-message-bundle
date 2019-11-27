@@ -15,7 +15,7 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
     {
         $this->abstractWsdlPaths = [
             rtrim($wsdlPath, '/'),
-            dirname(__FILE__) . '/../../Resources/wsdl',
+            dirname(__FILE__).'/../../Resources/wsdl',
         ];
     }
 
@@ -26,7 +26,7 @@ class OutboundMessageWsdlPathFactory implements WsdlPathFactoryInterface
      */
     public function getWsdlPath(string $objectName): string
     {
-        foreach($this->abstractWsdlPaths as $abstractWsdlPath) {
+        foreach ($this->abstractWsdlPaths as $abstractWsdlPath) {
             $wsdlPath = $this->buildFullObjectWsdlPath($abstractWsdlPath, $objectName);
 
             if (file_exists($wsdlPath)) {

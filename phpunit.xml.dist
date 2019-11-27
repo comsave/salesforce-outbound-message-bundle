@@ -5,17 +5,24 @@
          bootstrap="vendor/autoload.php"
          colors="true"
          backupGlobals="false"
-         stopOnFailure="true"
-         stopOnError="true"
+         backupStaticAttributes="false"
          convertErrorsToExceptions="true"
-         forceCoversAnnotation="true"
-         defaultTestSuite="all"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
 >
     <php>
-        <ini name="error_reporting" value="-1"/>
-        <ini name="intl.default_locale" value="en"/>
-        <ini name="intl.error_level" value="0"/>
-        <ini name="memory_limit" value="-1"/>
+        <ini name="error_reporting" value="-1" />
+        <ini name="intl.default_locale" value="en" />
+        <ini name="intl.error_level" value="0" />
+        <ini name="memory_limit" value="-1" />
+        <server name="KERNEL_DIR" value="app/" />
+        <server name="KERNEL_CLASS" value="AppKernel" />
+        <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+        <env name="APP_ENV" value="test"/>
+        <env name="APP_SECRET" value="bf76f2844543ac00ab5299328b1b70da"/>
     </php>
 
     <testsuites>

@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services;
 
-use LogicItLab\Salesforce\MapperBundle\Model\Product;
-use Comsave\SalesforceOutboundMessageBundle\Services\PropertyAccessor;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
+use Comsave\SalesforceOutboundMessageBundle\Services\PropertyAccessor;
 use Doctrine\Common\Annotations\AnnotationReader;
+use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -51,7 +51,7 @@ class DocumentUpdaterTest extends TestCase
         $newValues = [
             'id' => 'new ID',
             'description' => 'This is a new test description.',
-            'name' => 'test product'
+            'name' => 'test product',
         ];
 
         $this->propertyAccessor->expects($this->atLeastOnce())
@@ -100,9 +100,9 @@ class DocumentUpdaterTest extends TestCase
         $this->propertyAccessor->expects($this->atLeastOnce())
             ->method('setValue')
             ->withConsecutive(
-                    [$product, 'name', 'test product'],
-                    [$product, 'description', 'This is a new test description.']
-                );
+                [$product, 'name', 'test product'],
+                [$product, 'description', 'This is a new test description.']
+            );
 
         $this->documentUpdater->updateWithDocument($product, $newProduct);
     }

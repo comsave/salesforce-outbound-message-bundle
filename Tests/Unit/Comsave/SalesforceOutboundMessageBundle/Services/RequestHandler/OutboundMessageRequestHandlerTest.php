@@ -4,10 +4,11 @@ namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\RequestHan
 
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder;
-use Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObjectNameResolver;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler;
+use Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObjectNameResolver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use SoapServer;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -60,7 +61,7 @@ class OutboundMessageRequestHandlerTest extends TestCase
             ->method('resolve')
             ->willReturn('objectName');
 
-        $soapServerMock = $this->createMock(\SoapServer::class);
+        $soapServerMock = $this->createMock(SoapServer::class);
         $soapServerMock->expects($this->once())
             ->method('handle')
             ->with($xml);

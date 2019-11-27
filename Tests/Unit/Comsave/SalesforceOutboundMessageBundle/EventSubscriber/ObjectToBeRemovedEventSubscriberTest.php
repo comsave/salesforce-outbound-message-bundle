@@ -22,7 +22,7 @@ class ObjectToBeRemovedEventSubscriberTest extends TestCase
     /** @var ObjectToBeRemovedEventSubscriber */
     private $objectToBeRemovedEventSubscriber;
 
-    /** @var MockObject|DocumentManager  */
+    /** @var MockObject|DocumentManager */
     private $documentManagerMock;
 
     /** @var MockObject|Mapper */

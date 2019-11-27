@@ -7,8 +7,10 @@ use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEven
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Exception;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Throwable;
 
 class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
 {
@@ -55,7 +57,7 @@ class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param OutboundMessageBeforeFlushEvent $event
-     * @throws \Exception
+     * @throws Exception
      */
     public function onBeforeFlush(OutboundMessageBeforeFlushEvent $event): void
     {
@@ -73,15 +75,14 @@ class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
 
         $removableDocument = $removableDocumentRepository->find($objectToBeRemoved->getObjectId());
 
-        if($removableDocument) {
+        if ($removableDocument) {
             $this->documentManager->remove($removableDocument);
             $this->documentManager->flush();
         }
 
         try {
             $this->mapper->delete([$objectToBeRemoved]);
-        }
-        catch (\Throwable $ex) {
+        } catch (Throwable $ex) {
             // Quit silently if not available for removal anymore
         }
     }

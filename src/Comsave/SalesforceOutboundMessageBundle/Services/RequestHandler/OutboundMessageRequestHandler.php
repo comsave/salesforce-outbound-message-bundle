@@ -52,7 +52,7 @@ class OutboundMessageRequestHandler
         $objectName = $this->outboundMessageObjectNameResolver->resolve($xml);
         $soapServer = $this->outboundMessageSoapServerBuilder->build($objectName);
 
-        ob_start();
+        ob_start('comsave_salesforce_outbound_message_bundle_soap_server_output_buffer_handler');
         $soapServer->handle($xml);
         $responseContent = ob_get_contents();
         ob_end_clean();
