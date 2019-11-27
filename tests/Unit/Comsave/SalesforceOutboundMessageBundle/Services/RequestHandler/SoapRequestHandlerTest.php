@@ -4,21 +4,22 @@ namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\RequestHan
 
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageAfterFlushEvent;
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
-use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder;
-use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
-use Doctrine\ODM\MongoDB\UnitOfWork;
-use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationRequest;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationResponse;
+use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder;
+use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
+use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\UnitOfWork;
+use LogicItLab\Salesforce\MapperBundle\Mapper;
+use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use LogicItLab\Salesforce\MapperBundle\Mapper;
 use Psr\Log\LoggerInterface;
+use stdClass;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class SoapRequestHandlerTest
@@ -96,7 +97,7 @@ class SoapRequestHandlerTest extends TestCase
      */
     public function testNotificationsThrowsExceptionWhenNotAnObjectInNotification()
     {
-        $notification = new \stdClass();
+        $notification = new stdClass();
         $notification->sObject = 'not_an_object';
 
         $notificationRequestMock = $this->createMock(NotificationRequest::class);
@@ -113,8 +114,8 @@ class SoapRequestHandlerTest extends TestCase
      */
     public function testNotificationsSuccessfulOnExistingDocument()
     {
-        $notification = new \stdClass();
-        $notification->sObject = new \stdClass();
+        $notification = new stdClass();
+        $notification->sObject = new stdClass();
 
         $notificationRequestMock = $this->createMock(NotificationRequest::class);
         $notificationRequestMock->expects($this->atLeastOnce())
@@ -171,8 +172,8 @@ class SoapRequestHandlerTest extends TestCase
      */
     public function testNotificationsSuccessfulOnNewDocument()
     {
-        $notification = new \stdClass();
-        $notification->sObject = new \stdClass();
+        $notification = new stdClass();
+        $notification->sObject = new stdClass();
 
         $notificationRequestMock = $this->createMock(NotificationRequest::class);
         $notificationRequestMock->expects($this->atLeastOnce())
@@ -229,8 +230,8 @@ class SoapRequestHandlerTest extends TestCase
      */
     public function testNotificationsSkipSuccessful()
     {
-        $notification = new \stdClass();
-        $notification->sObject = new \stdClass();
+        $notification = new stdClass();
+        $notification->sObject = new stdClass();
 
         $notificationRequestMock = $this->createMock(NotificationRequest::class);
         $notificationRequestMock->expects($this->atLeastOnce())
@@ -281,7 +282,8 @@ class SoapRequestHandlerTest extends TestCase
         $this->assertTrue($response->getAck());
     }
 
-    public function generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, $isSkipDocument = false) {
+    public function generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, $isSkipDocument = false)
+    {
         $eventMock = $this->createMock(OutboundMessageBeforeFlushEvent::class);
 
         $eventMock->expects($this->any())
@@ -297,7 +299,8 @@ class SoapRequestHandlerTest extends TestCase
         return $eventMock;
     }
 
-    public function generateAfterFlushEventMock($documentMock) {
+    public function generateAfterFlushEventMock($documentMock)
+    {
         $eventMock = $this->createMock(OutboundMessageAfterFlushEvent::class);
 
         $eventMock->expects($this->any())

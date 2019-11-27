@@ -4,8 +4,8 @@ namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
-use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
+use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
