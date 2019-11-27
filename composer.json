@@ -6,7 +6,11 @@
   "autoload": {
     "psr-4": {
       "Comsave\\": "src/Comsave/"
-    }
+    },
+    "files": ["src/Comsave/SalesforceOutboundMessageBundle/functions.php"]
+  },
+  "autoload-dev": {
+    "files": ["src/Comsave/SalesforceOutboundMessageBundle/functions.php"]
   },
   "provide": {
     "ext-mongo": "*"

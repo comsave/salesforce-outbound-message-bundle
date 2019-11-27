@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services;
 
-use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use Comsave\SalesforceOutboundMessageBundle\Services\PropertyAccessor;
+use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use PHPUnit\Framework\TestCase;
 
 /**

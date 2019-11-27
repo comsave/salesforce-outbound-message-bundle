@@ -6,6 +6,7 @@ use Comsave\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterfa
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapServerBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use SoapServer;
 
 /**
  * Class SoapServerBuilderTest
@@ -36,6 +37,6 @@ class SoapServerBuilderTest extends TestCase
 
         $soapServer = $this->soapServerBuilder->build($wsdlPath, $soapRequestHandler);
 
-        $this->assertInstanceOf(\SoapServer::class, $soapServer);
+        $this->assertInstanceOf(SoapServer::class, $soapServer);
     }
 }

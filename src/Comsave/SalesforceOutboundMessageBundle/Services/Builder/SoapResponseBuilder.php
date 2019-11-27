@@ -14,7 +14,7 @@ class SoapResponseBuilder
     {
         $response = new Response();
 
-        foreach(static::SOAP_RESPONSE_HEADERS as $headerKey => $headerValue) {
+        foreach (static::SOAP_RESPONSE_HEADERS as $headerKey => $headerValue) {
             $response->headers->set($headerKey, $headerValue);
         }
 

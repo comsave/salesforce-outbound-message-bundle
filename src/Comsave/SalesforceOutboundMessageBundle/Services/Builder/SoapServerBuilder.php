@@ -19,7 +19,7 @@ class SoapServerBuilder
     public function __construct(string $wsdlCache)
     {
         $this->soapServerOptions = array_merge($this->soapServerOptions, [
-            'cache_wsdl' => constant($wsdlCache)
+            'cache_wsdl' => constant($wsdlCache),
         ]);
     }
 

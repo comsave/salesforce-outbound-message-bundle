@@ -23,6 +23,7 @@ class OutboundMessageAfterFlushEventBuilderTest extends TestCase
     {
         $this->outboundMessageAfterFlushEventBuilder = new OutboundMessageAfterFlushEventBuilder();
     }
+
     /**
      * @covers ::build()
      */
