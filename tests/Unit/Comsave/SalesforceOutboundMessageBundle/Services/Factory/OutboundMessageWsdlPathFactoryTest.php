@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Factory;
 
-use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -36,7 +35,7 @@ class OutboundMessageWsdlPathFactoryTest extends TestCase
 
     /**
      * @covers ::getWsdlPath()
-     * @expectedException SalesforceException
+     * @expectedException \Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
     public function testGetWsdlPathThrowsExceptionWhenFileCantBeFound()
     {

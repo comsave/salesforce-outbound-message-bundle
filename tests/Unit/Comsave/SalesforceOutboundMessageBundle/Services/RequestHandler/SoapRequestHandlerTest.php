@@ -4,7 +4,6 @@ namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\RequestHan
 
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageAfterFlushEvent;
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
-use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationRequest;
 use Comsave\SalesforceOutboundMessageBundle\Model\NotificationResponse;
@@ -94,7 +93,7 @@ class SoapRequestHandlerTest extends TestCase
     /**
      * @covers ::notifications()
      * @covers ::process()
-     * @expectedException SalesforceException
+     * @expectedException \Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
     public function testNotificationsThrowsExceptionWhenNotAnObjectInNotification()
     {

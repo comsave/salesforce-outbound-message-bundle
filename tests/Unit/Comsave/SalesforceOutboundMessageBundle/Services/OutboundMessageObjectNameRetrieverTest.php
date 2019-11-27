@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services;
 
-use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
 use Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObjectNameResolver;
 use PHPUnit\Framework\TestCase;
 
@@ -63,7 +62,7 @@ class OutboundMessageObjectNameRetrieverTest extends TestCase
 
     /**
      * @covers ::resolve()
-     * @expectedException SalesforceException
+     * @expectedException \Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
     public function testRetrieveThrowsExceptionOnInvalidXml()
     {
@@ -99,7 +98,7 @@ class OutboundMessageObjectNameRetrieverTest extends TestCase
 
     /**
      * @covers ::resolve()
-     * @expectedException SalesforceException
+     * @expectedException \Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException
      */
     public function testRetrieveThrowsExceptionOnEmptyXml()
     {
