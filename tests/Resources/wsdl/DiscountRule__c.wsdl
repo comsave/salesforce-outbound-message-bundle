@@ -15,7 +15,8 @@ All Rights Reserved
              xmlns:ens="urn:sobject.enterprise.soap.sforce.com">
     <types>
 
-        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:enterprise.soap.sforce.com">
+        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:enterprise.soap.sforce.com">
             <!-- Our simple ID Type -->
             <simpleType name="ID">
                 <restriction base="xsd:string">
@@ -25,13 +26,14 @@ All Rights Reserved
             </simpleType>
         </schema>
 
-        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:sobject.enterprise.soap.sforce.com">
-            <import namespace="urn:enterprise.soap.sforce.com" />
+        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:sobject.enterprise.soap.sforce.com">
+            <import namespace="urn:enterprise.soap.sforce.com"/>
             <!-- Base sObject (abstract) -->
             <complexType name="sObject">
                 <sequence>
-                    <element name="fieldsToNull"       type="xsd:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-                    <element name="Id"                 type="ent:ID" nillable="true" />
+                    <element name="fieldsToNull" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                    <element name="Id" type="ent:ID" nillable="true"/>
                 </sequence>
             </complexType>
 
@@ -39,7 +41,8 @@ All Rights Reserved
                 <complexContent>
                     <extension base="ens:sObject">
                         <sequence>
-                            <any namespace="##targetNamespace" minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+                            <any namespace="##targetNamespace" minOccurs="0" maxOccurs="unbounded"
+                                 processContents="lax"/>
                         </sequence>
                     </extension>
                 </complexContent>
@@ -65,34 +68,35 @@ All Rights Reserved
 
         </schema>
 
-        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://soap.sforce.com/2005/09/outbound">
-            <import namespace="urn:enterprise.soap.sforce.com" />
-            <import namespace="urn:sobject.enterprise.soap.sforce.com" />
+        <schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="http://soap.sforce.com/2005/09/outbound">
+            <import namespace="urn:enterprise.soap.sforce.com"/>
+            <import namespace="urn:sobject.enterprise.soap.sforce.com"/>
 
             <element name="notifications">
                 <complexType>
                     <sequence>
-                        <element name="OrganizationId" type="ent:ID" />
-                        <element name="ActionId" type="ent:ID" />
-                        <element name="SessionId" type="xsd:string" nillable="true" />
-                        <element name="EnterpriseUrl" type="xsd:string" />
-                        <element name="PartnerUrl" type="xsd:string" />
-                        <element name="Notification" maxOccurs="100" type="tns:DiscountRule__cNotification" />
+                        <element name="OrganizationId" type="ent:ID"/>
+                        <element name="ActionId" type="ent:ID"/>
+                        <element name="SessionId" type="xsd:string" nillable="true"/>
+                        <element name="EnterpriseUrl" type="xsd:string"/>
+                        <element name="PartnerUrl" type="xsd:string"/>
+                        <element name="Notification" maxOccurs="100" type="tns:DiscountRule__cNotification"/>
                     </sequence>
                 </complexType>
             </element>
 
             <complexType name="DiscountRule__cNotification">
                 <sequence>
-                    <element name="Id" type="ent:ID" />
-                    <element name="sObject" type="ens:DiscountRule__c" />
+                    <element name="Id" type="ent:ID"/>
+                    <element name="sObject" type="ens:DiscountRule__c"/>
                 </sequence>
             </complexType>
 
             <element name="notificationsResponse">
                 <complexType>
                     <sequence>
-                        <element name="Ack" type="xsd:boolean" />
+                        <element name="Ack" type="xsd:boolean"/>
                     </sequence>
                 </complexType>
             </element>
@@ -111,7 +115,7 @@ All Rights Reserved
     <portType name="NotificationPort">
         <operation name="notifications">
             <documentation>Process a number of notifications.</documentation>
-            <input  message="tns:notificationsRequest"/>
+            <input message="tns:notificationsRequest"/>
             <output message="tns:notificationsResponse"/>
         </operation>
     </portType>

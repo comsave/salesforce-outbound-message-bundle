@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
-use Comsave\SalesforceOutboundMessageBundle\Interfaces\SoapRequestHandlerInterface;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapServerBuilder;
-use PHPUnit\Framework\MockObject\MockObject;
+use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use PHPUnit\Framework\TestCase;
 use SoapServer;
 
@@ -16,7 +15,7 @@ use SoapServer;
 class SoapServerBuilderTest extends TestCase
 {
     /**
-     * @var SoapServerBuilder|MockObject
+     * @var SoapServerBuilder
      */
     protected $soapServerBuilder;
 
@@ -33,7 +32,7 @@ class SoapServerBuilderTest extends TestCase
     public function testBuildReturnsASoapServer()
     {
         $wsdlPath = 'Tests/Resources/wsdl/DiscountRule__c.wsdl';
-        $soapRequestHandler = $this->createMock(SoapRequestHandlerInterface::class);
+        $soapRequestHandler = $this->createMock(SoapRequestHandler::class);
 
         $soapServer = $this->soapServerBuilder->build($wsdlPath, $soapRequestHandler);
 
