@@ -19,7 +19,7 @@ class OutboundMessageWsdlPathFactoryTest extends TestCase
 
     public function setUp()
     {
-        $this->outboundMessageWsdlPathFactory = new OutboundMessageWsdlPathFactory('tests/Resources/wsdl/');
+        $this->outboundMessageWsdlPathFactory = new OutboundMessageWsdlPathFactory('Tests/Resources/wsdl/');
     }
 
     /**
@@ -30,7 +30,7 @@ class OutboundMessageWsdlPathFactoryTest extends TestCase
         $objectName = 'DiscountRule__c';
         $wsdlPath = $this->outboundMessageWsdlPathFactory->getWsdlPath($objectName);
 
-        $this->assertEquals('tests/Resources/wsdl/DiscountRule__c.wsdl', $wsdlPath);
+        $this->assertEquals('Tests/Resources/wsdl/DiscountRule__c.wsdl', $wsdlPath);
     }
 
     /**

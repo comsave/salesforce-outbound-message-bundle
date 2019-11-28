@@ -35,8 +35,8 @@
   },
   "scripts": {
     "run-tests": "vendor/bin/phpunit -c phpunit.xml.dist --no-coverage",
-    "run-coverage": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover tests/_output/coverage.xml",
-    "run-coverage-text": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-text=tests/_output/coverage.txt && cat tests/_output/coverage.txt"
+    "run-coverage": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover Tests/_output/coverage.xml",
+    "run-coverage-text": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-text=Tests/_output/coverage.txt && cat Tests/_output/coverage.txt"
   },
   "authors": [
     {
