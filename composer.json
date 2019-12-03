@@ -22,7 +22,7 @@
     "symfony/config": "^3.4",
     "symfony/dependency-injection": "^3.4.26",
     "symfony/event-dispatcher": "^3.4.9",
-    "symfony/http-foundation": "^3.4",
+    "symfony/http-foundation": "^3.4.26",
     "symfony/http-kernel": "^3.4",
     "symfony/polyfill-apcu": "^1.12"
   },
@@ -34,9 +34,9 @@
     "ext-mongo": "*"
   },
   "scripts": {
-    "run-tests": "vendor/bin/phpunit --no-coverage",
-    "run-coverage": "vendor/bin/phpunit --coverage-clover tests/_output/coverage.xml",
-    "run-coverage-text": "vendor/bin/phpunit --coverage-text=tests/_output/coverage.txt && cat tests/_output/coverage.txt"
+    "run-tests": "vendor/bin/phpunit -c phpunit.xml.dist --no-coverage",
+    "run-coverage": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover Tests/_output/coverage.xml",
+    "run-coverage-text": "vendor/bin/phpunit -c phpunit.xml.dist --coverage-text=Tests/_output/coverage.txt && cat Tests/_output/coverage.txt"
   },
   "authors": [
     {

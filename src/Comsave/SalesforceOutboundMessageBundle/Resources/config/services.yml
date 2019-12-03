@@ -6,7 +6,7 @@ services:
 
   Comsave\SalesforceOutboundMessageBundle\:
     resource: '../../*'
-    exclude: '../../{DependencyInjection,Entity,Exception,Migrations,Tests,Kernel.php}'
+    exclude: '../../{DependencyInjection,Entity,Exception,Migrations,Tests,Kernel.php,functions.php}'
 
   Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory:
     arguments:
