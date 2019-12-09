@@ -13,10 +13,9 @@ class ComsaveSalesforceOutboundMessageExtension extends Extension
     {
         $configuration = new Configuration();
 
-        $config = $this->processConfiguration($configuration, $configs);
         DependencyInjectionBuilder::setupConfigurationParameters(
             $container,
-            $config,
+            $this->processConfiguration($configuration, $configs),
             'comsave_salesforce_outbound_message'
         );
 

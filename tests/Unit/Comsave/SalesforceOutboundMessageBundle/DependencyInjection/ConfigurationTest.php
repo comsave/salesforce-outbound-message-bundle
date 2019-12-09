@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\DependencyInjection;
 
 use Comsave\SalesforceOutboundMessageBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
@@ -9,30 +9,31 @@ class ConfigurationTest extends TestCase
 {
     /**
      * @dataProvider dataTestConfiguration
-     *
-     * @param mixed $inputConfig
-     * @param mixed $expectedConfig
+     * @param array $inputConfig
+     * @param array $expectedConfig
      */
-    public function testConfiguration($inputConfig, $expectedConfig)
+    public function testConfiguration(array $inputConfig, array $expectedConfig): void
     {
         $configuration = new Configuration();
 
-        $node = $configuration->getConfigTreeBuilder()
-            ->buildTree();
-        $normalizedConfig = $node->normalize($inputConfig);
-        $finalizedConfig = $node->finalize($normalizedConfig);
+        $configNode = $configuration->getConfigTreeBuilder()->buildTree();
+        $resultConfig = $configNode->finalize($configNode->normalize($inputConfig));
 
-        $this->assertEquals($expectedConfig, $finalizedConfig);
+        $this->assertEquals($expectedConfig, $resultConfig);
     }
 
-    public function dataTestConfiguration()
+    public function dataTestConfiguration(): array
     {
         return [
-            'test configuration'   => [
-                ['input'],
-                ['expected_config']
+            'comsave_salesforce_outbound_message' => [
+                'wsdl_cache' => 'WSDL_CACHE_NONE',
+                'wsdl_directory' => '%kernel.project_dir%/Resources/wsdl_documents',
+                'document_paths' => [
+                    'ObjectToBeRemoved__c' => [
+                        'path' => 'Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved',
+                    ],
+                ],
             ],
-            // ...
         ];
     }
 }
