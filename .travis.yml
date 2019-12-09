@@ -5,14 +5,14 @@ php:
   - 7.3
 #  - 7.4
 
-before_install:
-  - composer require "symfony/config:${SYMFONY_VERSION}" --no-update
-  - composer require "symfony/dependency-injection:${SYMFONY_VERSION}" --no-update
-  - composer require "symfony/event-dispatcher:${SYMFONY_VERSION}" --no-update
-  - composer require "symfony/http-kernel:${SYMFONY_VERSION}" --no-update
+before_install: >
+  cat /etc/issue
+  apt-get install jq
+  for symfony_dependency in $(cat composer.json | jq '.require | to_entries[] | .key' | egrep -o "symfony/[^\"]+"); do
+    composer require "symfony/config:${SYMFONY_VERSION}" --no-update
+  done
 
-install:
-  - composer install --no-interaction
+install: composer install --no-interaction
 
 script:
   - bin/console cache:clear --env=prod
