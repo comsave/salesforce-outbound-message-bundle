@@ -11,9 +11,12 @@ before_install:
   - composer require "symfony/event-dispatcher:${SYMFONY_VERSION}" --no-update
   - composer require "symfony/http-kernel:${SYMFONY_VERSION}" --no-update
 
-install: composer install --no-interaction
+install:
+  - composer install --no-interaction
 
-script: composer run-coverage
+script:
+  - bin/console cache:clear --env=prod
+  - composer run-coverage
 
 env:
   global:
