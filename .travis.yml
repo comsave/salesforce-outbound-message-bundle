@@ -17,7 +17,7 @@ script:
 env:
   global:
     - CC_TEST_REPORTER_ID=ade3e812370d0201d8abc6f28208859b755b9cd188d2f9139cfbdcb3fc309dcf
-    - SYMFONY_VERSION=^5.0
+#    - SYMFONY_VERSION=^5.0
 
 matrix:
   include:
