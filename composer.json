@@ -19,7 +19,7 @@
     "ext-soap": "^7.2",
     "comsave/salesforce-mapper-bundle": "^3.0.6",
     "doctrine/mongodb-odm": "^1.1",
-    "symfony/config": "~3.4|~4.3|~5.0",
+    "symfony/config": "~3.4|~4.3",
     "symfony/dependency-injection": "~3.4|~4.3|~5.0",
     "symfony/event-dispatcher": "~3.4|~4.3|~5.0",
     "symfony/http-kernel": "~3.4|~4.3|~5.0",
@@ -30,7 +30,7 @@
     "phpunit/phpunit": "^7.0"
   },
   "conflict": {
-    "symfony/dependency-injection": ">=5.0"
+    "symfony/config": ">=5.0"
   },
   "provide": {
     "ext-mongo": "*"

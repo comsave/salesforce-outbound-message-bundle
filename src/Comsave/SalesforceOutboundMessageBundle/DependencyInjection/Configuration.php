@@ -14,15 +14,8 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder()
     {
-        if(version_compare(Kernel::VERSION, '5.0') >= 0) {
-            $treeBuilder = new TreeBuilder('comsave_salesforce_outbound_message');
-            $rootNode = $treeBuilder->getRootNode();
-        }
-        else {
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('comsave_salesforce_outbound_message');
-        }
-
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('comsave_salesforce_outbound_message');
         $rootNode
             ->children()
                 ->scalarNode('wsdl_cache')->defaultValue('WSDL_CACHE_DISK')->end()
