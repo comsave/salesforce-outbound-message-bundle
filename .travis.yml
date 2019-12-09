@@ -8,7 +8,7 @@ php:
 before_install: >
   cat /etc/issue;
   apt-get install jq;
-  for symfony_dependency in $(cat composer.json | jq '.require | to_entries[] | .key' | egrep -o "symfony/[^\"]+"); do composer require "symfony/config:${SYMFONY_VERSION}" --no-update; done
+  for symfony_dependency in $(cat composer.json | jq '.require | to_entries[] | .key' | egrep -o "symfony/[^\"]+"); do composer require "symfony/$symfony_dependency:${SYMFONY_VERSION}" --no-update; done
 
 install: composer install --no-interaction
 
