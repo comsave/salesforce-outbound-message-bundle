@@ -6,8 +6,7 @@ php:
 #  - 7.4
 
 before_install:
-  - SYMFONY_DEPENDENCIES=$(cat composer.json | cat composer.json | jq '.require | to_entries[] | "\(.key):\(.value)"' | egrep -o '(symfony\/[^:]+)[^|]+\|' | egrep -o '(symfony\/[^:]+)'); for SYMFONY_DEPENDENCY in $SYMFONY_DEPENDENCIES; do composer require "${SYMFONY_DEPENDENCY}:${SYMFONY_VERSION}" --no-update; done
-#  - SYMFONY_DEV_DEPENDENCIES=$(cat composer.json | cat composer.json | jq '.require-dev | to_entries[] | "\(.key):\(.value)"' | egrep -o '(symfony\/[^:]+)[^|]+\|' | egrep -o '(symfony\/[^:]+)'); for SYMFONY_DEV_DEPENDENCY in $SYMFONY_DEV_DEPENDENCIES; do composer require "${SYMFONY_DEV_DEPENDENCY}:${SYMFONY_VERSION}" --no-update; done
+  - SYMFONY_DEPENDENCIES=$(cat composer.json | jq '.require | to_entries[] | "\(.key):\(.value)"' | egrep -o '(symfony\/[^:]+)[^|]+\|' | egrep -o '(symfony\/[^:]+)'); for SYMFONY_DEPENDENCY in $SYMFONY_DEPENDENCIES; do composer require "${SYMFONY_DEPENDENCY}:${SYMFONY_VERSION}" --no-update; done
 
 install: composer install --no-interaction
 
