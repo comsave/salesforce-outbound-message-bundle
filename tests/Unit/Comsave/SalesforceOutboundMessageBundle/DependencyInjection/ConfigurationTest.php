@@ -7,10 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class ConfigurationTest extends TestCase
 {
-    /**
-     * @param array $inputConfig
-     * @param array $expectedConfig
-     */
     public function testConfiguration(): void
     {
         $inputOutput = [
