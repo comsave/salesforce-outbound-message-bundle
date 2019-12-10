@@ -8,32 +8,26 @@ use PHPUnit\Framework\TestCase;
 class ConfigurationTest extends TestCase
 {
     /**
-     * @dataProvider dataTestConfiguration
      * @param array $inputConfig
      * @param array $expectedConfig
      */
-    public function testConfiguration(array $inputConfig, array $expectedConfig): void
+    public function testConfiguration(): void
     {
-        $configuration = new Configuration();
-
-        $configNode = $configuration->getConfigTreeBuilder()->buildTree();
-        $resultConfig = $configNode->finalize($configNode->normalize($inputConfig));
-
-        $this->assertEquals($expectedConfig, $resultConfig);
-    }
-
-    public function dataTestConfiguration(): array
-    {
-        return [
-            'comsave_salesforce_outbound_message' => [
-                'wsdl_cache' => 'WSDL_CACHE_NONE',
-                'wsdl_directory' => '%kernel.project_dir%/Resources/wsdl_documents',
-                'document_paths' => [
-                    'ObjectToBeRemoved__c' => [
-                        'path' => 'Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved',
-                    ],
+        $inputOutput = [
+            'wsdl_cache' => 'WSDL_CACHE_NONE',
+            'wsdl_directory' => '%kernel.project_dir%/Resources/wsdl_documents',
+            'document_paths' => [
+                'ObjectToBeRemoved__c' => [
+                    'path' => 'Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved',
                 ],
             ],
         ];
+
+        $configuration = new Configuration();
+
+        $configNode = $configuration->getConfigTreeBuilder()->buildTree();
+        $resultConfig = $configNode->finalize($configNode->normalize($inputOutput));
+
+        $this->assertEquals($inputOutput, $resultConfig);
     }
 }
