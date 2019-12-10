@@ -3,7 +3,7 @@ language: php
 php:
   - 7.2
   - 7.3
-  - 7.4
+#  - 7.4
 
 before_install:
   - SYMFONY_DEPENDENCIES=$(cat composer.json | jq '.require | to_entries[] | "\(.key):\(.value)"' | egrep -o '(symfony\/[^:]+)[^|]+\|' | egrep -o '(symfony\/[^:]+)'); for SYMFONY_DEPENDENCY in $SYMFONY_DEPENDENCIES; do composer require "${SYMFONY_DEPENDENCY}:${SYMFONY_VERSION}" --no-update; done
@@ -28,10 +28,10 @@ matrix:
         env: SYMFONY_VERSION=^3.4
       - php: 7.3
         env: SYMFONY_VERSION=^4.3
-      - php: 7.4
-        env: SYMFONY_VERSION=^3.4
-      - php: 7.4
-        env: SYMFONY_VERSION=^4.3
+#      - php: 7.4
+#        env: SYMFONY_VERSION=^3.4
+#      - php: 7.4
+#        env: SYMFONY_VERSION=^4.3
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
