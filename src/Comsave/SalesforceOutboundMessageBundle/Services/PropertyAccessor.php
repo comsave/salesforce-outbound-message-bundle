@@ -2,11 +2,21 @@
 
 namespace Comsave\SalesforceOutboundMessageBundle\Services;
 
+use Symfony\Component\PropertyAccess\PropertyAccess;
+
 /**
  * @todo moveout to a separate repo
  */
 class PropertyAccessor
 {
+    /** @var PropertyAccess */
+    private $propertyAccess;
+
+    public function __construct()
+    {
+        $this->propertyAccess = PropertyAccess::createPropertyAccessor();
+    }
+
     /**
      * @param $document
      * @param $fieldName
@@ -14,13 +24,7 @@ class PropertyAccessor
      */
     public function getValue($document, $fieldName)
     {
-        if (method_exists($document, $fieldName)) {
-            return $document->$fieldName();
-        }
-
-        $getter = $this->getPropertyGetter($fieldName);
-
-        return $document->$getter();
+        return $this->propertyAccess->getValue($document, $fieldName);
     }
 
     /**
@@ -30,9 +34,7 @@ class PropertyAccessor
      */
     public function setValue($document, $fieldName, $value)
     {
-        $setter = $this->getPropertysetter($fieldName);
-
-        $document->$setter($value);
+        return $this->propertyAccess->setValue($document, $fieldName, $value);
     }
 
     /**
@@ -42,9 +44,7 @@ class PropertyAccessor
      */
     public function isReadable($document, $fieldName)
     {
-        $getter = $this->getPropertyGetter($fieldName);
-
-        return (method_exists($document, $getter) || method_exists($document, $fieldName));
+        return $this->propertyAccess->isReadable($document, $fieldName);
     }
 
     /**
@@ -54,26 +54,6 @@ class PropertyAccessor
      */
     public function isWritable($document, $fieldName)
     {
-        $setter = $this->getPropertySetter($fieldName);
-
-        return method_exists($document, $setter);
-    }
-
-    /**
-     * @param $fieldName
-     * @return string
-     */
-    private function getPropertyGetter($fieldName)
-    {
-        return 'get'.ucfirst($fieldName);
-    }
-
-    /**
-     * @param $fieldName
-     * @return string
-     */
-    private function getPropertySetter($fieldName)
-    {
-        return 'set'.ucfirst($fieldName);
+        return $this->propertyAccess->isWritable($document, $fieldName);
     }
 }

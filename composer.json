@@ -23,7 +23,8 @@
     "symfony/dependency-injection": "^3.4|^4.3",
     "symfony/event-dispatcher": "^3.4|^4.3",
     "symfony/http-kernel": "^3.4|^4.3",
-    "symfony/polyfill-apcu": "^1.12"
+    "symfony/polyfill-apcu": "^1.12",
+    "symfony/property-access": "^3.4|^4.3"
   },
   "require-dev": {
     "phpunit/php-code-coverage": "^6.0",
