@@ -21,22 +21,15 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('wsdl_cache')->defaultValue('WSDL_CACHE_DISK')->end()
                 ->scalarNode('wsdl_directory')->isRequired()->end()
                 ->arrayNode('document_paths')
-                    ->useAttributeAsKey('name', false)
-                    ->prototype('array')
-                    ->append($this->getDocumentPath())
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('path')->end()
+                            ->scalarNode('force_compare')->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end();
 
         return $treeBuilder;
-    }
-
-    private function getDocumentPath()
-    {
-        return new ScalarNodeDefinition('path');
-    }
-
-    private function getDocumentName()
-    {
-        return new ScalarNodeDefinition('name');
     }
 }

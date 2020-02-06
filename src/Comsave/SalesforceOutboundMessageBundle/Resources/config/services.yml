@@ -12,7 +12,7 @@ services:
     arguments:
       - '%comsave_salesforce_outbound_message.wsdl_directory%'
 
-  Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory:
+  Comsave\SalesforceOutboundMessageBundle\Services\Factory\SalesforceObjectDocumentMetadataFactory:
     arguments:
       - '%comsave_salesforce_outbound_message.document_paths%'
 
