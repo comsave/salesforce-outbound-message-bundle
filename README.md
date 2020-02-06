@@ -60,6 +60,7 @@ comsave_salesforce_outbound_message:
         # Map a document using its Salesforce name and your local class 
         CustomObject__c:              
             path: 'YourNamespace\Documents\CustomObject'
+            force_compared: false # if true, incoming object will be compared to existing ones in the database; will continue sync only if not equal
 ```
 * Add `DocumentInterface` to the document class you'd like to be tracked by the `OutboundMessageBundle`.
 ```php
