@@ -115,10 +115,9 @@ class AccountSoapRequestSubscriber implements EventSubscriberInterface
          * Make sure to do call $this->supports() before you start processing the object
          * You only want to process the correct object in this EventSubscriber (which is Account in this case)
          */
-        if (!$this->supports($account)) return; 
-    
         $existingAccount = $event->getExistingDocument();
-        
+        if (!$this->supports($existingAccount)) return; 
+    
         /**
          * You can do any modifications you want to the object before it get's saved (flushed) to the database.
          * - - -
