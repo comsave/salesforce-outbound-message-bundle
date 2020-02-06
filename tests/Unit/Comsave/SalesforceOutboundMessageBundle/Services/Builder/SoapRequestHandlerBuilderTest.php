@@ -6,6 +6,7 @@ use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfte
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
+use Comsave\SalesforceOutboundMessageBundle\Services\ObjectComparator;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
@@ -29,56 +30,54 @@ class SoapRequestHandlerBuilderTest extends TestCase
     /**
      * @var MockObject|DocumentManager
      */
-    private $documentManager;
+    private $documentManagerMock;
 
     /**
      * @var MockObject|Mapper
      */
-    private $mapper;
+    private $mapperMock;
 
     /**
      * @var MockObject|DocumentUpdater
      */
-    private $documentUpdater;
+    private $documentUpdaterMock;
 
     /**
      * @var MockObject|EventDispatcherInterface
      */
-    private $eventDispatcher;
-
-    /**
-     * @var MockObject|LoggerInterface
-     */
-    private $logger;
+    private $eventDispatcherMock;
 
     /**
      * @var MockObject|OutboundMessageBeforeFlushEventBuilder
      */
-    private $outboundMessageBeforeFlushEventBuilder;
+    private $outboundMessageBeforeFlushEventBuilderMock;
 
     /**
      * @var MockObject|OutboundMessageAfterFlushEventBuilder
      */
-    private $outboundMessageAfterFlushEventBuilder;
+    private $outboundMessageAfterFlushEventBuilderMock;
+
+    /** @var ObjectComparator|MockObject */
+    private $objectComparatorMock;
 
     public function setUp()
     {
-        $this->documentManager = $this->createMock(DocumentManager::class);
-        $this->mapper = $this->createMock(Mapper::class);
-        $this->documentUpdater = $this->createMock(DocumentUpdater::class);
-        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->outboundMessageBeforeFlushEventBuilder = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
-        $this->outboundMessageAfterFlushEventBuilder = $this->createMock(OutboundMessageAfterFlushEventBuilder::class);
+        $this->documentManagerMock = $this->createMock(DocumentManager::class);
+        $this->mapperMock = $this->createMock(Mapper::class);
+        $this->documentUpdaterMock = $this->createMock(DocumentUpdater::class);
+        $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $this->outboundMessageBeforeFlushEventBuilderMock = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
+        $this->outboundMessageAfterFlushEventBuilderMock = $this->createMock(OutboundMessageAfterFlushEventBuilder::class);
+        $this->objectComparatorMock = $this->createMock(ObjectComparator::class);
 
         $this->soapRequestHandlerBuilder = new SoapRequestHandlerBuilder(
-            $this->documentManager,
-            $this->mapper,
-            $this->documentUpdater,
-            $this->eventDispatcher,
-            $this->logger,
-            $this->outboundMessageBeforeFlushEventBuilder,
-            $this->outboundMessageAfterFlushEventBuilder
+            $this->documentManagerMock,
+            $this->mapperMock,
+            $this->documentUpdaterMock,
+            $this->eventDispatcherMock,
+            $this->outboundMessageBeforeFlushEventBuilderMock,
+            $this->outboundMessageAfterFlushEventBuilderMock,
+            $this->objectComparatorMock
         );
     }
 
@@ -89,7 +88,7 @@ class SoapRequestHandlerBuilderTest extends TestCase
     {
         $objectName = 'Product';
 
-        $soapRequestHandler = $this->soapRequestHandlerBuilder->build($objectName);
+        $soapRequestHandler = $this->soapRequestHandlerBuilder->build($objectName, false);
 
         $this->assertInstanceOf(SoapRequestHandler::class, $soapRequestHandler);
     }

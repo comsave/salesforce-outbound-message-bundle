@@ -6,7 +6,7 @@ use Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved;
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
 use Comsave\SalesforceOutboundMessageBundle\EventSubscriber\ObjectToBeRemovedEventSubscriber;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
-use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
+use Comsave\SalesforceOutboundMessageBundle\Services\Factory\SalesforceObjectDocumentMetadataFactory;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
@@ -28,14 +28,14 @@ class ObjectToBeRemovedEventSubscriberTest extends TestCase
     /** @var MockObject|Mapper */
     private $mapperMock;
 
-    /** @var MockObject|OutboundMessageDocumentClassNameFactory */
+    /** @var MockObject|SalesforceObjectDocumentMetadataFactory */
     private $outboundMessageDocumentClassNameFactory;
 
     public function setUp(): void
     {
         $this->documentManagerMock = $this->createMock(DocumentManager::class);
         $this->mapperMock = $this->createMock(Mapper::class);
-        $this->outboundMessageDocumentClassNameFactory = $this->createMock(OutboundMessageDocumentClassNameFactory::class);
+        $this->outboundMessageDocumentClassNameFactory = $this->createMock(SalesforceObjectDocumentMetadataFactory::class);
 
         $this->objectToBeRemovedEventSubscriber = new ObjectToBeRemovedEventSubscriber(
             $this->documentManagerMock,

@@ -17,14 +17,9 @@ use PHPUnit\Framework\TestCase;
 class DocumentUpdaterTest extends TestCase
 {
     /**
-     * @var MockObject
+     * @var MockObject|PropertyAccessor
      */
     private $propertyAccessor;
-
-    /**
-     * @var MockObject
-     */
-    private $annotationReader;
 
     /**
      * @var DocumentUpdater
@@ -34,9 +29,8 @@ class DocumentUpdaterTest extends TestCase
     public function setUp()
     {
         $this->propertyAccessor = $this->createMock(PropertyAccessor::class);
-        $this->annotationReader = $this->createMock(AnnotationReader::class);
 
-        $this->documentUpdater = new DocumentUpdater($this->propertyAccessor, $this->annotationReader);
+        $this->documentUpdater = new DocumentUpdater($this->propertyAccessor);
     }
 
     /**

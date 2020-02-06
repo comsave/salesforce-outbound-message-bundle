@@ -26,28 +26,28 @@ class OutboundMessageRequestHandlerTest extends TestCase
     /**
      * @var OutboundMessageSoapServerBuilder|MockObject
      */
-    private $outboundMessageSoapServerBuilder;
+    private $outboundMessageSoapServerBuilderMock;
 
     /**
      * @var SoapResponseBuilder|MockObject
      */
-    private $soapServerResponseBuilder;
+    private $soapServerResponseBuilderMock;
 
     /**
      * @var OutboundMessageObjectNameResolver|MockObject
      */
-    private $outboundMessageObjectNameResolver;
+    private $outboundMessageObjectNameResolverMock;
 
     public function setUp()
     {
-        $this->outboundMessageSoapServerBuilder = $this->createMock(OutboundMessageSoapServerBuilder::class);
-        $this->soapServerResponseBuilder = $this->createMock(SoapResponseBuilder::class);
-        $this->outboundMessageObjectNameResolver = $this->createMock(OutboundMessageObjectNameResolver::class);
+        $this->outboundMessageSoapServerBuilderMock = $this->createMock(OutboundMessageSoapServerBuilder::class);
+        $this->soapServerResponseBuilderMock = $this->createMock(SoapResponseBuilder::class);
+        $this->outboundMessageObjectNameResolverMock = $this->createMock(OutboundMessageObjectNameResolver::class);
 
         $this->outboundMessageRequestHandler = new OutboundMessageRequestHandler(
-            $this->outboundMessageSoapServerBuilder,
-            $this->soapServerResponseBuilder,
-            $this->outboundMessageObjectNameResolver
+            $this->outboundMessageSoapServerBuilderMock,
+            $this->soapServerResponseBuilderMock,
+            $this->outboundMessageObjectNameResolverMock
         );
     }
 
@@ -57,7 +57,7 @@ class OutboundMessageRequestHandlerTest extends TestCase
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>';
 
-        $this->outboundMessageObjectNameResolver->expects($this->once())
+        $this->outboundMessageObjectNameResolverMock->expects($this->once())
             ->method('resolve')
             ->willReturn('objectName');
 
@@ -66,14 +66,14 @@ class OutboundMessageRequestHandlerTest extends TestCase
             ->method('handle')
             ->with($xml);
 
-        $this->outboundMessageSoapServerBuilder->expects($this->once())
+        $this->outboundMessageSoapServerBuilderMock->expects($this->once())
             ->method('build')
             ->with('objectName')
             ->willReturn($soapServerMock);
 
         $response = $this->createMock(Response::class);
 
-        $this->soapServerResponseBuilder->expects($this->once())
+        $this->soapServerResponseBuilderMock->expects($this->once())
             ->method('build')
             ->willReturn($response);
 

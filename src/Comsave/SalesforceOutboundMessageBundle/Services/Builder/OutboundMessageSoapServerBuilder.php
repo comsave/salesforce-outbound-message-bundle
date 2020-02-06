@@ -3,7 +3,7 @@
 namespace Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 
 use Comsave\SalesforceOutboundMessageBundle\Exception\SalesforceException;
-use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
+use Comsave\SalesforceOutboundMessageBundle\Services\Factory\SalesforceObjectDocumentMetadataFactory;
 use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 use SoapServer;
 
@@ -21,28 +21,28 @@ class OutboundMessageSoapServerBuilder
     private $soapServerRequestHandlerBuilder;
 
     /**
-     * @var OutboundMessageDocumentClassNameFactory
+     * @var SalesforceObjectDocumentMetadataFactory
      */
-    private $outboundMessageDocumentClassNameFactory;
+    private $salesforceObjectMetadataFactory;
 
     /**
      * OutboundMessageSoapServerBuilder constructor.
      * @param SoapServerBuilder $soapServerBuilder
      * @param OutboundMessageWsdlPathFactory $wsdlPathFactory
      * @param SoapRequestHandlerBuilder $soapServerRequestHandlerBuilder
-     * @param OutboundMessageDocumentClassNameFactory $outboundMessageDocumentClassNameFactory
+     * @param SalesforceObjectDocumentMetadataFactory $outboundMessageDocumentClassNameFactory
      * @codeCoverageIgnore
      */
     public function __construct(
         SoapServerBuilder $soapServerBuilder,
         OutboundMessageWsdlPathFactory $wsdlPathFactory,
         SoapRequestHandlerBuilder $soapServerRequestHandlerBuilder,
-        OutboundMessageDocumentClassNameFactory $outboundMessageDocumentClassNameFactory
+        SalesforceObjectDocumentMetadataFactory $outboundMessageDocumentClassNameFactory
     ) {
         $this->soapServerBuilder = $soapServerBuilder;
         $this->wsdlPathFactory = $wsdlPathFactory;
         $this->soapServerRequestHandlerBuilder = $soapServerRequestHandlerBuilder;
-        $this->outboundMessageDocumentClassNameFactory = $outboundMessageDocumentClassNameFactory;
+        $this->salesforceObjectMetadataFactory = $outboundMessageDocumentClassNameFactory;
     }
 
     /**
@@ -55,7 +55,8 @@ class OutboundMessageSoapServerBuilder
         return $this->soapServerBuilder->build(
             $this->wsdlPathFactory->getWsdlPath($objectName),
             $this->soapServerRequestHandlerBuilder->build(
-                $this->outboundMessageDocumentClassNameFactory->getClassName($objectName)
+                $this->salesforceObjectMetadataFactory->getClassName($objectName),
+                $this->salesforceObjectMetadataFactory->isForceCompared($objectName)
             )
         );
     }

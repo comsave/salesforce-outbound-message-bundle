@@ -10,6 +10,7 @@ use Comsave\SalesforceOutboundMessageBundle\Model\NotificationResponse;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
+use Comsave\SalesforceOutboundMessageBundle\Services\ObjectComparator;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\UnitOfWork;
@@ -36,57 +37,56 @@ class SoapRequestHandlerTest extends TestCase
     /**
      * @var MockObject|DocumentManager
      */
-    private $documentManager;
+    private $documentManagerMock;
 
     /**
      * @var MockObject|Mapper
      */
-    private $mapper;
+    private $mapperMock;
 
     /**
      * @var MockObject|DocumentUpdater
      */
-    private $documentUpdater;
+    private $documentUpdaterMock;
 
     /**
      * @var MockObject|EventDispatcherInterface
      */
-    private $eventDispatcher;
-
-    /**
-     * @var MockObject|LoggerInterface
-     */
-    private $logger;
+    private $eventDispatcherMock;
 
     /**
      * @var MockObject|OutboundMessageBeforeFlushEventBuilder
      */
-    private $outboundMessageBeforeFlushEventBuilder;
+    private $outboundMessageBeforeFlushEventBuilderMock;
 
     /**
      * @var MockObject|OutboundMessageAfterFlushEventBuilder
      */
-    private $outboundMessageAfterFlushEventBuilder;
+    private $outboundMessageAfterFlushEventBuilderMock;
+
+    /** @var ObjectComparator|MockObject */
+    private $objectComparatorMock;
 
     public function setUp()
     {
-        $this->documentManager = $this->createMock(DocumentManager::class);
-        $this->mapper = $this->createMock(Mapper::class);
-        $this->documentUpdater = $this->createMock(DocumentUpdater::class);
-        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->outboundMessageBeforeFlushEventBuilder = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
-        $this->outboundMessageAfterFlushEventBuilder = $this->createMock(OutboundMessageAfterFlushEventBuilder::class);
+        $this->documentManagerMock = $this->createMock(DocumentManager::class);
+        $this->mapperMock = $this->createMock(Mapper::class);
+        $this->documentUpdaterMock = $this->createMock(DocumentUpdater::class);
+        $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $this->outboundMessageBeforeFlushEventBuilderMock = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
+        $this->outboundMessageAfterFlushEventBuilderMock = $this->createMock(OutboundMessageAfterFlushEventBuilder::class);
+        $this->objectComparatorMock = $this->createMock(ObjectComparator::class);
 
         $this->soapRequestHandler = new SoapRequestHandler(
-            $this->documentManager,
-            $this->mapper,
-            $this->documentUpdater,
-            $this->eventDispatcher,
-            $this->logger,
+            $this->documentManagerMock,
+            $this->mapperMock,
+            $this->documentUpdaterMock,
+            $this->eventDispatcherMock,
             'Product2',
-            $this->outboundMessageBeforeFlushEventBuilder,
-            $this->outboundMessageAfterFlushEventBuilder
+            false,
+            $this->outboundMessageBeforeFlushEventBuilderMock,
+            $this->outboundMessageAfterFlushEventBuilderMock,
+            $this->objectComparatorMock
         );
     }
 
@@ -123,7 +123,7 @@ class SoapRequestHandlerTest extends TestCase
             ->willReturn($notification);
 
         $unitOfWorkMock = $this->createMock(UnitOfWork::class);
-        $this->mapper->expects($this->once())
+        $this->mapperMock->expects($this->once())
             ->method('getUnitOfWork')
             ->willReturn($unitOfWorkMock);
 
@@ -132,7 +132,7 @@ class SoapRequestHandlerTest extends TestCase
             ->method('getId')
             ->willReturn('897D6FGSD');
 
-        $this->mapper->expects($this->once())
+        $this->mapperMock->expects($this->once())
             ->method('mapToDomainObject')
             ->willReturn($mappedDocumentMock);
 
@@ -140,22 +140,22 @@ class SoapRequestHandlerTest extends TestCase
 
         $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, false);
 
-        $this->outboundMessageBeforeFlushEventBuilder->expects($this->once())
+        $this->outboundMessageBeforeFlushEventBuilderMock->expects($this->once())
             ->method('build')
             ->with($mappedDocumentMock, $existingDocumentMock)
             ->willReturn($beforeFlushEventMock);
 
-        $this->eventDispatcher->expects($this->exactly(2))
+        $this->eventDispatcherMock->expects($this->exactly(2))
             ->method('dispatch');
 
-        $this->documentManager->expects($this->once())
+        $this->documentManagerMock->expects($this->once())
             ->method('find')
             ->willReturn($existingDocumentMock);
 
-        $this->documentUpdater->expects($this->once())
+        $this->documentUpdaterMock->expects($this->once())
             ->method('updateWithDocument');
 
-        $this->documentManager->expects($this->once())
+        $this->documentManagerMock->expects($this->once())
             ->method('flush');
 
         $afterFlushEventMock = $this->generateAfterFlushEventMock($existingDocumentMock);
@@ -181,7 +181,7 @@ class SoapRequestHandlerTest extends TestCase
             ->willReturn($notification);
 
         $unitOfWorkMock = $this->createMock(UnitOfWork::class);
-        $this->mapper->expects($this->once())
+        $this->mapperMock->expects($this->once())
             ->method('getUnitOfWork')
             ->willReturn($unitOfWorkMock);
 
@@ -190,11 +190,11 @@ class SoapRequestHandlerTest extends TestCase
             ->method('getId')
             ->willReturn('897D6FGSD');
 
-        $this->mapper->expects($this->once())
+        $this->mapperMock->expects($this->once())
             ->method('mapToDomainObject')
             ->willReturn($mappedDocumentMock);
 
-        $this->documentManager->expects($this->once())
+        $this->documentManagerMock->expects($this->once())
             ->method('find')
             ->willReturn(null);
 
@@ -202,18 +202,18 @@ class SoapRequestHandlerTest extends TestCase
 
         $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, false);
 
-        $this->outboundMessageBeforeFlushEventBuilder->expects($this->once())
+        $this->outboundMessageBeforeFlushEventBuilderMock->expects($this->once())
             ->method('build')
             ->with($mappedDocumentMock, $existingDocumentMock)
             ->willReturn($beforeFlushEventMock);
 
-        $this->eventDispatcher->expects($this->exactly(2))
+        $this->eventDispatcherMock->expects($this->exactly(2))
             ->method('dispatch');
 
-        $this->documentManager->expects($this->once())
+        $this->documentManagerMock->expects($this->once())
             ->method('persist');
 
-        $this->documentManager->expects($this->once())
+        $this->documentManagerMock->expects($this->once())
             ->method('flush');
 
         $afterFlushEventMock = $this->generateAfterFlushEventMock($mappedDocumentMock);
@@ -239,7 +239,7 @@ class SoapRequestHandlerTest extends TestCase
             ->willReturn($notification);
 
         $unitOfWorkMock = $this->createMock(UnitOfWork::class);
-        $this->mapper->expects($this->once())
+        $this->mapperMock->expects($this->once())
             ->method('getUnitOfWork')
             ->willReturn($unitOfWorkMock);
 
@@ -248,11 +248,11 @@ class SoapRequestHandlerTest extends TestCase
             ->method('getId')
             ->willReturn('897D6FGSD');
 
-        $this->mapper->expects($this->once())
+        $this->mapperMock->expects($this->once())
             ->method('mapToDomainObject')
             ->willReturn($mappedDocumentMock);
 
-        $this->documentManager->expects($this->once())
+        $this->documentManagerMock->expects($this->once())
             ->method('find')
             ->willReturn(null);
 
@@ -260,18 +260,18 @@ class SoapRequestHandlerTest extends TestCase
 
         $beforeFlushEventMock = $this->generateBeforeFlushEventMock($mappedDocumentMock, $existingDocumentMock, true);
 
-        $this->outboundMessageBeforeFlushEventBuilder->expects($this->once())
+        $this->outboundMessageBeforeFlushEventBuilderMock->expects($this->once())
             ->method('build')
             ->with($mappedDocumentMock, $existingDocumentMock)
             ->willReturn($beforeFlushEventMock);
 
-        $this->eventDispatcher->expects($this->exactly(1))
+        $this->eventDispatcherMock->expects($this->exactly(1))
             ->method('dispatch');
 
-        $this->documentManager->expects($this->never())
+        $this->documentManagerMock->expects($this->never())
             ->method('persist');
 
-        $this->documentManager->expects($this->never())
+        $this->documentManagerMock->expects($this->never())
             ->method('flush');
 
         $afterFlushEventMock = $this->generateAfterFlushEventMock($mappedDocumentMock);

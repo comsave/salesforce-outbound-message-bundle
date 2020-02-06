@@ -5,7 +5,7 @@ namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapServerBuilder;
-use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
+use Comsave\SalesforceOutboundMessageBundle\Services\Factory\SalesforceObjectDocumentMetadataFactory;
 use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -25,36 +25,36 @@ class OutboundMessageSoapServerBuilderTest extends TestCase
     protected $outboundMessageSoapServerBuilder;
 
     /**
-     * @var MockObject
+     * @var MockObject|SoapServerBuilder
      */
-    private $soapServerBuilder;
+    private $soapServerBuilderMock;
+
+    /**
+     * @var MockObject|OutboundMessageWsdlPathFactory
+     */
+    private $wsdlPathFactoryMock;
+
+    /**
+     * @var MockObject|SoapRequestHandlerBuilder
+     */
+    private $soapRequestHandlerBuilderMock;
 
     /**
      * @var MockObject
      */
-    private $wsdlPathFactory;
-
-    /**
-     * @var MockObject
-     */
-    private $soapServerRequestHandlerBuilder;
-
-    /**
-     * @var MockObject
-     */
-    private $outboundMessageDocumentClassNameFactory;
+    private $salesforceObjectMetadataFactoryMock;
 
     public function setUp()
     {
-        $this->soapServerBuilder = $this->createMock(SoapServerBuilder::class);
-        $this->wsdlPathFactory = $this->createMock(OutboundMessageWsdlPathFactory::class);
-        $this->soapServerRequestHandlerBuilder = $this->createMock(SoapRequestHandlerBuilder::class);
-        $this->outboundMessageDocumentClassNameFactory = $this->createMock(OutboundMessageDocumentClassNameFactory::class);
+        $this->soapServerBuilderMock = $this->createMock(SoapServerBuilder::class);
+        $this->wsdlPathFactoryMock = $this->createMock(OutboundMessageWsdlPathFactory::class);
+        $this->soapRequestHandlerBuilderMock = $this->createMock(SoapRequestHandlerBuilder::class);
+        $this->salesforceObjectMetadataFactoryMock = $this->createMock(SalesforceObjectDocumentMetadataFactory::class);
         $this->outboundMessageSoapServerBuilder = new OutboundMessageSoapServerBuilder(
-            $this->soapServerBuilder,
-            $this->wsdlPathFactory,
-            $this->soapServerRequestHandlerBuilder,
-            $this->outboundMessageDocumentClassNameFactory
+            $this->soapServerBuilderMock,
+            $this->wsdlPathFactoryMock,
+            $this->soapRequestHandlerBuilderMock,
+            $this->salesforceObjectMetadataFactoryMock
         );
     }
 
@@ -63,25 +63,25 @@ class OutboundMessageSoapServerBuilderTest extends TestCase
      */
     public function testBuildReturnsASoapServer()
     {
-        $this->wsdlPathFactory->expects($this->once())
+        $this->wsdlPathFactoryMock->expects($this->once())
             ->method('getWsdlPath')
             ->willReturn('path/to/document.wsdl');
 
         $soapRequestHandler = $this->createMock(SoapRequestHandler::class);
 
-        $this->soapServerRequestHandlerBuilder->expects($this->once())
+        $this->soapRequestHandlerBuilderMock->expects($this->once())
             ->method('build')
             ->willReturn($soapRequestHandler);
 
         $soapServerMock = $this->createMock(SoapServer::class);
 
-        $this->soapServerBuilder->expects($this->once())
+        $this->soapServerBuilderMock->expects($this->once())
             ->method('build')
             ->willReturn($soapServerMock);
 
         $objectName = 'Product';
 
-        $this->outboundMessageDocumentClassNameFactory->expects($this->once())
+        $this->salesforceObjectMetadataFactoryMock->expects($this->once())
             ->method('getClassName')
             ->with($objectName)
             ->willReturn('DocumentClassPathName');

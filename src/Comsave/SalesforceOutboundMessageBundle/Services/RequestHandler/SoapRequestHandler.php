@@ -12,6 +12,7 @@ use Comsave\SalesforceOutboundMessageBundle\Model\NotificationResponse;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
+use Comsave\SalesforceOutboundMessageBundle\Services\ObjectComparator;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
 use Psr\Log\LoggerInterface;
@@ -21,55 +22,38 @@ use TypeError;
 
 class SoapRequestHandler implements SoapRequestHandlerInterface
 {
-    /**
-     * @var DocumentManager
-     */
+    /** @var DocumentManager */
     private $documentManager;
 
-    /**
-     * @var Mapper
-     */
+    /** @var Mapper */
     private $mapper;
 
-    /**
-     * @var DocumentUpdater
-     */
+    /** @var DocumentUpdater */
     private $documentUpdater;
 
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var string
+    /** @var string
      */
     private $documentClassName;
 
-    /**
-     * @var OutboundMessageBeforeFlushEventBuilder
-     */
+    /** @var bool */
+    private $isForceCompared;
+
+    /** @var OutboundMessageBeforeFlushEventBuilder */
     private $outboundMessageBeforeFlushEventBuilder;
 
-    /**
-     * @var OutboundMessageAfterFlushEventBuilder
-     */
+    /** @var OutboundMessageAfterFlushEventBuilder */
     private $outboundMessageAfterFlushEventBuilder;
 
+    /** @var ObjectComparator */
+    private $objectComparator;
+
+    /** @var LoggerInterface */
+    private $logger;
+
     /**
-     * @param DocumentManager $documentManager
-     * @param Mapper $mapper
-     * @param DocumentUpdater $documentUpdater
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param LoggerInterface $logger
-     * @param string $documentClassName
-     * @param OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder
-     * @param OutboundMessageAfterFlushEventBuilder $outboundMessageAfterFlushEventBuilder
      * @codeCoverageIgnore
      */
     public function __construct(
@@ -77,24 +61,24 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         Mapper $mapper,
         DocumentUpdater $documentUpdater,
         EventDispatcherInterface $eventDispatcher,
-        LoggerInterface $logger,
         string $documentClassName,
+        bool $isForceCompared,
         OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder,
-        OutboundMessageAfterFlushEventBuilder $outboundMessageAfterFlushEventBuilder
+        OutboundMessageAfterFlushEventBuilder $outboundMessageAfterFlushEventBuilder,
+        ObjectComparator $objectComparator
     ) {
         $this->documentManager = $documentManager;
         $this->mapper = $mapper;
         $this->documentUpdater = $documentUpdater;
         $this->eventDispatcher = $eventDispatcher;
-        $this->logger = $logger;
         $this->documentClassName = $documentClassName;
+        $this->isForceCompared = $isForceCompared;
         $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageBeforeFlushEventBuilder;
         $this->outboundMessageAfterFlushEventBuilder = $outboundMessageAfterFlushEventBuilder;
+        $this->objectComparator = $objectComparator;
     }
 
     /**
-     * @param NotificationRequest $request
-     * @return NotificationResponse
      * @throws SalesforceException
      * @throws ReflectionException
      * @throws TypeError
@@ -111,7 +95,6 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
     }
 
     /**
-     * @param $sObject
      * @throws SalesforceException
      * @throws ReflectionException
      * @throws TypeError
@@ -122,12 +105,25 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
             throw new InvalidRequestException();
         }
 
-        $this->logger->debug('Document name: '.$this->documentClassName);
-        $this->logger->debug('SoapRequestHandler: '.json_encode($sObject));
+        if ($this->logger) {
+            $this->logger->debug('Document name: '.$this->documentClassName);
+            $this->logger->debug('SoapRequestHandler: '.json_encode($sObject));
+        }
 
         $this->mapper->getUnitOfWork()->clear();
         $mappedDocument = $this->mapper->mapToDomainObject($sObject, $this->documentClassName);
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
+
+        if ($this->isForceCompared
+            && $existingDocument
+            && $this->objectComparator->equals(
+                $this->mapper->mapToSalesforceObject($mappedDocument),
+                $this->mapper->mapToSalesforceObject($existingDocument)
+            )) {
+            $this->logger->info('Objects are equal, skipping save');
+
+            return;
+        }
 
         $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
@@ -139,10 +135,14 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         }
 
         if ($existingDocument) {
-            $this->logger->info('saving existing');
+            if ($this->logger) {
+                $this->logger->info('saving existing');
+            }
             $this->documentUpdater->updateWithDocument($existingDocument, $mappedDocument);
         } else {
-            $this->logger->info('saving new');
+            if ($this->logger) {
+                $this->logger->info('saving new');
+            }
             $this->documentManager->persist($mappedDocument);
             $existingDocument = $mappedDocument;
         }
@@ -151,5 +151,11 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
 
         $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
+    }
+
+    /** @required */
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
     }
 }

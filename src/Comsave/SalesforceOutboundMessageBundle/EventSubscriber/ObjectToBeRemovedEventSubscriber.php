@@ -5,7 +5,7 @@ namespace Comsave\SalesforceOutboundMessageBundle\EventSubscriber;
 use Comsave\SalesforceOutboundMessageBundle\Document\ObjectToBeRemoved;
 use Comsave\SalesforceOutboundMessageBundle\Event\OutboundMessageBeforeFlushEvent;
 use Comsave\SalesforceOutboundMessageBundle\Interfaces\DocumentInterface;
-use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageDocumentClassNameFactory;
+use Comsave\SalesforceOutboundMessageBundle\Services\Factory\SalesforceObjectDocumentMetadataFactory;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Exception;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
@@ -20,19 +20,19 @@ class ObjectToBeRemovedEventSubscriber implements EventSubscriberInterface
     /** @var Mapper */
     private $mapper;
 
-    /** @var OutboundMessageDocumentClassNameFactory */
+    /** @var SalesforceObjectDocumentMetadataFactory */
     private $outboundMessageDocumentClassNameFactory;
 
     /**
      * @param DocumentManager $documentManager
      * @param Mapper $mapper
-     * @param OutboundMessageDocumentClassNameFactory $outboundMessageDocumentClassNameFactory
+     * @param SalesforceObjectDocumentMetadataFactory $outboundMessageDocumentClassNameFactory
      * @codeCoverageIgnore
      */
     public function __construct(
         DocumentManager $documentManager,
         Mapper $mapper,
-        OutboundMessageDocumentClassNameFactory $outboundMessageDocumentClassNameFactory
+        SalesforceObjectDocumentMetadataFactory $outboundMessageDocumentClassNameFactory
     ) {
         $this->documentManager = $documentManager;
         $this->mapper = $mapper;

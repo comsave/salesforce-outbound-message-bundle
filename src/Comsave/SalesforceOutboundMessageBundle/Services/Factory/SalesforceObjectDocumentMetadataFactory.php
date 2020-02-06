@@ -4,7 +4,7 @@ namespace Comsave\SalesforceOutboundMessageBundle\Services\Factory;
 
 use Comsave\SalesforceOutboundMessageBundle\Exception\DocumentNotFoundException;
 
-class OutboundMessageDocumentClassNameFactory
+class SalesforceObjectDocumentMetadataFactory
 {
     protected $documentLocations;
 
@@ -25,5 +25,12 @@ class OutboundMessageDocumentClassNameFactory
         }
 
         throw new DocumentNotFoundException();
+    }
+
+    public function isForceCompared(string $objectName): bool
+    {
+        return isset($this->documentLocations[$objectName])
+            && isset($this->documentLocations[$objectName]['force_compare'])
+            && (bool)$this->documentLocations[$objectName]['force_compare'];
     }
 }
