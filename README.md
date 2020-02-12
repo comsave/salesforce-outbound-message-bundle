@@ -61,7 +61,7 @@ comsave_salesforce_outbound_message:
         # Map a document using its Salesforce name and your local class 
         CustomObject__c:              
             path: 'YourNamespace\Documents\CustomObject'
-            force_compared: false # if true, incoming object will be compared to existing ones in the database; will continue sync only if not equal
+            force_compare: false # if true, incoming object will be compared to existing ones in the database; will continue sync only if not equal
 ```
 * Add `DocumentInterface` to the document class you'd like to be tracked by the `OutboundMessageBundle`.
 ```php
@@ -116,10 +116,9 @@ class AccountSoapRequestSubscriber implements EventSubscriberInterface
          * Make sure to do call $this->supports() before you start processing the object
          * You only want to process the correct object in this EventSubscriber (which is Account in this case)
          */
-        if (!$this->supports($account)) return; 
-    
         $existingAccount = $event->getExistingDocument();
-        
+        if (!$this->supports($existingAccount)) return; 
+    
         /**
          * You can do any modifications you want to the object before it get's saved (flushed) to the database.
          * - - -
