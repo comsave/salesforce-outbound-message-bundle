@@ -30,5 +30,5 @@ before_script:
   - ./cc-test-reporter before-build
 
 after_script:
-  - mv Tests/_output/coverage.xml clover.xml
+  - mv tests/_output/coverage.xml clover.xml
   - ./cc-test-reporter after-build --coverage-input-type clover --id $CC_TEST_REPORTER_ID --exit-code $TRAVIS_TEST_RESULT
