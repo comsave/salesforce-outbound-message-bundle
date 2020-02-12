@@ -2,8 +2,9 @@
 
 Create, update, remove objects in Symfony sent through Salesforce outbound messages. 
 
-![](https://img.shields.io/github/v/release/comsave/salesforce-outbound-message-bundle)
-![](https://img.shields.io/travis/comsave/salesforce-outbound-message-bundle)
+[![Release](https://img.shields.io/github/v/release/comsave/salesforce-outbound-message-bundle)](https://github.com/comsave/salesforce-outbound-message-bundle/releases)
+[![Travis](https://img.shields.io/travis/comsave/salesforce-outbound-message-bundle)](https://travis-ci.org/comsave/salesforce-outbound-message-bundle)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/comsave/salesforce-outbound-message-bundle)
 
 ---
 
@@ -19,7 +20,7 @@ This bundle assumes you're using:
 * Object `create`
 * Object `update`
 * Object `delete`. To enable this complete [additional setup steps](README-setup-removal.md).
-* Object custom handling `beforeFlush`
+* Object custom handling `beforeFlush`w
 * Object custom handling `afterFlush`
 
 ## Installation
