@@ -132,7 +132,9 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         }
 
         $allowedProperties = $this->getAllowedProperties($this->documentClassName);
-        $this->documentUpdater->updateWithDocument($mappedDocument, $existingDocument, null, $allowedProperties);
+        if(count($allowedProperties) > 0) {
+            $this->documentUpdater->updateWithDocument($mappedDocument, $existingDocument, null, $allowedProperties);
+        }
 
         $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);

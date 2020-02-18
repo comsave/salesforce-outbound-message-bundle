@@ -135,7 +135,7 @@ class SoapRequestHandlerTest extends TestCase
             ->willReturn($unitOfWorkMock);
 
         $mappedDocumentMock = $this->createMock(Product::class);
-        $mappedDocumentMock->expects($this->atLeastOnce())
+        $mappedDocumentMock->expects($this->once())
             ->method('getId')
             ->willReturn('897D6FGSD');
 
@@ -193,7 +193,7 @@ class SoapRequestHandlerTest extends TestCase
             ->willReturn($unitOfWorkMock);
 
         $mappedDocumentMock = $this->createMock(Product::class);
-        $mappedDocumentMock->expects($this->atLeastOnce())
+        $mappedDocumentMock->expects($this->once())
             ->method('getId')
             ->willReturn('897D6FGSD');
 
@@ -251,7 +251,7 @@ class SoapRequestHandlerTest extends TestCase
             ->willReturn($unitOfWorkMock);
 
         $mappedDocumentMock = $this->createMock(Product::class);
-        $mappedDocumentMock->expects($this->atLeastOnce())
+        $mappedDocumentMock->expects($this->once())
             ->method('getId')
             ->willReturn('897D6FGSD');
 
