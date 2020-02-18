@@ -109,21 +109,23 @@ class AccountSoapRequestSubscriber implements EventSubscriberInterface
 
     public function onBeforeFlush(OutboundMessageBeforeFlushEvent $event)
     {
-        /** @var Account $account */
-        $newAccount = $event->getNewDocument();
-
         /**
          * Make sure to do call $this->supports() before you start processing the object
          * You only want to process the correct object in this EventSubscriber (which is Account in this case)
          */
-        $existingAccount = $event->getExistingDocument();
-        if (!$this->supports($existingAccount)) return; 
+        /** @var Account $newAccount */
+        $newAccount = $event->getNewDocument();
+        
+        if (!$this->supports($newAccount)) return; 
     
+        /** @var Account $existingAccount */
+        $existingAccount = $event->getExistingDocument();
+        
         /**
          * You can do any modifications you want to the object before it get's saved (flushed) to the database.
          * - - -
          * $event->getExistingDocument() provides you access to the existing object (if it exists) 
-         * $event->getNewDocument() provides you access to the new object delivered by the outbound message
+         * $event->getNewDocument() provides you access to the new object delivered by the outbound message. This is the object that will be merged over the existing one (if any) and saved to the database. In most of the cases you only need to use this one.
          */
     }
 
