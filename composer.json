@@ -15,8 +15,8 @@
   },
   "require": {
     "php": ">=7.2",
-    "ext-json": "*",
-    "ext-soap": "*",
+    "ext-json": ">=1.6",
+    "ext-soap": ">=7.2",
     "comsave/salesforce-mapper-bundle": "^3.4.0",
     "doctrine/mongodb-odm": "^1.1|^2.0",
     "symfony/config": "^3.4|^4.3",
