@@ -144,7 +144,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
 
         if ($existingDocument) {
             $this->log('saving existing');
-            $this->documentUpdater->updateWithDocument($existingDocument, $mappedDocument, $allowedProperties);
+            $this->documentUpdater->updateWithDocument($existingDocument, $mappedDocument);
         } else {
             $this->log('saving new');
             $this->documentManager->persist($mappedDocument);
