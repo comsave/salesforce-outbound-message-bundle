@@ -105,11 +105,10 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
             throw new InvalidRequestException();
         }
 
-        if ($this->logger) {
-            $this->logger->debug('Document name: '.$this->documentClassName);
-            $this->logger->debug('SoapRequestHandler: '.json_encode($sObject));
-        }
+        $this->log('Document name: '.$this->documentClassName);
+        $this->log('SoapRequestHandler: '.json_encode($sObject));
 
+        $this->documentManager->clear($this->documentClassName);
         $this->mapper->getUnitOfWork()->clear();
         $mappedDocument = $this->mapper->mapToDomainObject($sObject, $this->documentClassName);
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
@@ -120,8 +119,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
                 $this->mapper->mapToSalesforceObject($mappedDocument),
                 $this->mapper->mapToSalesforceObject($existingDocument)
             )) {
-            $this->logger->info('Objects are equal, skipping save');
-
+            $this->log('Objects are equal, skipping save');
             return;
         }
 
@@ -129,20 +127,15 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
 
         if ($beforeFlushEvent->isSkipDocument()) {
-            $this->logger->info('Skipping save');
-
+            $this->log('Skipping save');
             return;
         }
 
         if ($existingDocument) {
-            if ($this->logger) {
-                $this->logger->info('saving existing');
-            }
+            $this->log('saving existing');
             $this->documentUpdater->updateWithDocument($existingDocument, $mappedDocument);
         } else {
-            if ($this->logger) {
-                $this->logger->info('saving new');
-            }
+            $this->log('saving new');
             $this->documentManager->persist($mappedDocument);
             $existingDocument = $mappedDocument;
         }
@@ -151,6 +144,16 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
 
         $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
+    }
+
+    public function log(string $message): void
+    {
+        if($this->logger) {
+            $this->logger->debug(vsprintf('%s: %s', [
+                __CLASS__,
+                $message
+            ]));
+        }
     }
 
     /** @required */
