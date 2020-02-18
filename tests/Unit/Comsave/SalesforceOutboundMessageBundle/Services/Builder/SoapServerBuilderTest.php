@@ -28,7 +28,7 @@ class SoapServerBuilderTest extends TestCase
      */
     public function testBuildReturnsASoapServer()
     {
-        $wsdlPath = 'Tests/Resources/wsdl/DiscountRule__c.wsdl';
+        $wsdlPath = 'tests/Resources/wsdl/DiscountRule__c.wsdl';
         /** @var SoapRequestHandler|MockObject $soapRequestHandler */
         $soapRequestHandler = $this->createMock(SoapRequestHandlerInterface::class);
 
