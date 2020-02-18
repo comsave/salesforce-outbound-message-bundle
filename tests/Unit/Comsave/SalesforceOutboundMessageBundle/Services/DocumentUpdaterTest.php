@@ -10,8 +10,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class DocumentUpdaterTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater
  */
 class DocumentUpdaterTest extends TestCase

@@ -6,8 +6,6 @@ use Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdl
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class OutboundMessageWsdlPathFactoryTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Factory
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Factory\OutboundMessageWsdlPathFactory
  */
 class OutboundMessageWsdlPathFactoryTest extends TestCase

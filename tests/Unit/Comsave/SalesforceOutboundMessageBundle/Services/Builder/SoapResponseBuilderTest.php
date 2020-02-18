@@ -7,8 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SoapResponseBuilderTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapResponseBuilder
  */
 class SoapResponseBuilderTest extends TestCase

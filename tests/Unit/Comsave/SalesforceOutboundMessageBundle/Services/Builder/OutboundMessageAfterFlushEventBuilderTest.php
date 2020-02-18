@@ -8,8 +8,6 @@ use LogicItLab\Salesforce\MapperBundle\Model\AbstractModel;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class OutboundMessageAfterFlushEventBuilderTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder
  */
 class OutboundMessageAfterFlushEventBuilderTest extends TestCase

@@ -23,26 +23,21 @@ class OutboundMessageSoapServerBuilder
     /**
      * @var SalesforceObjectDocumentMetadataFactory
      */
-    private $salesforceObjectMetadataFactory;
+    private $salesforceObjectDocumentMetadataFactory;
 
     /**
-     * OutboundMessageSoapServerBuilder constructor.
-     * @param SoapServerBuilder $soapServerBuilder
-     * @param OutboundMessageWsdlPathFactory $wsdlPathFactory
-     * @param SoapRequestHandlerBuilder $soapServerRequestHandlerBuilder
-     * @param SalesforceObjectDocumentMetadataFactory $outboundMessageDocumentClassNameFactory
      * @codeCoverageIgnore
      */
     public function __construct(
         SoapServerBuilder $soapServerBuilder,
         OutboundMessageWsdlPathFactory $wsdlPathFactory,
         SoapRequestHandlerBuilder $soapServerRequestHandlerBuilder,
-        SalesforceObjectDocumentMetadataFactory $outboundMessageDocumentClassNameFactory
+        SalesforceObjectDocumentMetadataFactory $salesforceObjectDocumentMetadataFactory
     ) {
         $this->soapServerBuilder = $soapServerBuilder;
         $this->wsdlPathFactory = $wsdlPathFactory;
         $this->soapServerRequestHandlerBuilder = $soapServerRequestHandlerBuilder;
-        $this->salesforceObjectMetadataFactory = $outboundMessageDocumentClassNameFactory;
+        $this->salesforceObjectDocumentMetadataFactory = $salesforceObjectDocumentMetadataFactory;
     }
 
     /**
@@ -55,8 +50,8 @@ class OutboundMessageSoapServerBuilder
         return $this->soapServerBuilder->build(
             $this->wsdlPathFactory->getWsdlPath($objectName),
             $this->soapServerRequestHandlerBuilder->build(
-                $this->salesforceObjectMetadataFactory->getClassName($objectName),
-                $this->salesforceObjectMetadataFactory->isForceCompared($objectName)
+                $this->salesforceObjectDocumentMetadataFactory->getClassName($objectName),
+                $this->salesforceObjectDocumentMetadataFactory->isForceCompared($objectName)
             )
         );
     }

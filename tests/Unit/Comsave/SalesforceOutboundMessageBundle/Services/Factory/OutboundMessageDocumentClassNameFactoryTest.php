@@ -6,8 +6,14 @@ use Comsave\SalesforceOutboundMessageBundle\Exception\DocumentNotFoundException;
 use Comsave\SalesforceOutboundMessageBundle\Services\Factory\SalesforceObjectDocumentMetadataFactory;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversDefaultClass SalesforceObjectDocumentMetadataFactory
+ */
 class SalesforceObjectDocumentMetadataFactoryTest extends TestCase
 {
+    /**
+     * @covers ::getClassName()
+     */
     public function testGetClassNameSucceeds(): void
     {
         $documentLocations = [
@@ -22,6 +28,9 @@ class SalesforceObjectDocumentMetadataFactoryTest extends TestCase
         );
     }
 
+    /**
+     * @covers ::getClassName()
+     */
     public function testGetClassNameThrowsExceptionIfNotFound(): void
     {
         $documentLocations = [
@@ -35,6 +44,9 @@ class SalesforceObjectDocumentMetadataFactoryTest extends TestCase
         (new SalesforceObjectDocumentMetadataFactory($documentLocations))->getClassName('Account');
     }
 
+    /**
+     * @covers ::isForceCompared()
+     */
     public function testIsComparableTrue(): void
     {
         $documentLocations = [
@@ -46,6 +58,9 @@ class SalesforceObjectDocumentMetadataFactoryTest extends TestCase
         $this->assertTrue((new SalesforceObjectDocumentMetadataFactory($documentLocations))->isForceCompared('Subscriber'));
     }
 
+    /**
+     * @covers ::isForceCompared()
+     */
     public function testIsComparableFalse(): void
     {
         $documentLocations = [
@@ -57,6 +72,9 @@ class SalesforceObjectDocumentMetadataFactoryTest extends TestCase
         $this->assertFalse((new SalesforceObjectDocumentMetadataFactory($documentLocations))->isForceCompared('Subscriber'));
     }
 
+    /**
+     * @covers ::isForceCompared()
+     */
     public function testIsComparableFalseIfNotSet(): void
     {
         $documentLocations = [

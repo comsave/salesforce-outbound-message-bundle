@@ -16,8 +16,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class SoapRequestHandlerBuilderTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder
  */
 class SoapRequestHandlerBuilderTest extends TestCase

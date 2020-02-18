@@ -7,8 +7,6 @@ use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class PropertyAccessorTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\PropertyAccessor
  */
 class PropertyAccessorTest extends TestCase

@@ -10,8 +10,6 @@ use PHPUnit\Framework\TestCase;
 use SoapServer;
 
 /**
- * Class SoapServerBuilderTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapServerBuilder
  */
 class SoapServerBuilderTest extends TestCase

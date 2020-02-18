@@ -12,8 +12,6 @@ use SoapServer;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class OutboundMessageRequestHandlerTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\OutboundMessageRequestHandler
  */
 class OutboundMessageRequestHandlerTest extends TestCase
@@ -51,6 +49,9 @@ class OutboundMessageRequestHandlerTest extends TestCase
         );
     }
 
+    /**
+     * @covers ::handle()
+     */
     public function testHandleSuccess()
     {
         $documentName = 'document/name/folder/file';

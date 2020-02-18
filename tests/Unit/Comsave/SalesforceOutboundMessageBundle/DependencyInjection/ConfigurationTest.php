@@ -5,8 +5,14 @@ namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\DependencyInjection
 use Comsave\SalesforceOutboundMessageBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\DependencyInjection\Configuration
+ */
 class ConfigurationTest extends TestCase
 {
+    /**
+     * @covers ::getConfigTreeBuilder()
+     */
     public function testConfiguration(): void
     {
         $inputOutput = [

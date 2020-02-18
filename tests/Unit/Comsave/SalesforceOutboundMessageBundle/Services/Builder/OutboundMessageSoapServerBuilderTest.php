@@ -13,8 +13,6 @@ use PHPUnit\Framework\TestCase;
 use SoapServer;
 
 /**
- * Class OutboundMessageSoapServerBuilderTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageSoapServerBuilder
  */
 class OutboundMessageSoapServerBuilderTest extends TestCase
@@ -40,21 +38,21 @@ class OutboundMessageSoapServerBuilderTest extends TestCase
     private $soapRequestHandlerBuilderMock;
 
     /**
-     * @var MockObject
+     * @var MockObject|SalesforceObjectDocumentMetadataFactory
      */
-    private $salesforceObjectMetadataFactoryMock;
+    private $salesforceObjectDocumentMetadataFactory;
 
     public function setUp()
     {
         $this->soapServerBuilderMock = $this->createMock(SoapServerBuilder::class);
         $this->wsdlPathFactoryMock = $this->createMock(OutboundMessageWsdlPathFactory::class);
         $this->soapRequestHandlerBuilderMock = $this->createMock(SoapRequestHandlerBuilder::class);
-        $this->salesforceObjectMetadataFactoryMock = $this->createMock(SalesforceObjectDocumentMetadataFactory::class);
+        $this->salesforceObjectDocumentMetadataFactory = $this->createMock(SalesforceObjectDocumentMetadataFactory::class);
         $this->outboundMessageSoapServerBuilder = new OutboundMessageSoapServerBuilder(
             $this->soapServerBuilderMock,
             $this->wsdlPathFactoryMock,
             $this->soapRequestHandlerBuilderMock,
-            $this->salesforceObjectMetadataFactoryMock
+            $this->salesforceObjectDocumentMetadataFactory
         );
     }
 
@@ -81,7 +79,7 @@ class OutboundMessageSoapServerBuilderTest extends TestCase
 
         $objectName = 'Product';
 
-        $this->salesforceObjectMetadataFactoryMock->expects($this->once())
+        $this->salesforceObjectDocumentMetadataFactory->expects($this->once())
             ->method('getClassName')
             ->with($objectName)
             ->willReturn('DocumentClassPathName');

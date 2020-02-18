@@ -6,8 +6,6 @@ use Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObj
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class OutboundMessageObjectNameRetrieverTest
- * @package Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Resolver\OutboundMessageObjectNameResolver
  */
 class OutboundMessageObjectNameRetrieverTest extends TestCase
