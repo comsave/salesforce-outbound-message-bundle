@@ -8,6 +8,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Tests\Stub\DocumentWithSalesforceFields;
 
 /**
  * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater
@@ -17,7 +18,7 @@ class DocumentUpdaterTest extends TestCase
     /**
      * @var MockObject|PropertyAccessor
      */
-    private $propertyAccessor;
+    private $propertyAccessorMock;
 
     /**
      * @var DocumentUpdater
@@ -26,9 +27,9 @@ class DocumentUpdaterTest extends TestCase
 
     public function setUp()
     {
-        $this->propertyAccessor = $this->createMock(PropertyAccessor::class);
+        $this->propertyAccessorMock = $this->createMock(PropertyAccessor::class);
 
-        $this->documentUpdater = new DocumentUpdater($this->propertyAccessor);
+        $this->documentUpdater = new DocumentUpdater($this->propertyAccessorMock);
     }
 
     /**
@@ -46,7 +47,7 @@ class DocumentUpdaterTest extends TestCase
             'name' => 'test product',
         ];
 
-        $this->propertyAccessor->expects($this->atLeastOnce())
+        $this->propertyAccessorMock->expects($this->atLeastOnce())
             ->method('isWritable')
             ->withConsecutive(
                 [$product, 'description'],
@@ -54,7 +55,7 @@ class DocumentUpdaterTest extends TestCase
             )
             ->willReturn(true);
 
-        $this->propertyAccessor->expects($this->atLeastOnce())
+        $this->propertyAccessorMock->expects($this->atLeastOnce())
             ->method('setValue')
             ->withConsecutive(
                 [$product, 'description', 'This is a new test description.'],
@@ -77,19 +78,19 @@ class DocumentUpdaterTest extends TestCase
         $newProduct->setName('test product');
         $product->setDescription('This is a new test description.');
 
-        $this->propertyAccessor->expects($this->atLeastOnce())
+        $this->propertyAccessorMock->expects($this->atLeastOnce())
             ->method('getValue')
             ->willReturnOnConsecutiveCalls('test product', 'This is a new test description.');
 
-        $this->propertyAccessor->expects($this->atLeastOnce())
+        $this->propertyAccessorMock->expects($this->atLeastOnce())
             ->method('isWritable')
             ->willReturn(true);
 
-        $this->propertyAccessor->expects($this->atLeastOnce())
+        $this->propertyAccessorMock->expects($this->atLeastOnce())
             ->method('isReadable')
             ->willReturn(true);
 
-        $this->propertyAccessor->expects($this->atLeastOnce())
+        $this->propertyAccessorMock->expects($this->atLeastOnce())
             ->method('setValue')
             ->withConsecutive(
                 [$product, 'name', 'test product'],

@@ -8,10 +8,18 @@
     "psr-4": {
       "Comsave\\": "src/Comsave/"
     },
-    "files": ["src/Comsave/SalesforceOutboundMessageBundle/functions.php"]
+    "files": [
+      "src/Comsave/SalesforceOutboundMessageBundle/functions.php"
+    ]
   },
   "autoload-dev": {
-    "files": ["src/Comsave/SalesforceOutboundMessageBundle/functions.php"]
+    "files": [
+      "src/Comsave/SalesforceOutboundMessageBundle/functions.php",
+      "vendor/comsave/salesforce-mapper-bundle/src/LogicItLab/Salesforce/MapperBundle/Annotation/Field.php"
+    ],
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
   },
   "require": {
     "php": ">=7.2",

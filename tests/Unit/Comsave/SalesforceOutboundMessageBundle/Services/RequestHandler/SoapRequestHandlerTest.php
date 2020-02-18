@@ -14,6 +14,7 @@ use Comsave\SalesforceOutboundMessageBundle\Services\ObjectComparator;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\UnitOfWork;
+use LogicItLab\Salesforce\MapperBundle\Annotation\AnnotationReader;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
 use LogicItLab\Salesforce\MapperBundle\Model\Product;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -21,6 +22,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use stdClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Tests\Stub\DocumentWithSalesforceFields;
 
 /**
  * Class SoapRequestHandlerTest
@@ -67,6 +69,9 @@ class SoapRequestHandlerTest extends TestCase
     /** @var ObjectComparator|MockObject */
     private $objectComparatorMock;
 
+    /** @var AnnotationReader|MockObject */
+    private $salesforceAnnotationReaderMock;
+
     public function setUp()
     {
         $this->documentManagerMock = $this->createMock(DocumentManager::class);
@@ -76,6 +81,7 @@ class SoapRequestHandlerTest extends TestCase
         $this->outboundMessageBeforeFlushEventBuilderMock = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
         $this->outboundMessageAfterFlushEventBuilderMock = $this->createMock(OutboundMessageAfterFlushEventBuilder::class);
         $this->objectComparatorMock = $this->createMock(ObjectComparator::class);
+        $this->salesforceAnnotationReaderMock = $this->createMock(AnnotationReader::class);
 
         $this->soapRequestHandler = new SoapRequestHandler(
             $this->documentManagerMock,
@@ -86,7 +92,8 @@ class SoapRequestHandlerTest extends TestCase
             false,
             $this->outboundMessageBeforeFlushEventBuilderMock,
             $this->outboundMessageAfterFlushEventBuilderMock,
-            $this->objectComparatorMock
+            $this->objectComparatorMock,
+            $this->salesforceAnnotationReaderMock
         );
     }
 

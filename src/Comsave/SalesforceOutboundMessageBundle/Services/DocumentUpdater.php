@@ -49,26 +49,33 @@ class DocumentUpdater
     }
 
     /**
-     * @param $document
-     * @param $newDocument
      * @throws ReflectionException
      * @throws TypeError
      */
-    public function updateWithDocument($document, $newDocument)
+    public function updateWithDocument($document, $newDocument, ?array $allowedProperties = [], ?array $ignoredProperties = [])
     {
         $classReflection = new ReflectionClass($newDocument);
+        $checkAllowedProperties = count($allowedProperties) > 0;
+        $checkIgnoredProperties = count($ignoredProperties) > 0;
 
         foreach ($classReflection->getProperties() as $propertyReflection) {
-            if (in_array(strtolower($propertyReflection->getName()), $this->ignoredProperties)) {
+            $propertyName = $propertyReflection->getName();
+
+            if (($checkAllowedProperties && !in_array($propertyName, $allowedProperties))
+                || ($checkIgnoredProperties && in_array($propertyName, $ignoredProperties))) {
                 continue;
             }
 
-            if ($this->propertyAccessor->isReadable($newDocument, $propertyReflection->getName())) {
-                $newValue = $this->propertyAccessor->getValue($newDocument, $propertyReflection->getName());
+            if (in_array(strtolower($propertyName), $this->ignoredProperties)) {
+                continue;
             }
 
-            if ($newValue !== null && $this->propertyAccessor->isWritable($document, $propertyReflection->getName())) {
-                $this->propertyAccessor->setValue($document, $propertyReflection->getName(), $newValue);
+            if ($this->propertyAccessor->isReadable($newDocument, $propertyName)) {
+                $newValue = $this->propertyAccessor->getValue($newDocument, $propertyName);
+            }
+
+            if ($newValue !== null && $this->propertyAccessor->isWritable($document, $propertyName)) {
+                $this->propertyAccessor->setValue($document, $propertyName, $newValue);
             }
         }
     }

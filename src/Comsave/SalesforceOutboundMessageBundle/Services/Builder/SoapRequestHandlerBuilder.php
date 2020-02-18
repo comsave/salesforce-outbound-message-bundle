@@ -7,6 +7,7 @@ use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Comsave\SalesforceOutboundMessageBundle\Services\ObjectComparator;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use LogicItLab\Salesforce\MapperBundle\Annotation\AnnotationReader;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -46,6 +47,9 @@ class SoapRequestHandlerBuilder
     /** @var ObjectComparator */
     private $objectComparator;
 
+    /** @var AnnotationReader */
+    private $salesforceAnnotationReader;
+
     /** @var LoggerInterface */
     private $logger;
 
@@ -60,6 +64,7 @@ class SoapRequestHandlerBuilder
         OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder,
         OutboundMessageAfterFlushEventBuilder $outboundMessageAfterFlushEventBuilder,
         ObjectComparator $objectComparator,
+        AnnotationReader $salesforceAnnotationReader,
         LoggerInterface $logger
     ) {
         $this->documentManager = $documentManager;
@@ -69,6 +74,7 @@ class SoapRequestHandlerBuilder
         $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageBeforeFlushEventBuilder;
         $this->outboundMessageAfterFlushEventBuilder = $outboundMessageAfterFlushEventBuilder;
         $this->objectComparator = $objectComparator;
+        $this->salesforceAnnotationReader = $salesforceAnnotationReader;
         $this->logger = $logger;
     }
 
@@ -83,7 +89,8 @@ class SoapRequestHandlerBuilder
             $isForceCompared,
             $this->outboundMessageBeforeFlushEventBuilder,
             $this->outboundMessageAfterFlushEventBuilder,
-            $this->objectComparator
+            $this->objectComparator,
+            $this->salesforceAnnotationReader
         );
 
         $requestHandler->setLogger($this->logger);

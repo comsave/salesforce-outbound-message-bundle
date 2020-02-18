@@ -1,30 +1,31 @@
 <?php
 
-namespace Tests\Unit\Comsave\SalesforceOutboundMessageBundle\Services\Builder;
+namespace Tests\Functional\Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler;
 
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfterFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
-use Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Comsave\SalesforceOutboundMessageBundle\Services\ObjectComparator;
 use Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler;
+use Doctrine\Common\Cache\Cache;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use LogicItLab\Salesforce\MapperBundle\Annotation\AnnotationReader;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
+use Phpforce\SoapClient\Client;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Tests\Stub\DocumentWithSalesforceFields;
 
 /**
- * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\Builder\SoapRequestHandlerBuilder
+ * @coversDefaultClass \Comsave\SalesforceOutboundMessageBundle\Services\RequestHandler\SoapRequestHandler
  */
-class SoapRequestHandlerBuilderTest extends TestCase
+class SoapRequestHandlerTest extends TestCase
 {
     /**
-     * @var SoapRequestHandlerBuilder
+     * @var SoapRequestHandler
      */
-    protected $soapRequestHandlerBuilder;
+    protected $soapRequestHandler;
 
     /**
      * @var MockObject|DocumentManager
@@ -32,9 +33,9 @@ class SoapRequestHandlerBuilderTest extends TestCase
     private $documentManagerMock;
 
     /**
-     * @var MockObject|Mapper
+     * @var Mapper
      */
-    private $mapperMock;
+    private $mapper;
 
     /**
      * @var MockObject|DocumentUpdater
@@ -60,45 +61,44 @@ class SoapRequestHandlerBuilderTest extends TestCase
     private $objectComparatorMock;
 
     /** @var AnnotationReader */
-    private $salesforceAnnotationReaderMock;
+    private $salesforceAnnotationReader;
 
-    /** @var LoggerInterface|MockObject */
-    private $logger;
-
-    public function setUp()
+    public function setUp(): void
     {
         $this->documentManagerMock = $this->createMock(DocumentManager::class);
-        $this->mapperMock = $this->createMock(Mapper::class);
         $this->documentUpdaterMock = $this->createMock(DocumentUpdater::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
         $this->outboundMessageBeforeFlushEventBuilderMock = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
         $this->outboundMessageAfterFlushEventBuilderMock = $this->createMock(OutboundMessageAfterFlushEventBuilder::class);
         $this->objectComparatorMock = $this->createMock(ObjectComparator::class);
-        $this->salesforceAnnotationReaderMock = $this->createMock(AnnotationReader::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
 
-        $this->soapRequestHandlerBuilder = new SoapRequestHandlerBuilder(
+        $this->salesforceAnnotationReader = new AnnotationReader(new \Doctrine\Common\Annotations\AnnotationReader());
+        $this->mapper = new Mapper(
+            $this->createMock(Client::class),
+            $this->salesforceAnnotationReader,
+            $this->createMock(Cache::class)
+        );
+
+        $this->soapRequestHandler = new SoapRequestHandler(
             $this->documentManagerMock,
-            $this->mapperMock,
+            $this->mapper,
             $this->documentUpdaterMock,
             $this->eventDispatcherMock,
+            'Product2',
+            false,
             $this->outboundMessageBeforeFlushEventBuilderMock,
             $this->outboundMessageAfterFlushEventBuilderMock,
             $this->objectComparatorMock,
-            $this->salesforceAnnotationReaderMock,
-            $this->logger
+            $this->salesforceAnnotationReader
         );
     }
 
-    /**
-     * @covers ::build()
-     */
-    public function testBuildReturnsASoapRequestHandler()
+    /** @covers ::getAllowedProperties */
+    public function testGetAllowedProperties(): void
     {
-        $objectName = 'Product';
-
-        $soapRequestHandler = $this->soapRequestHandlerBuilder->build($objectName, false);
-
-        $this->assertInstanceOf(SoapRequestHandler::class, $soapRequestHandler);
+        $this->assertEquals([
+            'someField',
+            'someOtherField'
+        ], $this->soapRequestHandler->getAllowedProperties(DocumentWithSalesforceFields::class));
     }
 }

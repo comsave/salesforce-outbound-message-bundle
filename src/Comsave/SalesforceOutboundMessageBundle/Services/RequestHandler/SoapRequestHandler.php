@@ -13,7 +13,10 @@ use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageAfte
 use Comsave\SalesforceOutboundMessageBundle\Services\Builder\OutboundMessageBeforeFlushEventBuilder;
 use Comsave\SalesforceOutboundMessageBundle\Services\DocumentUpdater;
 use Comsave\SalesforceOutboundMessageBundle\Services\ObjectComparator;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use LogicItLab\Salesforce\MapperBundle\Annotation\AnnotationReader;
+use LogicItLab\Salesforce\MapperBundle\Annotation\Field;
 use LogicItLab\Salesforce\MapperBundle\Mapper;
 use Psr\Log\LoggerInterface;
 use ReflectionException;
@@ -50,6 +53,9 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
     /** @var ObjectComparator */
     private $objectComparator;
 
+    /** @var AnnotationReader */
+    private $salesforceAnnotationReader;
+
     /** @var LoggerInterface */
     private $logger;
 
@@ -65,7 +71,8 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         bool $isForceCompared,
         OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder,
         OutboundMessageAfterFlushEventBuilder $outboundMessageAfterFlushEventBuilder,
-        ObjectComparator $objectComparator
+        ObjectComparator $objectComparator,
+        AnnotationReader $salesforceAnnotationReader
     ) {
         $this->documentManager = $documentManager;
         $this->mapper = $mapper;
@@ -76,6 +83,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageBeforeFlushEventBuilder;
         $this->outboundMessageAfterFlushEventBuilder = $outboundMessageAfterFlushEventBuilder;
         $this->objectComparator = $objectComparator;
+        $this->salesforceAnnotationReader = $salesforceAnnotationReader;
     }
 
     /**
@@ -123,6 +131,9 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
             return;
         }
 
+        $allowedProperties = $this->getAllowedProperties($this->documentClassName);
+        $this->documentUpdater->updateWithDocument($mappedDocument, $existingDocument, null, $allowedProperties);
+
         $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
 
@@ -133,7 +144,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
 
         if ($existingDocument) {
             $this->log('saving existing');
-            $this->documentUpdater->updateWithDocument($existingDocument, $mappedDocument);
+            $this->documentUpdater->updateWithDocument($existingDocument, $mappedDocument, $allowedProperties);
         } else {
             $this->log('saving new');
             $this->documentManager->persist($mappedDocument);
@@ -144,6 +155,18 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
 
         $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
+    }
+
+    public function getAllowedProperties(string $documentClass): array
+    {
+        /** @var Field[]|ArrayCollection|null $salesforceFields */
+        $salesforceFields = $this->salesforceAnnotationReader->getSalesforceFields($documentClass);
+
+        if(!$salesforceFields instanceof ArrayCollection) {
+            return [];
+        }
+
+        return array_keys($salesforceFields->toArray());
     }
 
     public function log(string $message): void
