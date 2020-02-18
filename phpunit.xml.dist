@@ -5,29 +5,20 @@
          bootstrap="vendor/autoload.php"
          colors="true"
          backupGlobals="false"
-         backupStaticAttributes="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
 >
     <php>
-        <ini name="error_reporting" value="-1" />
-        <ini name="intl.default_locale" value="en" />
-        <ini name="intl.error_level" value="0" />
-        <ini name="memory_limit" value="-1" />
-        <server name="KERNEL_DIR" value="app/" />
-        <server name="KERNEL_CLASS" value="AppKernel" />
+        <ini name="error_reporting" value="-1"/>
+        <ini name="intl.default_locale" value="en"/>
+        <ini name="intl.error_level" value="0"/>
+        <ini name="memory_limit" value="-1"/>
         <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
         <env name="APP_ENV" value="test"/>
-        <env name="APP_SECRET" value="bf76f2844543ac00ab5299328b1b70da"/>
     </php>
 
     <testsuites>
         <testsuite name="all">
-            <directory>./Tests</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
@@ -35,7 +26,6 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src/</directory>
             <exclude>
-                <directory>./src/**/DependencyInjection</directory>
                 <directory>./src/**/Document</directory>
                 <directory>./src/**/Exception</directory>
                 <directory>./src/**/Interfaces</directory>
@@ -44,8 +34,8 @@
         </whitelist>
     </filter>
 
-<!--    <logging>-->
-<!--        <log type="coverage-html" target="/tmp/report" lowUpperBound="35" highLowerBound="70"/>-->
-<!--        <log type="coverage-clover" target="./coverage.xml"/>-->
-<!--    </logging>-->
+    <!--    <logging>-->
+    <!--        <log type="coverage-html" target="/tmp/report" lowUpperBound="35" highLowerBound="70"/>-->
+    <!--        <log type="coverage-clover" target="./coverage.xml"/>-->
+    <!--    </logging>-->
 </phpunit>
