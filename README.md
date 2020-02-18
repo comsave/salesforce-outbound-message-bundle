@@ -20,7 +20,7 @@ This bundle assumes you're using:
 * Object `create`
 * Object `update`
 * Object `delete`. To enable this complete [additional setup steps](README-setup-removal.md).
-* Object custom handling `beforeFlush`w
+* Object custom handling `beforeFlush`
 * Object custom handling `afterFlush`
 
 ## Installation
