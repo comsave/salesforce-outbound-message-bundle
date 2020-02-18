@@ -55,6 +55,8 @@ class DocumentUpdater
     public function updateWithDocument($document, $newDocument, ?array $allowedProperties = [], ?array $ignoredProperties = [])
     {
         $classReflection = new ReflectionClass($newDocument);
+        $allowedProperties = $allowedProperties ?: [];
+        $ignoredProperties = $ignoredProperties ?: [];
         $checkAllowedProperties = count($allowedProperties) > 0;
         $checkIgnoredProperties = count($ignoredProperties) > 0;
 
