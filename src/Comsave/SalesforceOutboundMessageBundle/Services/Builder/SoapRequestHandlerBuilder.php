@@ -46,6 +46,9 @@ class SoapRequestHandlerBuilder
     /** @var ObjectComparator */
     private $objectComparator;
 
+    /** @var LoggerInterface */
+    private $logger;
+
     /**
      * @codeCoverageIgnore
      */
@@ -56,7 +59,8 @@ class SoapRequestHandlerBuilder
         EventDispatcherInterface $eventDispatcher,
         OutboundMessageBeforeFlushEventBuilder $outboundMessageBeforeFlushEventBuilder,
         OutboundMessageAfterFlushEventBuilder $outboundMessageAfterFlushEventBuilder,
-        ObjectComparator $objectComparator
+        ObjectComparator $objectComparator,
+        LoggerInterface $logger
     ) {
         $this->documentManager = $documentManager;
         $this->mapper = $mapper;
@@ -65,11 +69,12 @@ class SoapRequestHandlerBuilder
         $this->outboundMessageBeforeFlushEventBuilder = $outboundMessageBeforeFlushEventBuilder;
         $this->outboundMessageAfterFlushEventBuilder = $outboundMessageAfterFlushEventBuilder;
         $this->objectComparator = $objectComparator;
+        $this->logger = $logger;
     }
 
     public function build(string $documentName, bool $isForceCompared): SoapRequestHandlerInterface
     {
-        return new SoapRequestHandler(
+        $requestHandler = new SoapRequestHandler(
             $this->documentManager,
             $this->mapper,
             $this->documentUpdater,
@@ -80,5 +85,9 @@ class SoapRequestHandlerBuilder
             $this->outboundMessageAfterFlushEventBuilder,
             $this->objectComparator
         );
+
+        $requestHandler->setLogger($this->logger);
+
+        return $requestHandler;
     }
 }

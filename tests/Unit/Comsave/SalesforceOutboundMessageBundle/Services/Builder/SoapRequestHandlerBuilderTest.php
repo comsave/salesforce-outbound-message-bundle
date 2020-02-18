@@ -58,6 +58,9 @@ class SoapRequestHandlerBuilderTest extends TestCase
     /** @var ObjectComparator|MockObject */
     private $objectComparatorMock;
 
+    /** @var LoggerInterface|MockObject */
+    private $logger;
+
     public function setUp()
     {
         $this->documentManagerMock = $this->createMock(DocumentManager::class);
@@ -67,6 +70,7 @@ class SoapRequestHandlerBuilderTest extends TestCase
         $this->outboundMessageBeforeFlushEventBuilderMock = $this->createMock(OutboundMessageBeforeFlushEventBuilder::class);
         $this->outboundMessageAfterFlushEventBuilderMock = $this->createMock(OutboundMessageAfterFlushEventBuilder::class);
         $this->objectComparatorMock = $this->createMock(ObjectComparator::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->soapRequestHandlerBuilder = new SoapRequestHandlerBuilder(
             $this->documentManagerMock,
@@ -75,7 +79,8 @@ class SoapRequestHandlerBuilderTest extends TestCase
             $this->eventDispatcherMock,
             $this->outboundMessageBeforeFlushEventBuilderMock,
             $this->outboundMessageAfterFlushEventBuilderMock,
-            $this->objectComparatorMock
+            $this->objectComparatorMock,
+            $this->logger
         );
     }
 
