@@ -159,7 +159,7 @@ class SoapRequestHandlerTest extends TestCase
             ->method('find')
             ->willReturn($existingDocumentMock);
 
-        $this->documentUpdaterMock->expects($this->once())
+        $this->documentUpdaterMock->expects($this->exactly(2))
             ->method('updateWithDocument');
 
         $this->documentManagerMock->expects($this->once())
