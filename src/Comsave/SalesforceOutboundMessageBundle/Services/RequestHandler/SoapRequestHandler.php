@@ -133,8 +133,6 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
             return;
         }
 
-        $this->mapInitialDocumentValues();
-
         $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
 
