@@ -121,6 +121,8 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
         $mappedDocument = $this->mapper->mapToDomainObject($sObject, $this->documentClassName);
         $existingDocument = $this->documentManager->find($this->documentClassName, $mappedDocument->getId());
 
+        $this->mapInitialDocumentValues($mappedDocument, $existingDocument);
+
         if ($this->isForceCompared
             && $existingDocument
             && $this->objectComparator->equals(
@@ -131,8 +133,7 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
             return;
         }
 
-        $allowedProperties = $this->getAllowedProperties($this->documentClassName);
-        $this->documentUpdater->updateWithDocument($mappedDocument, $existingDocument, null, $allowedProperties);
+        $this->mapInitialDocumentValues();
 
         $beforeFlushEvent = $this->outboundMessageBeforeFlushEventBuilder->build($mappedDocument, $existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageBeforeFlushEvent::NAME, $beforeFlushEvent);
@@ -155,6 +156,14 @@ class SoapRequestHandler implements SoapRequestHandlerInterface
 
         $afterFlushEvent = $this->outboundMessageAfterFlushEventBuilder->build($existingDocument);
         $this->eventDispatcher->dispatch(OutboundMessageAfterFlushEvent::NAME, $afterFlushEvent);
+    }
+
+    public function mapInitialDocumentValues($mappedDocument, $existingDocument): void
+    {
+        if($existingDocument) {
+            $allowedProperties = $this->getAllowedProperties($this->documentClassName);
+            $this->documentUpdater->updateWithDocument($mappedDocument, $existingDocument, null, $allowedProperties);
+        }
     }
 
     public function getAllowedProperties(string $documentClass): array
