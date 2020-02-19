@@ -74,10 +74,10 @@ class DocumentUpdater
 
             if ($this->propertyAccessor->isReadable($newDocument, $propertyName)) {
                 $newValue = $this->propertyAccessor->getValue($newDocument, $propertyName);
-            }
 
-            if ($newValue !== null && $this->propertyAccessor->isWritable($document, $propertyName)) {
-                $this->propertyAccessor->setValue($document, $propertyName, $newValue);
+                if ($newValue !== null && $this->propertyAccessor->isWritable($document, $propertyName)) {
+                    $this->propertyAccessor->setValue($document, $propertyName, $newValue);
+                }
             }
         }
     }
