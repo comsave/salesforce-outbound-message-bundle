@@ -27,7 +27,7 @@ class PropertyAccessor
         $getMethodName = $this->getGetterName($document, $fieldName);
 
         if(method_exists($document, $getMethodName)) {
-            return $document->{$getMethodName}();
+            return $document->$getMethodName();
         }
 
         return $this->propertyAccess->getValue($document, $fieldName);
@@ -40,10 +40,10 @@ class PropertyAccessor
      */
     public function setValue($document, $fieldName, $value)
     {
-        $setMethodName = $this->getGetterName($document, $fieldName);
+        $setMethodName = $this->getSetterName($document, $fieldName);
 
         if(method_exists($document, $setMethodName)) {
-            return $document->{$setMethodName}($value);
+            return $document->$setMethodName($value);
         }
 
         return $this->propertyAccess->setValue($document, $fieldName, $value);
@@ -56,7 +56,7 @@ class PropertyAccessor
      */
     public function isReadable($document, $fieldName)
     {
-        if($this->getGetterName($document, $fieldName) !== null) {
+        if($this->getGetterName($document, $fieldName)) {
             return true;
         }
 
@@ -70,7 +70,7 @@ class PropertyAccessor
      */
     public function isWritable($document, $fieldName)
     {
-        if($this->getSetterName($document, $fieldName) !== null) {
+        if ($this->getSetterName($document, $fieldName)) {
             return true;
         }
 

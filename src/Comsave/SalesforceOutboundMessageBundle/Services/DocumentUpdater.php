@@ -63,8 +63,11 @@ class DocumentUpdater
         foreach ($classReflection->getProperties() as $propertyReflection) {
             $propertyName = $propertyReflection->getName();
 
-            if (($checkAllowedProperties && !in_array($propertyName, $allowedProperties))
-                || ($checkIgnoredProperties && in_array($propertyName, $ignoredProperties))) {
+            if ($checkAllowedProperties && !in_array($propertyName, $allowedProperties)) {
+                continue;
+            }
+
+            if ($checkIgnoredProperties && in_array($propertyName, $ignoredProperties)) {
                 continue;
             }
 
