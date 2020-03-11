@@ -32,3 +32,7 @@ before_script:
 after_script:
   - mv tests/_output/coverage.xml clover.xml
   - ./cc-test-reporter after-build --coverage-input-type clover --id $CC_TEST_REPORTER_ID --exit-code $TRAVIS_TEST_RESULT
+
+notifications:
+  slack:
+    secure: EYz5ZfaCOcNXCnIX5XRU3g2RpqK0K4p7vDdg4pozC442cN7mZX3ObbvyWKwtEVt0/5M3ZACC8Q8vd76lm4Gq1d5PM0G4cAxY/7wVAxAXKWcW8n48vnOixujf5LavoWEWkJKoYVMX0BI6vMMWj/EF+6ITMKt7WQTHUARZ0CdGbNEgqFrKKd13j5jQ+xZI2/Uzoq/JyF5ynX5tLfo5gC3CT37FxrCjHHzy9fkycH0G2lYBdO8Swdyb6NVO8h9bQx5JV1ZDzL3sxrzyMoi8nR2V/2RUQhkR83TyOGrokNboaq7bOjrgM3WocBQGp2XvV9VDvXONBqlcmI1rcKNfS7WmXZnhdaAlGIQ9kxwpzeh2jVJg9nCwKUXmjAn9SPJfzZUQ/Sp9qEr7bGXTrupHH4JTpLDpcu/sof+Elb0HwKU/8IKrq5cEyzlEG2TsZ7EOxCWQa3RbZ1eiVktoFWX3Q6LYC4MaidrHSGxKRiMuRP13MP9wp40a5MrDS+pCYyN2vSeiSWW48ls5EhXRK+INW4IQiG0Po/pfDKEluyfA+t5WbTjgLc5MnhlduxHJv+mWk49NsAnlfas1xpGK4UIvn/RaKdjUZ6rdnQZOxM8cLbGiobMBPCl9CHjNy4VZzXZiQYli3zVnqHhDq6ilSiLuZSHJuPnJYsbzw5Sqn5VB3nPbQNM=
