@@ -5,6 +5,7 @@ Create, update, remove objects in Symfony sent through Salesforce outbound messa
 [![Release](https://img.shields.io/github/v/release/comsave/salesforce-outbound-message-bundle)](https://github.com/comsave/salesforce-outbound-message-bundle/releases)
 [![Travis](https://img.shields.io/travis/comsave/salesforce-outbound-message-bundle)](https://travis-ci.org/comsave/salesforce-outbound-message-bundle)
 [![Test Coverage](https://img.shields.io/codeclimate/coverage/comsave/salesforce-outbound-message-bundle)](https://codeclimate.com/github/comsave/salesforce-outbound-message-bundle)
+[![Packagist](https://img.shields.io/packagist/dt/comsave/salesforce-outbound-message-bundle)](https://packagist.org/packages/comsave/salesforce-outbound-message-bundle)
 
 ---
 
