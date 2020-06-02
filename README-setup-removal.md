@@ -7,7 +7,7 @@
 What happens in Salesforce:
 
 1) Once an object (for example `Account`) you're tracking gets removed a trigger is triggered.
-2) If it's a `isRemove` trigger a custom object called `ObjectToBeRemoved` gets created on the removal. It stores the class name and the ID of the object that is being removed.
+2) If it's a `isDelete` trigger a custom object called `ObjectToBeRemoved` gets created on the removal. It stores the class name and the ID of the object that is being removed.
 3) An outbound message is being sent with the newly created `ObjectToBeRemoved` object.
 
 What happens in the OutboundMessageBundle:
